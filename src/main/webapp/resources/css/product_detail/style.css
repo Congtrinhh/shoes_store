@@ -1,0 +1,142 @@
+/* PRODUCT DETAIL */
+.product-container {
+  margin-top: 110px;
+}
+.product__detail {
+}
+.detail__left {
+}
+.detail__left .carousel {
+  box-shadow: 0 0 4px #aaa;
+}
+.carousel-indicators {
+  margin-bottom: 0;
+  bottom: calc(var(--carousel-thumbnail-width) * -1);
+}
+.carousel-indicators > li {
+  width: var(--carousel-thumbnail-width);
+  height: auto;
+  border: none;
+}
+.carousel > a[class*="carousel-control"] {
+  bottom: -60px;
+  top: unset;
+  height: 60px;
+}
+.carousel > a[class*="carousel-control"] > i {
+  font-size: 30px;
+  color: #000;
+}
+
+.detail__right {
+  padding-left: 60px;
+}
+.detail__right__price {
+  font-size: 20px;
+}
+.detail__right__short-description {
+  margin: 20px 0;
+}
+.select-option {
+  margin-bottom: 20px;
+}
+.detail__right__list-header {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-size: 600;
+}
+.detail__right__list {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.detail__right__list > li {
+  margin-right: 6px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.detail__right__list > li > span {
+  padding: 6px;
+}
+.detail__right__quantity {
+  display: flex;
+}
+.detail__right__quantity > * {
+  margin-right: 4px;
+}
+.detail__right__quantity > input {
+  max-width: 80px;
+  text-align: center;
+}
+.detail__right__action {
+  margin-top: 30px;
+}
+
+.product__description {
+  margin-top: 100px;
+}
+.product__description > .btn {
+  margin-bottom: 30px;
+}
+.product__description__content {
+  line-height: 24px;
+}
+
+.product__description__content > div {
+  padding: 50px 30px;
+}
+
+/* custom button */
+.main .btn {
+  background-color: var(--quaternary-color);
+  transition: all 0.3s linear;
+}
+.main .btn:hover {
+  filter: brightness(95%);
+  color: #fff;
+}
+.product__description .btn > i {
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* Form select size and color */
+#productOption input[type="radio"] {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+  border: 1px solid #ddd;
+  border-radius: 1px;
+}
+
+#productOption input[type="radio"]:checked {
+  border-color: #555;
+}
+
+
+/* sửa lại ảnh carousel cho vuông  */
+.carousel-item {
+	display: block;
+	width: 100%;
+}
+.carousel-item::after {
+	content:"";
+	display: block;
+	padding-bottom: 110%;
+}
+.carousel-item > img {
+	position: absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+} 

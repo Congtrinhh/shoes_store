@@ -1,0 +1,219 @@
+/* SLIDER */
+.slider {
+  position: relative;
+  overflow: hidden;
+}
+.slides__wrapper {
+  position: relative;
+  padding-bottom: var(--slider-padding-top);
+}
+.slides__wrapper .slide {
+  width: 100%;
+  padding-bottom: var(--slider-padding-top);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin-right: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+@keyframes riseToTop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+.rise-top {
+  /* display: block; */
+  animation-name: riseToTop;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+.slide__info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  text-align: center;
+}
+.slide__info__header {
+  font-family: "Rokkitt", serif;
+  max-width: 250px;
+  color: var(--tertiary-color);
+  text-transform: uppercase;
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: 0px 0px 6px #000;
+  margin: 12px 0;
+  font-weight: 600;
+}
+.slider__indicator {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+.dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin: 0 4px;
+  background-color: #b3b3b3;
+  box-shadow: 0 0 1px rgb(109, 109, 109);
+}
+.active {
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 1px #fff;
+}
+
+/* SLOGAN */
+.slogan {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-top: 110px;
+  padding: 0 45px;
+}
+
+/* COLLECTION */
+.collection {
+  margin-top: 110px;
+  margin-left: 0;
+  margin-right: 0;
+}
+.collection > * {
+  /* position: relative; */
+}
+.collection [class$="men"] {
+  padding-bottom: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.collection [class$="men"] + h3 {
+  text-align: center;
+  margin-top: 36px;
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+/* MAIN */
+.main {
+}
+/* MAIN - BEST SELLER PRODUCTS */
+.best-sellers {
+  margin-top: 240px;
+}
+.best-sellers__header {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+.best-sellers__list {
+  margin-top: 110px;
+}
+.best-sellers__list > * {
+  margin-bottom: var(--gutter);
+}
+
+.product {
+  border: 1px solid var(--faded-border-color);
+  position: relative;
+}
+.product__img {
+  padding-bottom: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  display: block;
+  cursor: pointer;
+}
+.product__info {
+  padding: var(--gutter);
+  text-align: center;
+}
+.product__info > a {
+  color: unset;
+  text-decoration: none;
+  display: block;
+}
+.product__info__title {
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 400;
+  line-height: 180%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+}
+.product__info__price {
+  margin-top: calc(var(--gutter) - 10px);
+}
+
+/* MAIN - TRUSTED PARTNERS */
+.partners {
+  margin-top: 210px;
+}
+.partners__header {
+  font-family: "Rokkitt", serif;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #b7b7b7;
+  letter-spacing: 2px;
+}
+.partners__list {
+  margin-top: 100px;
+}
+
+.partner {
+  padding-bottom: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+/* CTA button */
+.btn-cta {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
+  padding: 20px 30px;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border-radius: 30px;
+  transition: all 0.5s ease;
+  background-color: var(--quaternary-color);
+}
+.btn-cta:hover {
+  background-color: var(--quaternary-color);
+  filter: brightness(110%);
+  color: #fff;
+}
+
+/* Thêm overlay cho banner - mới */
+.slides__wrapper .slide::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.slide__info {
+  /* giúp cta button nổi lên so với overlay */
+  z-index: 1000;
+}

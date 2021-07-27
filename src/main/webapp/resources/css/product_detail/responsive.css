@@ -1,0 +1,39 @@
+/* Tablet */
+@media only screen and (max-width: 768px) {
+  .product-container {
+    margin-top: 70px;
+  }
+  .detail__right {
+    padding-left: 15px;
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .product__description {
+    margin-top: 80px;
+    text-align: right;
+  }
+  .detail__right__header {
+    font-size: 2rem;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .product-container {
+    margin-top: 40px;
+  }
+  .detail__right__list > li {
+    width: 40px;
+    height: 40px;
+  }
+  .product__description {
+    margin-top: 40px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .detail__right__action {
+    text-align: right;
+  }
+}

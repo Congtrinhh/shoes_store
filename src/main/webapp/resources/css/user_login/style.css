@@ -1,0 +1,62 @@
+.container {
+  max-width: 400px;
+  margin: auto;
+  padding: 0 15px;
+  position: relative;
+  top: calc(100vh * 0.12);
+}
+
+.btn {
+  width: 100%;
+  margin-top: 30px;
+  padding: 12px 20px;
+  background-color: var(--secondary-color);
+}
+.btn:hover {
+  color: #fff;
+  background-color: #219bb9;
+}
+.form-text > input:required ~ span::before {
+  background-color: var(--quaternary-color);
+  color: #fff;
+}
+
+.action {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+.action > a {
+  color: var(--primary-color);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.form-checkbox > input {
+  margin-top: 36px;
+}
+.form-header {
+  font-size: 2rem;
+}
+
+.form-text {
+  margin-top: 66px;
+}
+
+@media only screen and (max-width: 576px) {
+  .form-header {
+    margin-bottom: 70px;
+  }
+  .form-text {
+    margin-top: 56px;
+  }
+}
+@media only screen and (max-width: 348px) {
+  .form-header {
+    margin-bottom: 60px;
+  }
+  .form-text {
+    margin-top: 36px;
+  }
+}

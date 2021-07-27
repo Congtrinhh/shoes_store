@@ -1,0 +1,133 @@
+.filters-and-products {
+  margin-top: 60px;
+}
+.filters-and-products .filters {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.form-header {
+  margin-bottom: 10px;
+}
+.filters fieldset {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.filters fieldset select {
+  text-transform: capitalize;
+  padding: 2px 20px;
+}
+.filters fieldset select option {
+  text-transform: capitalize;
+}
+.form-range {
+  padding-left: 20px;
+}
+.form-range > div {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  margin-bottom: 6px;
+}
+.form-range label {
+  /* min-width: 40px; */
+  display: inline-block;
+  width: 20%;
+}
+.form-range input {
+  display: inline-block;
+  width: 75%;
+  margin-left: auto;
+  padding-left: 20px;
+}
+
+.filters-and-products .products {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.product__img {
+	display:block;
+	position: relative;
+}
+.product__img::after {
+	content:"";
+	display: block;
+	padding-bottom: 100%;
+}
+.product__img > img {
+	position: absolute;
+	top:0;left:0;
+	width:100%;
+	height:100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.filters-and-products .product-row {
+}
+.product-row .product {
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+.product__img {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  /* overflow: hidden; */
+}
+.product__img::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+.product__img > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.product__info {
+  padding: calc(var(--gutter) / 2);
+  text-align: center;
+}
+.product__info > a {
+  text-decoration: none;
+}
+.product__info__title {
+  color: #000;
+  font-weight: 400;
+}
+.product__info__price {
+  margin-top: 15px;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 50px;
+}
+.pagination ul {
+  display: flex;
+  margin: auto;
+}
+.pagination ul li {
+  margin: 0 4px;
+}
+.btn-pagination {
+  background-color: #06696d;
+}
+.btn-pagination.active {
+  background-color: var(--primary-color);
+}
+
+/* Chỉnh sửa bổ sung cho em nó nào */
+.main .btn {
+  padding-left: 20px;
+  padding-right: 20px;
+}
