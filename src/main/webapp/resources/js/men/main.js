@@ -1,23 +1,31 @@
+window.scrollTo(0,0);
 
 $('#filterBtn').on('click', loadProducts);
 function loadProducts() {
-	// thêm hiệu ứng chờ ...
-	
     let xhr = new XMLHttpRequest();
     xhr.open('POST', '/ajax-men-products', true);
 
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
+	xhr.onloadstart = function(){
+		// Thêm hiệu ứng chờ
+		$('.loader').addClass('on');
+	}
+	
     xhr.onload = function(event) {
         if (this.status==200) {
+			window.scrollTo(0,0); // quay về đầu trang
 			// bỏ hiệu ứng chờ ...
             parseProducts(JSON.parse(this.responseText));
-completePagination(JSON.parse(this.responseText));
+			completePagination(JSON.parse(this.responseText));
 
-				$('.pagination .btn-pagination').on('click', loadProductsPerPage);
+			$('.pagination .btn-pagination').on('click', loadProductsPerPage);
         }
-    }
 
+		// Bỏ hiệu ứng chờ
+		$('.loader').removeClass('on');
+    }
+	
     let paramsArray = document.getElementById('filter').querySelectorAll('fieldset [name]');
     let params ='';
     paramsArray.forEach( field => {
@@ -41,7 +49,7 @@ function parseProducts(productArray) {
         `<div class="col-12 col-md-6 col-xl-4 mb-4">
             <div class="product">
                 <a class="product__img" href="${product.c_slug}${product.pr_slug}">
-                    <img src='/resources/imgs/product/men/${product.img_location}' alt="">
+                    <img src='data:image/jpg;base64,${product.base64Image}' alt="">
                 </a>
                 <div class="product__info">
                     <a href="${product.c_slug}${product.pr_slug}">
@@ -67,6 +75,8 @@ function loadProductsPerPage(){
     xhr.onload = function(event){
         if (this.status == 200){
             if (this.responseText.length > 0) {
+				window.scrollTo(0,0); // quay về đầu trang
+	
 				parseProducts(JSON.parse(this.responseText));
             	completePagination(JSON.parse(this.responseText));
 
@@ -88,6 +98,12 @@ $(window).on('load', doPaginationWindow);
 function doPaginationWindow(){
     let currentPageIndex = Number($('[name="hidden-current-page"]').attr('value'));
     let totalPages = Number($('[name="hidden-total-pages"]').attr('value'));
+	
+	if (totalPages<=1) {
+		document.querySelector('.pagination > ul').innerHTML = '';
+		return;
+	}
+
     console.log(currentPageIndex,totalPages);
     let pageNumbersArray = doPagination(currentPageIndex, totalPages);
 
@@ -138,21 +154,32 @@ function doPagination(c, m) {
     return rangeWithDots;
 }
 function completePagination(productsArray){
-    let currentPageIndex = Number(productsArray[0].currentPage);
-    let totalPages = Number(productsArray[0].totalPages);
-    if (typeof currentPageIndex == 'number' && typeof totalPages=='number') {
-		let pageNumbersArray = doPagination(currentPageIndex, totalPages);
 
-    document.querySelector('.pagination > ul').innerHTML = '';
+	if (productsArray.length>0) {
+		let currentPageIndex = Number(productsArray[0].currentPage);
+    	let totalPages = Number(productsArray[0].totalPages);
+   		if (typeof currentPageIndex == 'number' && typeof totalPages=='number') {
+			if (totalPages <=1) {
+				document.querySelector('.pagination > ul').innerHTML = '';
+				return;
+			}
+	
+			let pageNumbersArray = doPagination(currentPageIndex, totalPages);
 
-    document.querySelector('.pagination > ul').innerHTML =
-     pageNumbersArray.map( pageNumber => {
-        if (pageNumber == currentPageIndex) {
-            return `<li> <button type="button" class="btn btn-pagination active" pagination-value="${currentPageIndex}">${currentPageIndex}</button> </li>`
-        }
-        else {
-            return `<li> <button type="button" class="btn btn-pagination" pagination-value="${pageNumber}">${pageNumber}</button> </li>`
-        }
-    } ).join('');
-}
+		    document.querySelector('.pagination > ul').innerHTML = '';
+		
+		    document.querySelector('.pagination > ul').innerHTML =
+		    pageNumbersArray.map( pageNumber => {
+		        if (pageNumber == currentPageIndex) {
+		            return `<li> <button type="button" class="btn btn-pagination active" pagination-value="${currentPageIndex}">${currentPageIndex}</button> </li>`
+		        }
+		        else {
+		            return `<li> <button type="button" class="btn btn-pagination" pagination-value="${pageNumber}">${pageNumber}</button> </li>`
+		        }
+		    }).join('');
+		}
+	}
+	else {
+		console.log('khong co san pham');
+	}    
 }

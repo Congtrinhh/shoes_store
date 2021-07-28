@@ -3,7 +3,7 @@ package ajax_call;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import constants.SystemConstants;
 import homepage_servlet.ProductGetter;
 
 @WebServlet(urlPatterns = {"/ajax-men-products"})
@@ -23,8 +22,7 @@ public class Men extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		/*
 		 * Nhiệm vụ của hàm này là trả về list sản phẩm theo từng trang, cập nhật lại currentPage,..
-		 *  
-		 *  */
+		 */
 		
 		String requestedPageStr = req.getParameter("requestedPage");
 		
@@ -71,7 +69,7 @@ public class Men extends HttpServlet {
 		try {
 			session.setAttribute("currentPage", requestedPage);
 			
-			ArrayList<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(req, conn, brandOption, priorityOption, fromRangeOption, toRangeOption, requestedPage);
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(req, conn, brandOption, priorityOption, fromRangeOption, toRangeOption, requestedPage);
 			if (productList!=null) {
 				session.setAttribute("productList", productList);
 				
@@ -84,7 +82,6 @@ public class Men extends HttpServlet {
 				System.out.println("Men jax [GET] thanh cong");
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 				
@@ -151,7 +148,7 @@ public class Men extends HttpServlet {
 			session.setAttribute("currentPage", 1); // luôn trả về trang đầu tiên, nên currentPage=1
 			int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, brandOption, priorityOption, fromRangeOption, toRangeOption);
 			session.setAttribute("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts));
-			ArrayList<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(req, conn, brandOption, priorityOption, fromRangeOption, toRangeOption, 1);
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(req, conn, brandOption, priorityOption, fromRangeOption, toRangeOption, 1);
 			
 			if (productList!=null) {
 				

@@ -77,7 +77,7 @@
 									<c:if test="${sessionScope.login_token=='user'}">${logedInUser.u_login_name}</c:if>
 									<i class="fas fa-user-cog"></i>
 								</p>
-								!<div class="action">
+								<div class="action">
 									<a
 										href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-manage</c:if><c:if test="${sessionScope.login_token=='user'}">user-manage</c:if>"
 										class="manage-account">Quản lý tài khoản</a>
@@ -156,23 +156,29 @@
                     <div class="detail__left col-12 col-md-6">
         
                         <div>
-                            <div id="product-slider" class="carousel slide  carousel-fade" data-ride="carousel">
+                            <div id="product-slider" class="carousel slide carousel-fade" data-ride="">
                                 <!-- Hidden id -->
                                 <input type="text" hidden name="hidden-id" value="${product.product_line_id}">
         
                                 <ol class="carousel-indicators">
-                                    <li data-target="#product-slider" data-slide-to="0" class="active">
-                                        <img src="${pageContext.request.contextPath}/resources/imgs/product/men/${product.img_location}" alt="">
-                                        <input type="text" hidden name="hidden-image"
-                                            value="${pageContext.request.contextPath}/resources/imgs/product/men/${product.img_location}">
-                                    </li>
+                                    <c:forEach items="${imagesList}" var="image" varStatus="status">
+                                    	<li data-target="#product-slider" data-slide-to="${status.index}" class="">
+	                                        <img src="data:image/jpg;base64,${image.base64Image}" alt="">
+	                                        <input type="text" hidden name="hidden-image"
+	                                            value="data:image/jpg;base64,${image.base64Image}">
+	                                    </li>
+                                    </c:forEach>
                                 </ol>
+                                
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="${pageContext.request.contextPath}/resources/imgs/product/men/${product.img_location}"
-                                            class="d-block w-100" alt="...">
-                                    </div>
-                                </div>
+                                	<c:forEach items="${imagesList}" var="image">
+	                                    <div class="carousel-item">
+	                                        <img src="data:image/jpg;base64,${image.base64Image}"
+	                                            class="d-block w-100" alt="...">
+	                                    </div>
+                                	</c:forEach>
+	                            </div>
+                                
                                 <a class="carousel-control-prev" href="#product-slider" role="button" data-slide="prev">
                                     <i class="fas fa-angle-left"></i>
                                     <span class="sr-only">Previous</span>
@@ -187,12 +193,12 @@
                     </div>
         
                     <div class="detail__right col-12 col-md-6">
-                        <h1 class="detail__right__header">${product.pr_name}
+                    	<input type="text" hidden name="specificProducts" value=${specificProductInfoList}>
                             <input type="text" hidden name="hidden-name" value="${product.pr_name}">
+                        <h1 class="detail__right__header">${product.pr_name}
                         </h1>
-                        <p class="detail__right__price money">${product.pr_price}
-                            <input type="text" hidden name="hidden-price" value="${product.pr_price}">
-                        </p>
+                        <input type="text" hidden name="hidden-price" value="${product.pr_price}">
+                        <p class="detail__right__price money">${product.pr_price}</p>
                         <p class="detail__right__short-description">${product.pr_description}</p>
                         <form id='productOption' method="GET" action='${pageContext.request.contextPath}/cart'>
                             <div class="detail__right__color select-option">

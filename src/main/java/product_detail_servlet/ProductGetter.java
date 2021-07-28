@@ -9,11 +9,10 @@ public class ProductGetter {
 	private BigDecimal pr_price;
 	private String pr_description;
 	private String pr_brand_name;
-	private String img_location;
 	
 	
 	public ProductGetter(int product_line_id, String pr_slug, String pr_name, BigDecimal pr_price, String pr_description,
-			String pr_brand_name, String img_location) {
+			String pr_brand_name) {
 		super();
 		this.product_line_id = product_line_id;
 		this.pr_slug = pr_slug;
@@ -21,7 +20,6 @@ public class ProductGetter {
 		this.pr_price = pr_price;
 		this.pr_description = pr_description;
 		this.pr_brand_name = pr_brand_name;
-		this.img_location = img_location;
 	}
 
 
@@ -54,10 +52,6 @@ public class ProductGetter {
 		this.pr_name = pr_name;
 	}
 
-
-
-
-
 	public BigDecimal getPr_price() {
 		return pr_price;
 	}
@@ -86,16 +80,5 @@ public class ProductGetter {
 	public void setPr_brand_name(String pr_brand_name) {
 		this.pr_brand_name = pr_brand_name;
 	}
-
-
-	public String getImg_location() {
-		return img_location;
-	}
-
-
-	public void setImg_location(String img_location) {
-		this.img_location = img_location;
-	}
-	
 	
 }

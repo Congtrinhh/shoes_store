@@ -17,7 +17,7 @@
                 productDOM.querySelector('.card__product-info__name').innerHTML = item.name;
                 productDOM.querySelector('.parent-image > img').src = item.image;
                 productDOM.querySelector('.card__product-info__size > span').innerHTML = item.size;
-                productDOM.querySelector('.card__product-info__color > span').innerHTML = item.color;
+                productDOM.querySelector('.card__product-info__color > span').style.backgroundColor = item.color;
                 productDOM.querySelector('[name="product-quantity"]').setAttribute('value', item.quantity);
                 
                                         
@@ -33,7 +33,7 @@
 
     
     
-        function cloneProductRowNode() {
+    function cloneProductRowNode() {
         const node = document.querySelector('.cart__products__left > .table > .tbody > .tr.product-row');
         return node.cloneNode(true);
     }

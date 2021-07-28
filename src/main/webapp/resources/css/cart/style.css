@@ -145,3 +145,11 @@
     display: flex;
     justify-content: center;
 }
+
+/* hiển thị màu sắc sp */
+.card__product-info__color > span { 
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	vertical-align: bottom;
+}

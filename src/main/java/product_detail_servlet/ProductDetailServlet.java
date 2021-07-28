@@ -3,6 +3,7 @@ package product_detail_servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
 
 @WebServlet(urlPatterns = {"/men/*", "/women/*"})
 public class ProductDetailServlet extends HttpServlet {
@@ -25,11 +28,38 @@ public class ProductDetailServlet extends HttpServlet {
 				
 				if (product != null) {
 					req.setAttribute("product", product);
-					RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/product_detail/productDetail.jsp");
-					dispatcher.forward(req, resp);
 				}
 				else {
 					// forward sang trang không tìm thấy sp.
+				}
+				
+				
+				List<ImageGetter> imagesList = product_detail_utils.ProductDetailSQL.getImagesOfProduct(conn, pr_slug);
+				if (imagesList!=null) {
+					req.setAttribute("imagesList", imagesList);
+				}
+				else {
+					
+				}
+				
+				// gửi về dưới dạng string
+				List<SpecificProductInfo> specificProductInfoList = product_detail_utils.ProductDetailSQL.getSpecificProductsList(conn, pr_slug);				
+				String json = new Gson().toJson(specificProductInfoList);
+				req.setAttribute("specificProductInfoList", json);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/product_detail/productDetail.jsp");
+				try {
+					dispatcher.forward(req, resp);
+				}catch(Exception e) {
+					System.out.println("error when forwarding: "+e.getMessage());
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

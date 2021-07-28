@@ -58,11 +58,22 @@
   align-items: center;
   width: 50px;
   height: 50px;
-  border-radius: 3px;
   cursor: pointer;
+  position: relative;
 }
 .detail__right__list > li > span {
-  padding: 6px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left:0;
+  bottom: 0;
+  z-index: -1;
+  text-align: center;
+  text-shadow: 0 0 1px rgba(0,0,0,0.3);
+  background-color: #ddd;
+  font-weight: 500;
+   border-radius: 50%;
+  line-height: 300%; /* tạm */ 
 }
 .detail__right__quantity {
   display: flex;
@@ -111,9 +122,9 @@
   appearance: none;
   width: 100%;
   height: 100%;
-  background-color: #ddd;
   border: 1px solid #ddd;
-  border-radius: 1px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 #productOption input[type="radio"]:checked {

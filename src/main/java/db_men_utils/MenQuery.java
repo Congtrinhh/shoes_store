@@ -1,6 +1,7 @@
 package db_men_utils;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import homepage_servlet.ProductGetter;
 
 public class MenQuery {
-	public static ArrayList<ProductGetter> queryProduct(Connection conn, int brand, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
+	public static List<ProductGetter> queryProduct(Connection conn, int brand, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
 		String sql = "select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
 				+ "join specific_product s on s.product_line_id=p.product_line_id\r\n"
 				+ "where pr_brand_name like ? and (pr_price between ? and ?) \r\n"
@@ -75,18 +76,20 @@ public class MenQuery {
 			int id = rs.getInt("product_line_id");
 			String name = rs.getString("pr_name");
 			BigDecimal price = rs.getBigDecimal("spr_price");
-			String imageLocation = rs.getString("img_location");
 			String brandName = rs.getString("pr_brand_name");
 			String slug = rs.getString("pr_slug");
 			String c_slug = rs.getString("c_slug");
 			
-			ProductGetter product = new ProductGetter(slug, name, price, imageLocation, c_slug, brandStr);
+			Blob img_file = rs.getBlob("img_file");
+			String base64String = common_utils.MyUtils.convertBlobToString(img_file);
+			
+			ProductGetter product = new ProductGetter(slug, name, base64String, c_slug, brandName, price);
 			list.add(product);
 		}
 		return (ArrayList<ProductGetter>) list;
 	}
 	
-	public static ArrayList<ProductGetter> queryProduct(HttpServletRequest req, Connection conn, int brand, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
+	public static List<ProductGetter> queryProduct(HttpServletRequest req, Connection conn, int brand, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
 		String sql = "select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
 				+ "join specific_product s on s.product_line_id=p.product_line_id\r\n"
 				+ "where pr_brand_name like ? and (pr_price between ? and ?) \r\n"
@@ -142,17 +145,20 @@ public class MenQuery {
 		stm.setInt(6, (pageNo-1) * constants.SystemConstants.PRODUCTS_PER_PAGE);
 		
 		ResultSet rs = stm.executeQuery();
-		List<ProductGetter> list = new ArrayList<ProductGetter>();
+		List<ProductGetter> list = new ArrayList<>();
 		while (rs.next()) {
 			int id = rs.getInt("product_line_id");
 			String name = rs.getString("pr_name");
 			BigDecimal price = rs.getBigDecimal("spr_price");
-			String imageLocation = rs.getString("img_location");
 			String brandName = rs.getString("pr_brand_name");
 			String slug = rs.getString("pr_slug");
 			String c_slug = rs.getString("c_slug");
+					
+			Blob img_file= rs.getBlob("img_file");
+			String base64String = common_utils.MyUtils.convertBlobToString(img_file);
 			
-			ProductGetter product = new ProductGetter(slug, name, price, imageLocation, c_slug, brandStr);
+			
+			ProductGetter product = new ProductGetter(slug, name, base64String, c_slug, brandName, price);
 			
 			if (rs.isFirst()) {
 				System.out.println("Đang ở đầu row product đây nè");

@@ -70,7 +70,7 @@
 									<c:if test="${sessionScope.login_token=='user'}">${logedInUser.u_login_name}</c:if>
 									<i class="fas fa-user-cog"></i>
 								</p>
-								!<div class="action">
+								<div class="action">
 									<a
 										href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-manage</c:if><c:if test="${sessionScope.login_token=='user'}">user-manage</c:if>"
 										class="manage-account">Quản lý tài khoản</a>
@@ -163,9 +163,9 @@
                                         <input type="text" hidden name="hidden-product-id" value="">
                                         <div class="parent-image"><img src="" alt=""></div>
                                         <div class="card__product-info">
-                                            <h2 class="card__product-info__name">nike ahiahiafajejajj ahahahaie</h2>
-                                            <p class="card__product-info__size">size <span>42</span></p>
-                                            <p class="card__product-info__color">color <span>white</span></p>
+                                            <h2 class="card__product-info__name"></h2>
+                                            <p class="card__product-info__size">size <span></span></p>
+                                            <p class="card__product-info__color">color <span></span></p>
                                         </div>
                                     </div>
                                 </div>

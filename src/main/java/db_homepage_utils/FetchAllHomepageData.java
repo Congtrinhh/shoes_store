@@ -52,21 +52,7 @@ public class FetchAllHomepageData {
 			
 			// nhận và xử lí ảnh ở đây.
 			Blob img_file = rs.getBlob("img_file");
-			
-			InputStream iStream = img_file.getBinaryStream();
-			ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
-			byte[] buffer = new byte[4096];
-			int bytesRead = -1;
-			
-			while( (bytesRead=iStream.read(buffer)) != -1 ) {
-				byteOutputStream.write(buffer, 0, bytesRead);
-			}
-			byte[] imageBytes = byteOutputStream.toByteArray();
-			
-			String base64Str = Base64.getEncoder().encodeToString(imageBytes);
-			
-			iStream.close();
-			byteOutputStream.close();
+			String base64Str= common_utils.MyUtils.convertBlobToString(img_file);
 			// kết thúc xử lí ảnh
 			
 			

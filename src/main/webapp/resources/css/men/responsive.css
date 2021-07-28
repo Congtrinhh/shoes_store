@@ -37,4 +37,11 @@
     text-transform: capitalize;
     padding: 4px 20px;
   }
+  .product__info__title{
+  	font-size: 1.7rem;
+  }
+  .product__info__price {
+  font-size: 1.1rem;
+  }
+  
 }

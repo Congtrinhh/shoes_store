@@ -27,7 +27,7 @@ public class GetProducts extends HttpServlet {
 		try {
 			conn = connection_utils.ConnectionUtils.getConnection();
 			
-			ArrayList<ProductGetter> productList = db_homepage_utils.FetchAllHomepageData.fetchProducts(conn);
+			ArrayList<ProductGetter> productList = new ArrayList<>(); // 
 			
 			String json = null;
 			

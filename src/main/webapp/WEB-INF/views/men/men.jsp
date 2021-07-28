@@ -84,7 +84,7 @@
 									<c:if test="${sessionScope.login_token=='user'}">${logedInUser.u_login_name}</c:if>
 									<i class="fas fa-user-cog"></i>
 								</p>
-								!<div class="action">
+								<div class="action">
 									<a
 										href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-manage</c:if><c:if test="${sessionScope.login_token=='user'}">user-manage</c:if>"
 										class="manage-account">Quản lý tài khoản</a>
@@ -199,7 +199,7 @@
 								<a class="product__img"
 									href="${pageContext.request.contextPath}${product.c_slug}${product.pr_slug}">
 									<img
-									src='${pageContext.request.contextPath}/resources/imgs/product/men/${product.img_location}'
+									src='data:image/jpg;base64,${product.base64Image}'
 									alt="">
 								</a>
 								<div class="product__info">
@@ -218,36 +218,12 @@
 
 				<div class="pagination">
 					<ul>
-						<li>
-							<button type="button" class="btn btn-pagination"
-								pagination-value="1">Đầu</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-pagination"
-								pagination-value="1">Trước</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-pagination active"
-								pagination-value="1">1</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-pagination"
-								pagination-value="2">2</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-pagination"
-								pagination-value="3">3</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-pagination"
-								pagination-value="1">Sau</button>
-						</li>
-						<li>
-							<button type="button" class="btn btn-pagination"
-								pagination-value="1">Cuối</button>
-						</li>
+						
 					</ul>
 				</div>
+				
+				<div class="loader" style="background-image: url('${pageContext.request.contextPath}/resources/imgs/loader/ajax-loader.gif')"></div>
+				
 				<input type="text" hidden name="hidden-current-page"
 					value="${currentPage}"> <input type="text" hidden
 					name="hidden-total-pages" value="${totalPages}">

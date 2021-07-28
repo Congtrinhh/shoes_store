@@ -1,4 +1,5 @@
-
+let specificProductsList = [];
+const moneySubfix = '.00';
 $(window).on('load', function(){
 
     $('.btn-increase').on('click', function(event) {
@@ -13,12 +14,99 @@ $(window).on('load', function(){
         }
     })
 
-    $('.carousel').carousel({
-        interval: 3000,
-    })
+   
+	$('.carousel .carousel-indicators > li:first-child').addClass('active');
+	$('.carousel .carousel-inner .carousel-item:first-child').addClass('active');
 
-
-
+	/* ------------ for choosing color, size and displaying real price -------------- */
+	specificProductsList = JSON.parse($('[name="specificProducts"]').attr('value')); // get list of specific product info from jsp 
+	
+	renderFirstSpecificProductOptions();
+	function renderFirstSpecificProductOptions(){
+		
+		let colorsList =[];
+		let sizesList = [];
+		
+		specificProductsList.forEach( item => {
+			if ( !colorsList.includes(item.color) ) {
+				colorsList.push(item.color);			
+			}
+		})
+		
+		updateColorsListInDOM(colorsList); // hiển thị danh sách color
+		$('.detail__right__color > ul > li:first-child > [name="hidden-color"]').attr('checked', 'checked'); // set color đầu tiên check mặc định
+		updateSizesOnColorChange($('[name="hidden-color"]:checked').attr('value')); // hiển thị danh sách size theo color vừa được check
+		var i=0;
+		specificProductsList.forEach(productInfo=>{
+			if (productInfo.color == $('[name="hidden-color"]:checked').attr('value')) {
+				$('.detail__right__price').text(productInfo.price + moneySubfix);
+				$('[name="hidden-price"]').attr('value', productInfo.price + moneySubfix); // dùng cho LocalStorage
+			}
+		})
+	}
+	
+	$('[name="hidden-color"]').on('click', function(){
+		updateSizesOnColorChange($(this).attr('value'));
+	})
+	
+	$('[name="hidden-size"]').on('click', function(){
+		console.log('size box clicked')
+		if ( $('[name="hidden-color"]:checked') ) {
+			showSpecificPrice($(this).attr('value'), $('[name="hidden-color"]:checked').attr('value'));
+		}
+	})
+	function showSpecificPrice(clickedSize, clickedColor){
+		specificProductsList.forEach( productInfo => {
+			if ( productInfo.size==clickedSize && productInfo.color==clickedColor ) {
+				$('.detail__right__price').text(productInfo.price + moneySubfix);
+				$('[name="hidden-price"]').attr('value', productInfo.price + moneySubfix); // dùng cho LocalStorage
+			}	
+		})
+	}
+	
+	function updateSizesOnColorChange(clickedValue){ // khi một radio color được bấm vào, hàm này sẽ được gọi
+		$('.detail__right__size > ul').html('');
+		
+		let sizesList = [];
+		
+		specificProductsList.forEach( productInfo => {
+			if (productInfo.color == clickedValue) {
+				sizesList.push(productInfo.size);
+			}	
+		})
+		
+		updateSizesListInDOM(sizesList);
+	}
+	
+	function updateSizesListInDOM(sizesArray) {
+		let innerHtmlSize = '';
+		sizesArray.forEach(item =>{
+			innerHtmlSize += `<li>
+                                   <input type="radio" name="hidden-size" value="${item}" form="productOption">
+									<span>${item}</span>
+                               </li>`
+		})
+		document.querySelector('.detail__right__size > ul').innerHTML = innerHtmlSize;
+		
+		//lắng nghe thay đổi với dom với
+		$('[name="hidden-size"]').on('click', function(){
+		console.log('size box clicked')
+		if ( $('[name="hidden-color"]:checked') ) {
+			showSpecificPrice($(this).attr('value'), $('[name="hidden-color"]:checked').attr('value'));
+		}
+	})
+	}
+	function updateColorsListInDOM(colorsArray){
+		let innerHtmlColor = '';
+		colorsArray.forEach(item =>{
+			innerHtmlColor += `<li>
+                                   <input type="radio" name="hidden-color" value="${item}" form="productOption">
+									<span style="background-color: ${item}; opacity: 0.9;"></span>
+                               </li>`
+		})
+		document.querySelector('.detail__right__color > ul').innerHTML = innerHtmlColor;
+	}
+	
 
         
     /*
@@ -61,7 +149,7 @@ $(window).on('load', function(){
 
 	
     
-
+	/* -------- lưu thông tin sp trong giỏ hàng thông qua LocalStorage ------------- */
     function storeProductInfoIntoLS() {
         let id = $('[name="hidden-id"]').val();
         let name = $('[name="hidden-name"]').val();
@@ -111,4 +199,3 @@ $(window).on('load', function(){
     }
    
 })
-    
