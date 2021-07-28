@@ -2,6 +2,7 @@ package db_crud_utils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.springframework.dao.DuplicateKeyException;
 
@@ -38,6 +39,24 @@ public class AdminUtils {
 		} finally {
 			connection_utils.ConnectionUtils .closeQuietly(conn);
 		}
+	}
+	
+	
+	public static int findAdminIdByName(Connection conn, String userName) {
+		String sql = "select admin_id from admin where ad_login_name = ?;";
+		
+		try (PreparedStatement stm = conn.prepareStatement(sql)){
+			stm.setString(1, userName);
+			ResultSet rs = stm.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+			
+		}
+		catch(Exception e) {
+			System.out.println("Loi "+e.getMessage());
+		}
+		return -1;
 	}
 	
 }

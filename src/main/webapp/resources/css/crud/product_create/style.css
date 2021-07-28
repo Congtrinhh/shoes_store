@@ -204,3 +204,12 @@ form textarea {
 form .btn {
   width: 100%;
 }
+
+
+
+.error-message {
+  display: none;
+}
+.error-message.on {
+  display: block;
+}

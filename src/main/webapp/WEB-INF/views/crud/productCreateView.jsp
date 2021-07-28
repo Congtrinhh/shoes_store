@@ -84,7 +84,7 @@
                 <!-- Form tạo mới (create) -->
                 <div class="create-area">
                     <div class="form-header create-area__header">Tạo dòng sản phẩm mới</div>
-                    <form id='createForm' action='${pageContext.request.contextPath}/' method='POST'>
+                    <form id='createForm' action='${pageContext.request.contextPath}/' method='POST' enctype="multipart/form-data">
 
                         <!-- name -->
                         <div class='form-text'>
@@ -106,7 +106,7 @@
 
                         <!-- price -->
                         <div class='form-text'>
-                            <input type='number' name='' placeholder='' required>
+                            <input type='number' name='price' placeholder='' required>
                             <label for='' class='label-name'>
                                 <p class='content-name__placeholder'>Giá</p>
                             </label>
@@ -154,6 +154,8 @@
                         </div>
 
                         <button type="submit" class="btn btn-submit">Submit</button>
+                        
+                        <p class="error-message"></p>
                     </form>
                 </div>
 

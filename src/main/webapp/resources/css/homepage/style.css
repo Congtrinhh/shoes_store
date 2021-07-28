@@ -130,14 +130,27 @@
   border: 1px solid var(--faded-border-color);
   position: relative;
 }
+
 .product__img {
-  padding-bottom: 100%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   display: block;
   cursor: pointer;
+  position: relative;
 }
+.product__img::after {
+	content:"";
+	display: block;
+	padding-bottom: 100%;
+}
+.product__img > img {
+	position: absolute;
+	top: 0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
 .product__info {
   padding: var(--gutter);
   text-align: center;

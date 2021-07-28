@@ -506,12 +506,14 @@ input[type="submit"] {
   color: #fff;
   top: 0;
   right: 0;
+  z-index: 100;
 }
 .buy-now::after {
   content: "";
   position: absolute;
   right: 0;
   top: var(--buy-now-height);
+  z-index: 100;
   display: block;
   width: var(--buy-now-width);
   border-right: calc(var(--buy-now-width) / 2) solid #dd5a3c;

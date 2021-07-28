@@ -27,6 +27,19 @@ public class Product {
 		this.pr_description = pr_description;
 		this.pr_price = pr_price;
 	}
+	
+	public Product(int admin_id, int category_id, String pr_slug, String pr_name, String pr_brand_name,
+			BigDecimal pr_price, String pr_description) {
+		super();
+		this.admin_id = admin_id;
+		this.category_id = category_id;
+		this.pr_slug = pr_slug;
+		this.pr_name = pr_name;
+		this.pr_brand_name = pr_brand_name;
+		this.pr_price = pr_price;
+		this.pr_description = pr_description;
+	}
+
 
 	public String getPr_brand_name() {
 		return pr_brand_name;

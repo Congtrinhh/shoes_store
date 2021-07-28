@@ -26,12 +26,13 @@ $('#createForm').validate({
 });
 
 
+
 $('.btn-submit').on('click', function(event){
 	event.preventDefault();
     if ( $('#createForm').valid() ) {
         let form = document.querySelector('#createForm');
         let formData = new FormData(form);
-        $.ajax({
+        let rs = $.ajax({
             url: '/create-product',
             type: 'POST',
             data: formData,
@@ -39,8 +40,17 @@ $('.btn-submit').on('click', function(event){
             cache: false,
             processData: false,
             success: function(data){
-                console.log('submit form jquery ajax thanh cong voi data: ' + data);
+                if (data == null) { // tức là mọi thứ đều thành công, không lỗi lầm
+					$('.error-message').removeClass('on');
+				}
+				else {
+					$('.error-message').addClass('on');
+					$('.error-message').html(data);
+					$('#createForm').on('click', function(){
+						$('.error-message').removeClass('on');
+					})
+				}
             }
-        })
+        });
     }
 })

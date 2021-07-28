@@ -201,7 +201,7 @@
 						<div class="col-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="product buy-now">
 								<a class="product__img" href="${pageContext.request.contextPath}${product.c_slug}${product.pr_slug}">
-									<img src="${product.base64Image}" alt="a pair of shoes">
+									<img src="data:image/jpg;base64,${product.base64Image}" alt="a pair of shoes">
 								</a>
 								<div class="product__info">
 									<a href="${pageContext.request.contextPath}${product.c_slug}${product.pr_slug}">
