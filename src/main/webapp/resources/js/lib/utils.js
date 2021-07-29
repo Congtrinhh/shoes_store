@@ -16,11 +16,12 @@
 					$('.number-indicator').removeClass('indicatorAnimation');
 				}, 750);
             }
-
+			
+			/* local storage - get list products */
             function getProductListFromLS() {
 				let list = localStorage.getItem('productList');
 				
-				if (list!=null && list!='' && list!=undefined && list!=[]) {
+				if (list.length>0) {
 					try {
 						return JSON.parse(list);
 					} catch(e) {
@@ -29,6 +30,10 @@
 				}
                 return null;
             }
+			
+			function storeProductList(list){
+				localStorage.setItem("productList", JSON.stringify(list));
+			}
 
 // try -catch loi
 			

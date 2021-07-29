@@ -223,9 +223,10 @@ select * from specific_product;
 select * from purchase_order;
 select * from product_in_order;
 
-select * from image;
-
-
+update specific_product s join product_line p on p.product_line_id=s.product_line_id
+	join color on color.color_id=s.color_id join size on size.size_id=s.size_id
+set s.spr_quantity= s.spr_quantity-0
+where p.product_line_id=26 and color_code like '%' and size_number = 42;
 
 
 

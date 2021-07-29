@@ -33,14 +33,14 @@
 			<h1 class="form-header">Đăng nhập Admin</h1>
 
 			<div class='form-text'>
-				<input type='text' name='name' id='' placeholder='' required>
+				<input type='text' name='name' placeholder='' required>
 				<label for='' class='label-name'>
 					<p class='content-name__placeholder'>Tên tài khoản</p>
 				</label> <span></span>
 			</div>
 
 			<div class='form-text'>
-				<input type='password' name='password' id='' placeholder='' required>
+				<input type='password' name='password' placeholder='' required>
 				<label for='' class='label-name'>
 					<p class='content-name__placeholder'>Mật khẩu</p>
 				</label> <span></span>
@@ -58,7 +58,7 @@
 
 		<div class="action">
 			<a href="" class="forget-password">Quên mật khẩu</a> <a href="${pageContext.request.contextPath}/"
-				class="to-homepage">Trang chủ</a>
+				class="to-homepage"><< Trang chủ</a>
 		</div>
 
 	</div>

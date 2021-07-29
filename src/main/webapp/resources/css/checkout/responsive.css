@@ -1,0 +1,35 @@
+/* Tablet */
+@media only screen and (max-width: 1024px) {
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    max-width: 576px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    max-width: 448px;
+  }
+  .address-container > fieldset {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .address-container {
+    flex-flow: column;
+  }
+  .form-header {
+    margin-bottom: 50px;
+  }
+  .form-text {
+    margin-top: 40px;
+  }
+  .address-container > fieldset > select {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-bottom: 2px;
+  }
+}

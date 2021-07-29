@@ -11,9 +11,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -134,6 +132,11 @@
 
         <!-- Card - main -->
         <main class="cart main container">
+        	<div style="display:none;" my-note="khu vực dành cho chức năng nếu người dùng chưa đăng nhập, chuyển qua trang login">
+        		<input type="text" hidden name="login-token-for-user" value="${sessionScope.login_token}"> <!-- js căn cứ vào đây để biết ng dùng đã login hay chưa, nếu chưa, khi click nút 'tiếp tục' sẽ đc chuyển sang trang login -->
+        	<a class="btn-login" href="${pageContext.request.contextPath}/user-login" style="display:none;">qua trang login</a>
+        	</div>
+        	
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
@@ -230,7 +233,10 @@
         
                     <div class="continue-checkout">
                         <a href="" class="btn btn-continue">Continue</a>
+                        <p class="error-message"></p>
                     </div>
+                    
+                    
                 </div>
             </div>
         </main>
@@ -306,11 +312,10 @@
                 <div class="overlay"></div>
 
                 <a class="back-to-top btn" href="#app" id="${login_token}"><i class="fas fa-caret-up"></i></a>
+                
+                <a href="${pageContext.request.contextPath}/checkout" class="btn btn-checkout" style="display:none">Checkout here</a>
 
     </div>
-</body>
-</html>
-
-
+    <div class="loader" style="background-image:url('${pageContext.request.contextPath}/resources/imgs/loader/ajax-loader.gif')"></div>
 </body>
 </html>

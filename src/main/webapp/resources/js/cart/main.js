@@ -2,6 +2,60 @@
     const moneySubfix = '.00';
 
 
+	$('.btn-continue').on('click', function(event){
+		event.preventDefault();
+		
+		// if người dùng chưa đăng nhập, chuyển qua trang đăng nhập
+		if( $('[name="login-token-for-user"]').attr('value') != 'user' ) {
+			document.querySelector('.btn-login').click();
+			return;
+		};
+		
+		$('.loader').addClass('on');// app.y hiệu ứng chờ
+		
+		
+		let productListFormLS = getProductListFromLS();
+		let quantityList = document.querySelectorAll('.tr:not(.tr:first-child) [name="product-quantity"]');// không lấy phần tử đầu (product row đầu dùng để clone dom)
+	
+		if (productListFormLS.length > 0){
+			
+			let formData = '';
+			productListFormLS.forEach( (product, index) => {
+				formData += `id-${index}=${product.id}&color-${index}=${product.color}&size-${index}=${product.size}&quantity-${index}=`
+								+quantityList[index].getAttribute('value')+"&";	
+			})
+			
+			$.ajax({
+				url: '/ajax-cart',
+				type: 'POST',
+				data: formData,
+				cache: false,
+				success: function(response){
+					$('.loader').removeClass('on'); // bỏ hiệu ứng chờ
+					if (response==null) {// không có lỗi
+						// set quantity cho LS
+						let quantityList = document.querySelectorAll('.tr:not(.tr:first-child) [name="product-quantity"]');
+						productListFormLS.forEach( (product, index) => {
+							product.quantity = quantityList[index].getAttribute('value');
+						})
+						storeProductList(productListFormLS);
+						
+						// chuyển sang trang checkout
+						document.querySelector('.btn-checkout').click();
+					}
+					else {
+						$('.error-message').text(response);
+						$('.error-message').addClass('on');
+					}
+				}
+			})
+			
+		}
+		else {
+			console.log('khong co sp trong cart');
+		}
+	})
+
     loadProductToCart();
     function loadProductToCart(){
         let productListFormLS = getProductListFromLS();
@@ -98,9 +152,11 @@
             
             let currentQuantity = quantity+1;
             let initialPrice = Number(initialPriceTag.text());
-            totalPriceTag.html( currentQuantity*initialPrice );
+            totalPriceTag.html( (currentQuantity*initialPrice) +moneySubfix);
 
             setTotalPriceOfAllProducts();
+
+			target.parent().find('[name="product-quantity"]').attr('value', currentQuantity);
         } 
         else if (type=='decrease') {
             if (quantity >= 2) {
@@ -114,9 +170,11 @@
                 // total price for each item
                 let currentQuantity = quantity-1;
                 let initialPrice = Number(initialPriceTag.text());
-                totalPriceTag.html( currentQuantity*initialPrice );
+                totalPriceTag.html( (currentQuantity*initialPrice) +moneySubfix );
 
                 setTotalPriceOfAllProducts();
+
+				target.parent().find('[name="product-quantity"]').attr('value', currentQuantity);
             }
         }
     }

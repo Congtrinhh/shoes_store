@@ -27,10 +27,16 @@
   justify-content: space-between;
   flex-direction: row-reverse;
 }
-.action > a {
+.action > a,
+.to-home-page {
   color: var(--primary-color);
   font-size: 18px;
   font-weight: 500;
+}
+.to-home-page {
+	display: block;
+	margin-bottom: 30px;
+	text-decoration: none;
 }
 
 .form-checkbox > input {

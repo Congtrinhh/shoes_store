@@ -27,7 +27,8 @@
 <body>
 	
 	<div id="app" class="container">
-
+			<a href="${pageContext.request.contextPath}/" class="to-home-page"><<  Trang chủ</a>
+			
             <form id='userForm' method='POST' action='${pageContext.request.contextPath}/register'>
                 <h1 class="form-header">Đăng ký</h1>
 
@@ -75,7 +76,7 @@
 
             <div class="action">
                 <a href="" class="forget-password">Quên mật khẩu</a>
-                <a href="${pageContext.request.contextPath}/" class="to-homepage">Trang chủ</a>
+                <a href="${pageContext.request.contextPath}/login" class="">Đăng nhập</a>
             </div>
 
         </div>

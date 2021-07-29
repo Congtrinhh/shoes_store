@@ -377,6 +377,10 @@ input[type="submit"] {
 .error-message {
   color: red;
   margin: 12px 0;
+  display: none;
+}
+.error-message.on {
+	display: block;
 }
 
 /* for header of the page */
