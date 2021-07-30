@@ -164,7 +164,7 @@
                                 <div class="td col-10 col-sm-6 col-md-7">
                                     <div class="product__container">
                                         <input type="text" hidden name="hidden-product-id" value="">
-                                        <div class="parent-image"><img src="" alt=""></div>
+                                        <a class="parent-image" href=""><img src="" alt=""></a>
                                         <div class="card__product-info">
                                             <h2 class="card__product-info__name"></h2>
                                             <p class="card__product-info__size">size <span></span></p>

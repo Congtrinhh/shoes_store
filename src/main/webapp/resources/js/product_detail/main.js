@@ -119,12 +119,9 @@ $(window).on('load', function(){
     */
 
     $('#productOption').validate({
-        ignore: '',
+		
         submitHandler: function (form, event) {
-					
 			event.preventDefault();
-            storeProductInfoIntoLS();	
-			displayNumberIndicator();
         },
         rules: {
             'hidden-color': { // <- NAME of every radio in the same group
@@ -146,7 +143,19 @@ $(window).on('load', function(){
             errorElement.insertAfter(invalidElement.closest('ul'));
         },
     })
-
+	
+	$('.btn-add-to-cart').on('click',function(event){
+		console.log('add to cart clicked');
+		storeProductInfoIntoLS();	
+		displayNumberIndicator();
+	})
+	
+	$('.btn-buy-now').on('click',function(event){
+		console.log('buy now clicked');
+		storeProductInfoIntoLS();	
+		displayNumberIndicator();
+		document.querySelector('.go-to-cart-page').click(); // go to cart page
+	})
 	
     
 	/* -------- lưu thông tin sp trong giỏ hàng thông qua LocalStorage ------------- */
@@ -158,18 +167,20 @@ $(window).on('load', function(){
         let color = $('[name="hidden-color"]:checked').val();
         let size = $('[name="hidden-size"]:checked').val();
         let quantity = $('[name="product-quantity"]').val();
+		let categorySlug = $('[name="hidden-category-slug"]').val();
+		let productSlug = $('[name="hidden-product-slug"]').val();
 
         
         let productListInLS = getProductListFromLS();
 
-        if (productListInLS != null) { // danh sách không rỗng, cần kiểm tra id trùng
+        if (productListInLS.length>0) { // danh sách không rỗng, cần kiểm tra id trùng
             let isDuplicatedId = productListInLS.some( product => {
                 return product.id === id;
             })
 
             if (!isDuplicatedId) {
                 productListInLS.push({
-                    id, name, image, price, color, size, quantity,
+                    id, name, image, price, color, size, quantity, categorySlug, productSlug
                 })
 
                 localStorage.setItem('productList', JSON.stringify(productListInLS));
@@ -182,6 +193,8 @@ $(window).on('load', function(){
                         item.color = color;
                         item.size = size;
                         item.quantity = quantity;
+						item.categorySlug = categorySlug;
+						item.productSlug = productSlug;
                     }
                 })
                 localStorage.setItem('productList', JSON.stringify(productListInLS));
@@ -189,10 +202,8 @@ $(window).on('load', function(){
         } else { // nếu list chưa có gì, thêm product luôn vào
             let productList = [];
             productList.push({
-                id, name, image, price, color, size, quantity,
+                id, name, image, price, color, size, quantity, categorySlug, productSlug
             })
-
-            //console.log(productListInLS);
 
             localStorage.setItem('productList', JSON.stringify(productList));
         }

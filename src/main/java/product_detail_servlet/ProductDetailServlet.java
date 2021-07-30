@@ -47,20 +47,13 @@ public class ProductDetailServlet extends HttpServlet {
 				String json = new Gson().toJson(specificProductInfoList);
 				req.setAttribute("specificProductInfoList", json);
 				
-				
-				
-				
-				
-				
-				
-				
+				req.setAttribute("categorySlug", req.getServletPath());
+				req.setAttribute("productLineSlug", pr_slug);
+							
 				
 				RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/product_detail/productDetail.jsp");
-				try {
-					dispatcher.forward(req, resp);
-				}catch(Exception e) {
-					System.out.println("error when forwarding: "+e.getMessage());
-				}
+				dispatcher.forward(req, resp);
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

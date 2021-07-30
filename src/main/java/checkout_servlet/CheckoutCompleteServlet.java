@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/checkout"})
-public class Checkout extends HttpServlet {
+@WebServlet(urlPatterns = {"/checkout-complete"})
+public class CheckoutCompleteServlet extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
-		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/checkout/checkout.jsp");
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/notice/checkoutComplete.jsp");
 		dispatcher.forward(req, resp);
 	}
 }

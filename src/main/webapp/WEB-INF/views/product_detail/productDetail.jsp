@@ -142,6 +142,20 @@
 
 
         <main class="main container">
+        	<div class="product-in-local-storage-info" style="display:none;">
+				<input type="text" hidden name="hidden-id" value="${product.product_line_id}">
+                <input type="text" hidden name="hidden-name" value="${product.pr_name}">
+                <input type="text" hidden name="hidden-price" value="${product.pr_price}">
+                <input type="text" hidden name="hidden-category-slug" value="${categorySlug}">
+                <input type="text" hidden name="hidden-product-slug" value="${productLineSlug}">      				                                            
+                  
+                 <!-- array of specific product match with the product line retrieved from server under json format -->
+				<input type="text" hidden name="specificProducts" value=${specificProductInfoList}>
+				
+				<!-- for buy now button to forward to cart page -->
+				<a class="go-to-cart-page" href="${pageContext.request.contextPath}/cart" style="display:none;">go to cart page</a>
+        	</div>
+        	
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -157,15 +171,10 @@
         
                         <div>
                             <div id="product-slider" class="carousel slide carousel-fade" data-ride="">
-                                <!-- Hidden id -->
-                                <input type="text" hidden name="hidden-id" value="${product.product_line_id}">
-        
                                 <ol class="carousel-indicators">
                                     <c:forEach items="${imagesList}" var="image" varStatus="status">
                                     	<li data-target="#product-slider" data-slide-to="${status.index}" class="">
 	                                        <img src="data:image/jpg;base64,${image.base64Image}" alt="">
-	                                        <input type="text" hidden name="hidden-image"
-	                                            value="data:image/jpg;base64,${image.base64Image}">
 	                                    </li>
                                     </c:forEach>
                                 </ol>
@@ -176,6 +185,8 @@
 	                                        <img src="data:image/jpg;base64,${image.base64Image}"
 	                                            class="d-block w-100" alt="...">
 	                                    </div>
+	                                    <!-- this hidden input must be here because it is relevant to c:forEach -->
+	                                    <input type="text" hidden name="hidden-image" value="data:image/jpg;base64,${image.base64Image}">
                                 	</c:forEach>
 	                            </div>
                                 
@@ -193,11 +204,7 @@
                     </div>
         
                     <div class="detail__right col-12 col-md-6">
-                    	<input type="text" hidden name="specificProducts" value=${specificProductInfoList}>
-                            <input type="text" hidden name="hidden-name" value="${product.pr_name}">
-                        <h1 class="detail__right__header">${product.pr_name}
-                        </h1>
-                        <input type="text" hidden name="hidden-price" value="${product.pr_price}">
+                        <h1 class="detail__right__header">${product.pr_name}</h1>
                         <p class="detail__right__price money">${product.pr_price}</p>
                         <p class="detail__right__short-description">${product.pr_description}</p>
                         <form id='productOption' method="GET" action='${pageContext.request.contextPath}/cart'>
@@ -248,9 +255,9 @@
                             <input type="button" value="+" class="btn btn-increase">
                         </div>
                         <div class="detail__right__action">
-                            <button class="btn mb-2 mb-sm0" type="submit" form="productOption"><i class="fas fa-shopping-cart"></i> Thêm vào
+                            <button class="btn btn-add-to-cart mb-2 mb-sm0" type="submit" form="productOption"><i class="fas fa-shopping-cart"></i> Thêm vào
                                 giỏ hàng</button>
-                            <button class="btn mb-2 mb-sm0" type="submit" form="productOption">Mua ngay</button>
+                            <button class="btn btn-buy-now mb-2 mb-sm0" type="submit" form="productOption">Mua ngay</button>
                         </div>
                     </div>
                 </div>

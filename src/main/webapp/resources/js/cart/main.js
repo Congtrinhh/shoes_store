@@ -73,7 +73,7 @@
                 productDOM.querySelector('.card__product-info__size > span').innerHTML = item.size;
                 productDOM.querySelector('.card__product-info__color > span').style.backgroundColor = item.color;
                 productDOM.querySelector('[name="product-quantity"]').setAttribute('value', item.quantity);
-                
+                productDOM.querySelector('.parent-image').href = item.categorySlug + item.productSlug;
                                         
                 document.querySelector('.cart__products__left > .table > .tbody').appendChild(productDOM);
                 

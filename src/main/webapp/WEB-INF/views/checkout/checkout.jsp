@@ -96,21 +96,21 @@
                             <fieldset>
                                 <select name="province" required>
                                     <option value="">Tỉnh/thành phố</option>
-                                    <option value="1">Ha noi</option>
+                                    <c:forEach items="${provincesList}" var="province">
+                                    	<option class="option-province" value="${province.id}">${province.name}</option>
+                                    </c:forEach>
                                 </select>
                             </fieldset>
                             
                             <fieldset>
                                 <select name="district" required>
                                     <option value="">Quận/huyện</option>
-                                    <option value="1">Ha noi</option>
                                 </select>
                             </fieldset>
                             
                             <fieldset>
                                 <select name="ward" required>
                                     <option value="">Xã/phường</option>
-                                    <option value="1">Ha noi</option>
                                 </select>
                             </fieldset>
                         </div>
@@ -126,12 +126,12 @@
                                         <div class="td col-12 col-sm-12 col-lg-8">
                                             <div class="product__container">
                                                 <input type="text" hidden name="hidden-product-id" value="">
-                                                <div class="parent-image">
+                                                <a class="parent-image" href="">
                                                     <img src="" alt="">
                                                     <div class="quantity-container">
                                                         <input type="text" name="product-quantity" disabled value="1">
                                                     </div>
-                                                </div>
+                                                </a>
                                                 <div class="card__product-info">
                                                     <h2 class="card__product-info__name"></h2>
                                                     <p class="card__product-info__size">size <span></span></p>

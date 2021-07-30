@@ -3,6 +3,10 @@ package db_checkout_utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import checkout_servlet.AddressEntity;
 
 public class CheckoutDB {
 	
@@ -92,6 +96,69 @@ public class CheckoutDB {
 		}
 		
 		return -1;
+	}
+	
+	public static List<AddressEntity> getAllProvinces(Connection conn){
+		String sql ="select id, _name from province;";
+		try (PreparedStatement stm = conn.prepareStatement(sql)){
+			ResultSet rs = stm.executeQuery();
+			
+			List<AddressEntity> list = new ArrayList<>();
+			while(rs.next()) {
+				int id=rs.getInt(1);
+				String name= rs.getString(2);
+				list.add(new AddressEntity(id, name));
+			}
+			return list;
+		}
+		catch(Exception e) {
+			System.out.println("Lỗi get all provinces Checkout db, "+e.getMessage());
+		}
+		return null;
+	}
+	
+	public static List<AddressEntity> getAllDistricts(Connection conn, int provinceId) {
+		String sql ="select id , _name from district\r\n"
+				+ "where _province_id=?;";
+		try (PreparedStatement stm = conn.prepareStatement(sql)){
+			stm.setInt(1, provinceId);
+			
+			ResultSet rs = stm.executeQuery();
+			
+			List<AddressEntity> list = new ArrayList<>();
+			while(rs.next()) {
+				int id=rs.getInt(1);
+				String name= rs.getString(2);
+				list.add(new AddressEntity(id, name));
+			}
+			return list;
+		}
+		catch(Exception e) {
+			System.out.println("Lỗi get all districts Checkout db, "+e.getMessage());
+		}
+		return null;
+	}
+	
+	public static List<AddressEntity> getAllWards(Connection conn, int districtId) {
+		String sql ="select id , _name from ward\r\n"
+				+ "where _district_id=?;";
+		try (PreparedStatement stm = conn.prepareStatement(sql)){
+			stm.setInt(1, districtId);
+			
+			ResultSet rs = stm.executeQuery();
+			
+			List<AddressEntity> list = new ArrayList<>();
+			while(rs.next()) {
+				int id=rs.getInt(1);
+				String name= rs.getString(2);
+				list.add(new AddressEntity(id, name));
+			}
+			return list;
+		}
+		catch(Exception e) {
+			System.out.println("Lỗi get all wards Checkout db, "+e.getMessage());
+		}
+		return null;
 	}
 	
 }

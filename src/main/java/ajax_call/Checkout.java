@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import checkout_servlet.AddressEntity;
 import entities.User;
 
 @WebServlet(urlPatterns = {"/ajax-checkout"})
@@ -69,7 +70,7 @@ public class Checkout extends HttpServlet {
 			int quantity = Integer.parseInt(req.getParameter(paramNamesList.get(i*4 + 3)));
 			
 			int row = db_checkout_utils.CheckoutDB.decreaseInStockQuantity(conn, id, colorCode, size, quantity);
-			System.out.println("(update quantity)1 -> 1 row effected; 0 -> failed: "+row);
+			//System.out.println("(update quantity)1 -> 1 row effected; 0 -> failed: "+row);
 		}
 		
 		// tạo đơn hàng mới
@@ -80,7 +81,7 @@ public class Checkout extends HttpServlet {
 		int wardId = Integer.parseInt(req.getParameter("ward"));
 	
 		db_checkout_utils.CheckoutDB.createOrder(conn, logedinUser.getUser_id(), wardId, specificAddress);
-		System.out.println("Tạo 1 Order");
+		//System.out.println("Tạo 1 Order");
 		
 		int highestOrderId = db_checkout_utils.CheckoutDB.getHighestOrderId(conn);
 		// tạo các sản phẩm trong đơn hàng 
@@ -92,7 +93,7 @@ public class Checkout extends HttpServlet {
 			
 			int specificProductId = db_checkout_utils.CheckoutDB.getSpecificProductId(conn, id, colorCode, size);
 			db_checkout_utils.CheckoutDB.createProductInOrder(conn, highestOrderId, specificProductId, quantity);
-			System.out.println("Tạo 1 product in order");
+			//System.out.println("Tạo 1 product in order");
 		}
 		
 		
@@ -111,6 +112,38 @@ public class Checkout extends HttpServlet {
 		 * update DOM cho địa chỉ (tỉnh/tp, huyện, xã) 
 		 * lưu ý rằng ds tỉnh/tp cần được lấy ra từ request thường trước
 		 */
+		String type = req.getParameter("needed-type"); // loại địa chỉ cần lấy
+		if (type.equals("district")) {
+			Connection conn = common_utils.MyUtils.getStoredConnection(req);
+			int id = Integer.parseInt(req.getParameter("id"));
+			
+			List<AddressEntity> districtsList = db_checkout_utils.CheckoutDB.getAllDistricts(conn, id);
+			if (districtsList!=null) {
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("application/json");
+				String json = new Gson().toJson(districtsList);
+				resp.getWriter().write(json);
+			}
+			else {
+				System.out.println("khong co district");
+			}
+		}
+		else if (type.equals("ward")) {
+			System.out.println("trong if ward");
+			Connection conn = common_utils.MyUtils.getStoredConnection(req);
+			int id = Integer.parseInt(req.getParameter("id"));
+			
+			List<AddressEntity> wardsList = db_checkout_utils.CheckoutDB.getAllWards(conn, id);
+			if (wardsList!=null) {
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("application/json");
+				String json = new Gson().toJson(wardsList);
+				resp.getWriter().write(json);
+			}
+			else {
+				System.out.println("khong co ward");
+			}
+		}
 		
 	}
 }

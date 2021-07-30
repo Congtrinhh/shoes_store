@@ -21,7 +21,6 @@
 				data: formData, //
 				cache: false,
 				success: function(response){
-					console.log(`tra du lieu ve tu ajax thanh cong ${response}`)
 					// tat hieu ung chox	
 					if (response==null){
 						// click nút để chuyển qua trang đặt hàng thành công
@@ -36,6 +35,58 @@
 	
 		}
 	})
+	
+	/* ajax - khi người dùng chọn tỉnh/tp -> hiện ra quận/huyện tương ứng và xóa all xã/phường  */
+	$('select[name="province"]').on('change', function(){
+		if ($(this).val()==='') {
+			return;
+		}
+		
+		let formData = 'id=' + $(this).val();
+		formData += '&needed-type=district';
+		
+		$.ajax({
+			url: '/ajax-checkout',
+			type: 'GET',
+			data: formData,
+			success: function(response) { // mảng các quận/huyện
+				const districtSel = document.querySelector('select[name="district"]');
+				districtSel.innerHTML = '<option value="">Quận/huyện</option>'
+				
+				response.forEach( district => {
+					districtSel.innerHTML += `<option class="option-district" value="${district.id}">${district.name}</option>`
+				})
+				
+				// xóa tất cả option trong thẻ select xã/phường 
+				const wardSel = document.querySelector('select[name="ward"]');
+				wardSel.innerHTML= '<option value="">Xã/phường</option>';
+			}
+		})
+	})
+	
+	/* ajax - khi người dùng chọn quận/huyện -> hiện ra xã/phường  */
+	$('select[name="district"]').on('change', function(){
+		if ($(this).val()==='') {
+			return;
+		}
+		let formData = 'id='+$(this).val();
+		formData+= '&needed-type=ward';
+		
+		$.ajax({
+			url:'/ajax-checkout',
+			type: 'GET',
+			data: formData,
+			success: function(response) { //mảng các xã/phường
+				const wardSel = document.querySelector('select[name="ward"]');
+				wardSel.innerHTML = '<option value="">Xã/phường</option>';
+				
+				response.forEach( ward => {
+					wardSel.innerHTML += `<option class="option-ward" value="${ward.id}">${ward.name}</option>`
+				})
+			}
+		})
+		
+	})
 
 
     /* validate contact address form */
@@ -45,12 +96,13 @@ $(document).ready(function(){
         rules: {
             'full-name': {
                 required: true,
+				containOnlyLetter: true,
             },
             'phone-number': {
-
+				containOnlyDigit: true,
             },
             'specific-address': {
-
+				containOnlyDigitAndLetter: true,
             },
         },
 
@@ -66,7 +118,7 @@ $(document).ready(function(){
                 email: 'Email chưa đúng định dạng'
             },
             'specific-address': {
-                required: 'Vui lòng nhập địa chỉ cụ thể'
+                required: 'Vui lòng nhập địa chỉ cụ thể',
             },
             province: {
                 required: 'Vui lòng chọn tỉnh/thành phố'
@@ -91,8 +143,20 @@ $(document).ready(function(){
 
 });
 
+jQuery.validator.addMethod('containOnlyLetter', function(value){
+	const regex = /[^\p{L}\s]/gmu;
+	return !regex.test(value.trim());
+}, 'Tên không được chứa số và các ký tự đặc biệt')
 
+jQuery.validator.addMethod('containOnlyDigit', function(value){
+	const regex = /0\d{9}/g;
+	return regex.test(value.trim());
+}, 'Số điện thoại chưa đúng định dạng')
 
+jQuery.validator.addMethod('containOnlyDigitAndLetter', function(value){
+	const regex = /[^\p{L}\d\s]/gmu;
+	return !regex.test(value.trim());
+}, 'Địa chỉ không được chứa ký tự đặc biệt')
 
 
 
@@ -112,7 +176,7 @@ $(document).ready(function(){
                 productDOM.querySelector('.card__product-info__size > span').innerHTML = item.size;
                 productDOM.querySelector('.card__product-info__color > span').style.backgroundColor = item.color;
                 productDOM.querySelector('[name="product-quantity"]').setAttribute('value', item.quantity);
-                
+                productDOM.querySelector('.parent-image').href = item.categorySlug+item.productSlug; 
                                         
                 document.querySelector('.cart__products__left > .table > .tbody').appendChild(productDOM);
                 
