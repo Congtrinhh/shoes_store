@@ -7,17 +7,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Product create</title>
+    
+	<!-- Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-
+    
+    <!-- Bs 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
     <!-- Jquery validation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"
         integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg=="
@@ -32,7 +29,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/utilities.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/lib/adminSidebar.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/crud/product_create/style.css">
+    <script defer src="${pageContext.request.contextPath}/resources/js/lib/utils.js"></script>
+    <script defer src="${pageContext.request.contextPath}/resources/js/lib/adminSidebar.js"></script>
     <script defer src="${pageContext.request.contextPath}/resources/js/crud/product_create/main.js"></script>
     
 
@@ -40,46 +40,11 @@
 <body>
 
 	<div id="app">
-        <aside class="nav">       
-            <h2 class="logo px-4 py-2">Dashboard</h2>
+        <!-- sidebar and logo top -->
+        <jsp:include page="/WEB-INF/views/fragments/admin/sidebar.jsp"></jsp:include>
 
-            <ul class="parent-menu px-4">
-                <li>
-                    <a href="#sub-menu-1" class="" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="sub-menu-1">
-                        <span>manage</span>
-                        <span class="child-menu__trigger"><i class="fas fa-caret-right"></i></span>
-                    </a>
-                    <ul class="child-menu collapse px-3" id="sub-menu-1">
-                        <li><a href="#">Admin</a></li>
-                        <li><a href="#">User</a></li>
-                        <li><a href="#">product</a></li>
-                        <li><a href="#">order</a></li>
-                        <li><a href="#">size</a></li>
-                        <li><a href="#">color</a></li>
-                    </ul>
-                </li>
-                <li><a href="../home/index.html" class="">home page</a></li>
-            </ul>
-        </aside>
-
-        <div class="content px-3">
-            <div class="content__top">
-                <h1 class="page__header"></h1>
-
-                <div id="nav__toggle" class="on">
-                    <i class="nav__toggle__close fas fa-bars"></i>
-                    <!-- <i class="nav__toggle__open fas fa-caret-right"></i> -->
-                </div>
-
-                <div class="admin-info">
-                    <a href=""class="image-parent">
-                        <img src="" alt="">
-                    </a>
-                    <p class="admin-name">Congtrinhh</p>
-                    <p class="icon"></p>
-                </div>
-            </div>
-
+        <main class="content px-3">
+            
             <div class="data-area">
                 <!-- Form tạo mới (create) -->
                 <div class="create-area">
@@ -119,8 +84,9 @@
                                 <div class="">
                                     <div class="form-header">Hãng (brand)</div>
                                     <select name='brand' class='form-select' required>
-                                        <c:forEach items="${brandsList}" var="brand">
-                                        	<option value="${brand.name}">${brand.name}</option>
+                                    	<!--  <option value="">-- Brand --</option>  -->
+                                        <c:forEach items="${brandList}" var="brand">
+                                        	<option value="${brand.id}">${brand.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -131,7 +97,7 @@
                                 <div class="">
                                     <div class="form-header">Phân loại (category)</div>
                                     <select name='category' class='form-select' required>
-                                        <c:forEach items="${categoriesList}" var="cate">
+                                        <c:forEach items="${categoryList}" var="cate">
                                         	<option value="${cate.id}">${cate.name}</option>
                                         </c:forEach>
                                     </select>
@@ -159,105 +125,10 @@
                     </form>
                 </div>
 
-                <!-- Liệt kê các bản ghi hiện tại (read) -->
-                <div class="enumerate-area">
-                    <table class=''>
-                        <caption class="select-wrapper">
-                            <select name='data-base-quantity-selector' id='data-base-quantity-selector' class='form-select'>
-                                <option value='5'>5</option>
-                                <option value='10' selected>10</option>
-                                <option value='25'>25</option>
-                                <option value='50'>50</option>
-                                <option value='100'>100</option>
-                            </select>
-                            <p>Số lượng bản ghi / trang</p>
-                        </caption>
-
-                        <thead>
-                            <th>stt</th>
-                            <th>id</th>
-                            <th>họ tên</th>
-                            <th>tên đăng nhập</th>
-                            <th>mật khẩu</th>
-                            <th>số điện thoại</th>
-                            <th>email</th>
-                            <th>trạng thái</th>
-                            <th>ngày tạo</th>
-                            <th>ngày sửa</th>
-                            <th>hành động</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>họ tên</td>
-                                <td>tên đăng nhập</td>
-                                <td>mật khẩu</td>
-                                <td>0531346871</td>
-                                <td>email@gmail.com</td>
-                                <td>hoạt động</td>
-                                <td>ngày tạo</td>
-                                <td>ngày sửa</td>
-                                <td>
-                                    <a href="/update" class="btn table-btn" type="submit"><i class="fas fa-edit"></i></a>
-                                    <a href="/delete" class="btn table-btn" type="submit"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            <tr><!-- input type hidden send data-->
-                                <td>1</td>
-                                <td>1</td>
-                                <td>họ tên</td>
-                                <td>tên đăng nhập</td>
-                                <td>mật khẩu</td>
-                                <td>0531346871</td>
-                                <td>email@gmail.com</td>
-                                <td>hoạt động</td>
-                                <td>ngày tạo</td>
-                                <td>ngày sửa</td>
-                                <td>
-                                    <a href="/update" class="btn table-btn" type="submit"><i class="fas fa-edit"></i></a>
-                                    <a href="/delete" class="btn table-btn" type="submit"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>họ tên</td>
-                                <td>tên đăng nhập</td>
-                                <td>mật khẩu</td>
-                                <td>0531346871</td>
-                                <td>email@gmail.com</td>
-                                <td>hoạt động</td>
-                                <td>ngày tạo</td>
-                                <td>ngày sửa</td>
-                                <td>
-                                    <a href="/update" class="btn table-btn" type="submit"><i class="fas fa-edit"></i></a>
-                                    <a href="/delete" class="btn table-btn" type="submit"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>họ tên</td>
-                                <td>tên đăng nhập</td>
-                                <td>mật khẩu</td>
-                                <td>0531346871</td>
-                                <td>email@gmail.com</td>
-                                <td>hoạt động</td>
-                                <td>ngày tạo</td>
-                                <td>ngày sửa</td>
-                                <td>
-                                    <a href="/update" class="btn table-btn" type="submit"><i class="fas fa-edit"></i></a>
-                                    <a href="/delete" class="btn table-btn" type="submit"><i class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
+        </main>
+        <!-- Toast, các text bên trong tự chỉnh thông qua .textContent, innnerHTML -->
+		<jsp:include page="/WEB-INF/views/fragments/toast.html"></jsp:include>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

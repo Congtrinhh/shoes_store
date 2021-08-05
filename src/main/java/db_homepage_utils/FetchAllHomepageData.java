@@ -1,8 +1,6 @@
 package db_homepage_utils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -10,8 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 import homepage_servlet.CategoryGetter;
@@ -25,7 +21,7 @@ public class FetchAllHomepageData {
 		PreparedStatement stm = conn.prepareStatement(sql);
 		ResultSet rs = stm.executeQuery();
 		
-		ArrayList<CategoryGetter> list = new ArrayList<>();
+		List<CategoryGetter> list = new ArrayList<>();
 		
 		while(rs.next()) {
 			String c_slug = rs.getString("c_slug");
@@ -44,7 +40,7 @@ public class FetchAllHomepageData {
 		PreparedStatement stm = conn.prepareStatement(sql);
 		ResultSet rs = stm.executeQuery();
 		
-		ArrayList<ProductGetter> list = new ArrayList<>();
+		List<ProductGetter> list = new ArrayList<>();
 		while(rs.next()) {
 			String pr_slug = rs.getString("pr_slug");
 			String pr_name = rs.getString("pr_name");
@@ -57,9 +53,9 @@ public class FetchAllHomepageData {
 			
 			
 			String c_slug = rs.getString("c_slug");
-			String pr_brand_name = rs.getString("pr_brand_name");
+			int pr_brand_id = rs.getInt("pr_brand_id");
 			
-			ProductGetter prd = new ProductGetter(pr_slug, pr_name, base64Str, c_slug, pr_brand_name, pr_price);
+			ProductGetter prd = new ProductGetter(pr_slug, pr_name, base64Str, c_slug, pr_brand_id, pr_price);
 			prd.refineProductName();
 			list.add(prd);
 		}
@@ -71,7 +67,7 @@ public class FetchAllHomepageData {
 		PreparedStatement stm = conn.prepareStatement(sql);
 		ResultSet rs = stm.executeQuery();
 		
-		ArrayList<CtaGetter> list = new ArrayList<>();
+		List<CtaGetter> list = new ArrayList<>();
 		
 		while(rs.next()) {
 			String cta_slug = rs.getString("cta_slug");

@@ -3,9 +3,6 @@ package user_register_servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.RequestDispatcher;
@@ -16,13 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import entities.Admin;
 import entities.User;
 
 @WebServlet(name = "userRegister", urlPatterns = { "/register", "/user-register" })
 public class UserRegisterServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();

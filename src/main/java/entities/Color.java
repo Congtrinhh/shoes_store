@@ -10,6 +10,14 @@ public class Color {
 		this.color_name = color_name;
 		this.color_code = color_code;
 	}
+	
+
+	public Color(int color_id, String color_name) {
+		super();
+		this.color_id = color_id;
+		this.color_name = color_name;
+	}
+
 
 	public int getColor_id() {
 		return color_id;

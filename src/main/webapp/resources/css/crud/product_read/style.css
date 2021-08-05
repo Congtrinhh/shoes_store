@@ -1,0 +1,34 @@
+td, th {
+    padding: 8px 15px;
+}
+td:last-child,
+th:last-child {
+	min-width: 140px;
+}
+
+
+.form-select {
+    display: inline-block;
+    padding: 4px 20px;
+    width: unset;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-image: unset;
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.form-select:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 .25rem #1fbcf8;
+}

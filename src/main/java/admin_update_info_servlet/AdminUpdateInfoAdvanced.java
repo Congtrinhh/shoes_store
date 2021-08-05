@@ -16,6 +16,11 @@ import entities.Admin;
 
 @WebServlet(urlPatterns = {"/admin-update-advanced"})
 public class AdminUpdateInfoAdvanced extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/admin_update_info/updateAdvancedInfo.jsp");
@@ -47,7 +52,7 @@ public class AdminUpdateInfoAdvanced extends HttpServlet {
 					
 					// nếu cập nhật mật khẩu thành công, update lại session của admin
 					adminInSession.setAd_password(ad_confirmed_password);
-					session.setAttribute(adminInSession.LOGED_IN_ADMIN_IN_SESSION, adminInSession);
+					session.setAttribute(Admin.LOGED_IN_ADMIN_IN_SESSION, adminInSession);
 					
 					errorMessage = "Cập nhật mật khẩu thành công";
 					req.setAttribute(Admin.ERROR_MESSAGE_IN_REQUEST, errorMessage);

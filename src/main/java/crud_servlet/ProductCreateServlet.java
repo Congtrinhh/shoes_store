@@ -5,10 +5,9 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,7 +21,6 @@ import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
-import common_utils.MyUtils;
 import crud.entity.product_create.Brand;
 import crud.entity.product_create.Category;
 import entities.Admin;
@@ -34,8 +32,12 @@ import entities.Product;
 		maxFileSize = 1024*1024*2,
 		maxRequestSize = 1024*1024*5*5
 )
-@WebServlet(urlPatterns = {"/create-product"})
+@WebServlet(urlPatterns = {"/product-create"})
 public class ProductCreateServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// lấy thông tin category, brand ráp vào file jsp
@@ -43,14 +45,14 @@ public class ProductCreateServlet extends HttpServlet {
 		try {
 			conn = common_utils.MyUtils.getStoredConnection(req);
 			
-			ArrayList<Brand> brandsList = db_crud_utils.ProductUtils.getBrandsList(conn);
-			if (brandsList!=null) {
-				req.setAttribute("brandsList", brandsList);
+			List<Brand> brandList = db_crud_utils.ProductUtils.getBrandList(conn);
+			if (brandList!=null) {
+				req.setAttribute("brandList", brandList);
 			}
 			
-			ArrayList<Category> categoriesList = db_crud_utils.ProductUtils.getCategoriesList(conn);
-			if (categoriesList!=null) {
-				req.setAttribute("categoriesList", categoriesList);
+			List<Category> categoryList = db_crud_utils.ProductUtils.getCategoryList(conn);
+			if (categoryList!=null) {
+				req.setAttribute("categoryList", categoryList);
 			}
 			
 		}
@@ -79,13 +81,22 @@ public class ProductCreateServlet extends HttpServlet {
 		String description = req.getParameter("description");
 		
 		int category = 0;
+		int brand = 0;
 		BigDecimal price = null;
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat(req.getServletContext().getInitParameter("dateFormat"));
+		String nowStr = sdf.format(now);
+		
+		if (!slug.startsWith("/")) {
+			slug = "/" + slug;
+		}
 		
 		String errorMessage = null;
 		
 		try {
 			price = new BigDecimal(priceStr);
 			category = Integer.parseInt(categoryStr);
+			brand = Integer.parseInt(brandStr);
 		}
 		catch(Exception e) {
 			System.out.println("error parsing bigdecimal");
@@ -106,7 +117,7 @@ public class ProductCreateServlet extends HttpServlet {
 		Admin logedinAdmin = (Admin) session.getAttribute(Admin.LOGED_IN_ADMIN_IN_SESSION);
 		int adminId = db_crud_utils.AdminUtils.findAdminIdByName(conn, logedinAdmin.getAd_login_name());
 		
-		Product product = new Product(adminId, category, slug, name, brandStr, price, description);
+		Product product = new Product(adminId, category, slug, name, brand, price, description, nowStr);
 		
 		try {
 			db_crud_utils.ProductUtils.createProduct(conn, product);

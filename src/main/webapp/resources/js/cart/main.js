@@ -1,4 +1,4 @@
- //$(window).on('load', function() {
+	
     const moneySubfix = '.00';
 
 
@@ -11,13 +11,13 @@
 			return;
 		};
 		
-		$('.loader').addClass('on');// app.y hiệu ứng chờ
 		
 		
 		let productListFormLS = getProductListFromLS();
 		let quantityList = document.querySelectorAll('.tr:not(.tr:first-child) [name="product-quantity"]');// không lấy phần tử đầu (product row đầu dùng để clone dom)
 	
 		if (productListFormLS.length > 0){
+			$('.loader').show();// app.y hiệu ứng chờ
 			
 			let formData = '';
 			productListFormLS.forEach( (product, index) => {
@@ -31,8 +31,8 @@
 				data: formData,
 				cache: false,
 				success: function(response){
-					$('.loader').removeClass('on'); // bỏ hiệu ứng chờ
-					if (response==null) {// không có lỗi
+					$('.loader').fadeOut(300); // bỏ hiệu ứng chờ
+					if (response!=null && response.startsWith('/')) {// không có lỗi
 						// set quantity cho LS
 						let quantityList = document.querySelectorAll('.tr:not(.tr:first-child) [name="product-quantity"]');
 						productListFormLS.forEach( (product, index) => {
@@ -41,7 +41,8 @@
 						storeProductList(productListFormLS);
 						
 						// chuyển sang trang checkout
-						document.querySelector('.btn-checkout').click();
+						window.location.href = response;
+						window.location.assign();
 					}
 					else {
 						$('.error-message').text(response);
@@ -52,7 +53,8 @@
 			
 		}
 		else {
-			console.log('khong co sp trong cart');
+			$('.error-message').text('Không có sản phẩm, hãy mua sắm nào');
+			$('.error-message').addClass('on');
 		}
 	})
 
@@ -62,6 +64,7 @@
 				
         if (productListFormLS != null && productListFormLS.length>0) {
 			$('.empty-cart').removeClass('on');
+			$('.btn-continue').attr('disabled', 'disabled');
 	
             productListFormLS.forEach( (item, index) => {
                 let productDOM = cloneProductRowNode();
@@ -80,7 +83,7 @@
             })
         }
 		else {
-			$('.empty-cart').addClass('on');			
+			$('.empty-cart').addClass('on');		
 		}
         
     }

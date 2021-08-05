@@ -1,0 +1,111 @@
+/* css của sidebar + header trong mọi page của admin */
+:root {
+  --gray-color: #212529;
+  --silver-color: #909294;
+  --sidebar-width: 250px;
+}
+
+/* Sidebar - nav */
+.nav {
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--gray-color);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  position: fixed;
+  right: calc(100% - var(--sidebar-width));
+  transition: all 0.4s cubic-bezier(0.19, 0.76, 0.23, 0.98);
+}
+.logo {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: 600;
+  text-align: left;
+}
+.parent-menu {
+  margin-top: 80px;
+}
+.parent-menu > li {
+}
+.parent-menu > li > a,
+.child-menu > li > a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--silver-color);
+  padding: 14px 0px;
+  text-transform: capitalize;
+  transition: all var(--transition-duration) linear;
+}
+.parent-menu > li > a:hover,
+.child-menu > li > a:hover {
+  color: #fff;
+}
+.parent-menu > li > a > .child-menu__trigger {
+  margin-left: auto;
+  transition: transform var(--transition-duration) ease-in-out;
+}
+.parent-menu > li > a > .child-menu__trigger.on {
+  transform: rotate(90deg);
+}
+.parent-menu > li > a > .child-menu__trigger > i {
+  font-size: 1.5rem;
+  display: inline-block;
+  padding: 0 10px;
+}
+
+/* main content */
+.content {
+  width: calc(100% - var(--sidebar-width));
+  height: 100vh;
+  margin-left: auto;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.19, 0.76, 0.23, 0.98);
+}
+
+.content__top {
+  width: calc(100% - var(--sidebar-width));
+  margin-left: auto;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.19, 0.76, 0.23, 0.98);
+}
+.page__header {
+  flex-grow: 1;
+}
+.admin-info {
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: var(--avatar-gap);
+}
+.admin-info .image-parent {
+  display: block;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: 50%;
+  box-shadow: 1px 1px 3px rgb(0 0 0 / 10%);
+  overflow: hidden;
+}
+.admin-info .image-parent > img {
+}
+.admin-info .admin-name {
+}
+
+/* Sidebar toggle */
+#nav__toggle {
+  margin-right: 50px;
+  cursor: pointer;
+}
+#nav__toggle > i {
+  font-size: 1.8rem;
+}
+.hide-side-bar {
+  right: 100%;
+}
+.span-main-content {
+  width: 100%;
+}

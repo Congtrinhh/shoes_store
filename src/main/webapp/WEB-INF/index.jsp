@@ -15,14 +15,11 @@
 </head>
 <body>
 	<div class="container">
-
-		<jsp:include page="./views/crud/header.jsp" />
 		
 		<h1 class="py">
 			<span style="color: orange; text-decoration: underline;">ADMIN</span>,
-			WELCOME
+			WELCOME to the default page (index.jsp)
 		</h1>
-		<h2>Do data entry</h2>
 
 
 	</div>

@@ -11,15 +11,13 @@ public class ProductGetter {
 	private String pr_brand_name;
 	
 	
-	public ProductGetter(int product_line_id, String pr_slug, String pr_name, BigDecimal pr_price, String pr_description,
-			String pr_brand_name) {
+	public ProductGetter(int product_line_id, String pr_slug, String pr_name, BigDecimal pr_price, String pr_description) {
 		super();
 		this.product_line_id = product_line_id;
 		this.pr_slug = pr_slug;
 		this.pr_name = pr_name;
 		this.pr_price = pr_price;
 		this.pr_description = pr_description;
-		this.pr_brand_name = pr_brand_name;
 	}
 
 

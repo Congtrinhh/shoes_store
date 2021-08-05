@@ -2,7 +2,6 @@ package user_login_servlet;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -15,6 +14,10 @@ import entities.User;
 
 @WebServlet(name = "userLogout", urlPatterns = {"/logout", "/user-logout"})
 public class UserLogoutServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		

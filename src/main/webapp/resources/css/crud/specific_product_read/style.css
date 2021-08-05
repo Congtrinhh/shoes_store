@@ -1,0 +1,16 @@
+.form-select {
+	display: inline-block;
+	width: unset;
+}
+.content {
+	text-align: center;
+}
+.enumerate-area {
+	display: inline-block;
+	margin: auto;
+	text-align: left;
+}
+
+.item-per-page {
+	display: inline-block;
+}

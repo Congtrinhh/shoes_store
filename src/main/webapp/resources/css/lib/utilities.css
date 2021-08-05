@@ -42,6 +42,9 @@ ul {
   max-width: var(--container-width);
   margin: auto;
 }
+a{
+	text-decoration: none;
+}
 input,
 button,
 select,
@@ -264,6 +267,10 @@ input[type="submit"] {
 .btn-login:hover {
   background-color: rgba(57, 76, 96, 0.15);
 }
+.btn-dismiss {
+	background-color: #aaa;
+	color: #fff;
+}
 
 /* Form group - type="checkbox" */
 .form-checkbox-header,
@@ -354,7 +361,29 @@ input[type="submit"] {
 .form-select-header {
 }
 .form-select {
-  appearance: none;
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-image: unset;
+    background-repeat: unset;
+    background-position: unset;
+    background-size: unset;
+    border: 1px solid #ced4da;
+    border-radius: unset;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.form-select:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: unset;
 }
 .form-select > option {
   appearance: none;
@@ -523,4 +552,73 @@ input[type="submit"] {
   border-right: calc(var(--buy-now-width) / 2) solid #dd5a3c;
   border-bottom: 12px solid transparent;
   border-left: calc(var(--buy-now-width) / 2) solid #dd5a3c;
+}
+
+
+/* Pagination */
+.pagination {
+  margin-top: 50px;
+}
+.pagination ul {
+  display: flex;
+  margin: auto;
+}
+.pagination ul li {
+  margin: 0 4px;
+}
+.btn-pagination {
+  background-color: #06696d;
+}
+.btn-pagination.active {
+  background-color: var(--primary-color);
+}
+
+
+/* TOAST */
+.toast {
+    position: fixed;
+    top: 40%;
+    right: 20px;
+    display: none;
+}
+.toast.on {
+    animation-name: showToast;
+    animation-duration: 800ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(.27,.69,.64,.9);
+}
+@keyframes showToast {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-150%);
+    }
+}
+.toast-indicator{
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 1.5rem;
+}
+.toast-title {
+    display: inline-block;
+    margin-right: 30px;
+}
+.toast.show {
+    display: block;
+}
+
+
+/* Loader */
+.loader {
+	display: block;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255,255,255,0.8);
+	top:0;
+	left:0;
+	z-index: 10000;
+	background-repeat: no-repeat;
+	background-position: center 70%;
 }

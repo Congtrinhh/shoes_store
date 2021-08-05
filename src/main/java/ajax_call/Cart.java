@@ -2,11 +2,9 @@ package ajax_call;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +16,27 @@ import com.google.gson.Gson;
 
 @WebServlet(urlPatterns = {"/ajax-cart"})
 public class Cart extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Enumeration<String> paramsEnum= req.getParameterNames();
 		List<String> paramsList = Collections.list(paramsEnum); 
 		
-		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		String errorMessage = null;
+		if (paramsList.size()==0) {
+			resp.setCharacterEncoding("UTF-8");
+			resp.setContentType("application/json");
+			errorMessage = "Giỏ hàng trống, hãy mua sắm nào!";
+			String json = new Gson().toJson(errorMessage);
+			resp.getWriter().write(json);
+			return;
+		}
+		
+		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		
 		for (int i=0; i<(paramsList.size()/4); i++) {
 			int id = Integer.parseInt(req.getParameter(paramsList.get(i*4)));
@@ -41,7 +53,14 @@ public class Cart extends HttpServlet {
 		
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
-		String json = new Gson().toJson(errorMessage);
-		resp.getWriter().write(json);
+		
+		if (errorMessage !=null) {
+			String json = new Gson().toJson(errorMessage);
+			resp.getWriter().write(json);			
+		}
+		else {
+			String redirectLink = req.getContextPath() + "/checkout";
+			resp.getWriter().write(new Gson().toJson(redirectLink));
+		}
 	}
 }

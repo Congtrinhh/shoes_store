@@ -1,7 +1,6 @@
 package entities;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class Product {
 	private int product_line_id;
@@ -10,43 +9,83 @@ public class Product {
 	private String pr_slug;
 	private String pr_name;
 	private String pr_sku;
-	private String pr_brand_name;
+	private int pr_brand_id;
 	private BigDecimal pr_price; 
 	private String pr_description;
-	private Date  created_at;
-	private Date  updated_at;
+	private String  created_at;
+	private String updated_at;
 	
-	public Product(int admin_id, int category_id, String pr_slug, String pr_name, String pr_sku, BigDecimal pr_price, String pr_brand_name,String pr_description) {
+	public Product(int admin_id, int category_id, String pr_slug, String pr_name, String pr_sku, BigDecimal pr_price, int pr_brand_id,String pr_description) {
 		super();
 		this.admin_id = admin_id;
 		this.category_id = category_id;
 		this.pr_slug = pr_slug;
 		this.pr_name = pr_name;
 		this.pr_sku = pr_sku;
-		this.pr_brand_name = pr_brand_name;
+		this.pr_brand_id = pr_brand_id;
 		this.pr_description = pr_description;
 		this.pr_price = pr_price;
 	}
 	
-	public Product(int admin_id, int category_id, String pr_slug, String pr_name, String pr_brand_name,
-			BigDecimal pr_price, String pr_description) {
+	public Product(int admin_id, int category_id, String pr_slug, String pr_name, int pr_brand_id,
+			BigDecimal pr_price, String pr_description, String created_at) {
 		super();
 		this.admin_id = admin_id;
 		this.category_id = category_id;
 		this.pr_slug = pr_slug;
 		this.pr_name = pr_name;
-		this.pr_brand_name = pr_brand_name;
+		this.pr_brand_id = pr_brand_id;
 		this.pr_price = pr_price;
 		this.pr_description = pr_description;
+		this.created_at = created_at;
 	}
 
-
-	public String getPr_brand_name() {
-		return pr_brand_name;
+	public Product(int product_line_id, int admin_id, int category_id, String pr_slug, String pr_name, int pr_brand_id,
+			BigDecimal pr_price, String pr_description, String updated_at) {
+		super();
+		this.product_line_id = product_line_id;
+		this.admin_id = admin_id;
+		this.category_id = category_id;
+		this.pr_slug = pr_slug;
+		this.pr_name = pr_name;
+		this.pr_brand_id = pr_brand_id;
+		this.pr_price = pr_price;
+		this.pr_description = pr_description;
+		this.updated_at = updated_at;
 	}
 
-	public void setPr_brand_name(String pr_brand_name) {
-		this.pr_brand_name = pr_brand_name;
+	public Product(int product_line_id, String pr_name) {
+		super();
+		this.product_line_id = product_line_id;
+		this.pr_name = pr_name;
+	}
+	
+	
+	
+	public Product(int product_line_id, int admin_id, int category_id, String pr_slug, String pr_name, String pr_sku,
+			int pr_brand_id, BigDecimal pr_price, String pr_description, String created_at, String updated_at) {
+		super();
+		this.product_line_id = product_line_id;
+		this.admin_id = admin_id;
+		this.category_id = category_id;
+		this.pr_slug = pr_slug;
+		this.pr_name = pr_name;
+		this.pr_sku = pr_sku;
+		this.pr_brand_id = pr_brand_id;
+		this.pr_price = pr_price;
+		this.pr_description = pr_description;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
+	}
+
+	
+
+	public int getPr_brand_id() {
+		return pr_brand_id;
+	}
+
+	public void setPr_brand_id(int pr_brand_id) {
+		this.pr_brand_id = pr_brand_id;
 	}
 
 	public int getProduct_line_id() {
@@ -105,19 +144,21 @@ public class Product {
 		this.pr_description = pr_description;
 	}
 
-	public Date getCreated_at() {
+	
+
+	public String getCreated_at() {
 		return created_at;
 	}
 
-	public void setCreated_at(Date created_at) {
+	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
 	}
 
-	public Date getUpdated_at() {
+	public String getUpdated_at() {
 		return updated_at;
 	}
 
-	public void setUpdated_at(Date updated_at) {
+	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
 	}
 

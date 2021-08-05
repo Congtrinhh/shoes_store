@@ -110,7 +110,7 @@ create table image (
     img_name nvarchar(200) not null,
     img_location nvarchar(200) not null, -- full name of the image file
     constraint pk_image primary key (image_id),
-    constraint fk_image_product_line foreign key (product_line_id) references product_line(product_line_id)
+    constraint fk_image_product_line foreign key (product_line_id) references product_line(product_line_id) 
 );
 alter table image
 add column admin_id int not null;
@@ -209,8 +209,17 @@ create table product_in_order (
 
 ALTER TABLE `specific_product` ADD UNIQUE (`product_line_id`, `color_id`, `size_id`);
 
+-- tạo thêm bảng brand
+create table brand (
+	brand_id int primary key auto_increment,
+    brand_name nvarchar(100) not null,
+    brand_nation_code nvarchar(4) null, -- vn, us, uk,..
+    brand_description text null
+);
 
-select * from adminu;
+select brand_id, brand_name from brand;
+
+select * from admin;
 select * from category;
 
 select * from cta;
@@ -224,6 +233,21 @@ select * from purchase_order;
 select * from product_in_order;
 
 
+
+select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id
+				join specific_product s on s.product_line_id=p.product_line_id
+				where pr_brand_id like '0' and (pr_price between 0 and 99999999) 
+				group by p.product_line_id
+				order by p.created_at ;
+                -- limit 10 offset 0;
+                
+select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id
+			--	join specific_product s on s.product_line_id=p.product_line_id
+				where pr_brand_id like '%' and (pr_price between 0 and 9999) 
+				group by p.product_line_id
+				order by p.created_at limit 18 offset 0;
+		
+                
 -- --------------trigger for inserting-----------------
 -- we don't need trigger now
 -- create crud for data entry

@@ -9,11 +9,15 @@ public class ProductGetter {
 	private Blob img_file;
 	private String base64Image;
 	private String c_slug;
-	private String pr_brand_name;
+	private int pr_brand_id;
 	private BigDecimal pr_price;
 	
-	private int currentPage; // 2 thuộc tính này dành cho việc lấy sản phẩm
-	private int totalPages; // và gọi ajax và phân trang
+	private int pr_id;
+	private String brand_name;
+	private String category_name;
+	private String pr_description;
+	
+	
 	
 	public String getC_slug() {
 		return c_slug;
@@ -30,28 +34,40 @@ public class ProductGetter {
 		this.pr_price = pr_price;
 	}
 	
-	public ProductGetter(String pr_slug, String pr_name,BigDecimal pr_price, Blob img_file, String c_slug, String pr_brand_name) {
+	public ProductGetter(String pr_slug, String pr_name,BigDecimal pr_price, Blob img_file, String c_slug, int pr_brand_id) {
 		super();
 		this.pr_slug = pr_slug;
 		this.pr_name = pr_name;
 		this.img_file = img_file;
 		this.c_slug = c_slug;
-		this.pr_brand_name = pr_brand_name;
+		this.pr_brand_id = pr_brand_id;
 		this.pr_price = pr_price;
 	}
 	
 	
 	public ProductGetter(String pr_slug, String pr_name,String base64Image, String c_slug,
-			String pr_brand_name, BigDecimal pr_price) {
+			int pr_brand_id, BigDecimal pr_price) {
 		super();
 		this.pr_slug = pr_slug;
 		this.pr_name = pr_name;
 		this.base64Image = base64Image;
 		this.c_slug = c_slug;
-		this.pr_brand_name = pr_brand_name;
+		this.pr_brand_id = pr_brand_id;
 		this.pr_price = pr_price;
 	}
 	
+	
+	public ProductGetter(String pr_slug, String pr_name, BigDecimal pr_price, int pr_id, String brand_name,
+			String category_name, String pr_description) {
+		super();
+		this.pr_slug = pr_slug;
+		this.pr_name = pr_name;
+		this.pr_price = pr_price;
+		this.pr_id = pr_id;
+		this.brand_name = brand_name;
+		this.category_name = category_name;
+		this.pr_description = pr_description;
+	}
 	public String getBase64Image() {
 		return base64Image;
 	}
@@ -74,32 +90,12 @@ public class ProductGetter {
 		this.pr_name = pr_name;
 	}
 
-
-	public String getPr_brand_name() {
-		return pr_brand_name;
-	}
-	public void setPr_brand_name(String pr_brand_name) {
-		this.pr_brand_name = pr_brand_name;
-	}
 	
-	public void toString2() {
-		System.out.println("pr_slug"+pr_slug);
-		System.out.println("pr_name"+pr_name);
-		System.out.println("pr_brand_name"+pr_brand_name);
-		System.out.println("pr_brand_name"+pr_brand_name);
-		
+	public int getPr_brand_id() {
+		return pr_brand_id;
 	}
-	public int getCurrentPage() {
-		return currentPage;
-	}
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-	public int getTotalPages() {
-		return totalPages;
-	}
-	public void setTotalPages(int totalPages) {
-		this.totalPages = totalPages;
+	public void setPr_brand_id(int pr_brand_id) {
+		this.pr_brand_id = pr_brand_id;
 	}
 	public BigDecimal getPr_price() {
 		return pr_price;
@@ -112,6 +108,33 @@ public class ProductGetter {
 	}
 	public void setImg_file(Blob img_file) {
 		this.img_file = img_file;
+	}
+	@Override
+	public String toString() {
+		return "ProductGetter [pr_name=" + pr_name + ", c_slug=" + c_slug + ", pr_price=" + pr_price + "]";
+	}
+	public int getPr_id() {
+		return pr_id;
+	}
+	public void setPr_id(int pr_id) {
+		this.pr_id = pr_id;
+	}
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
+	public String getPr_description() {
+		return pr_description;
+	}
+	public void setPr_description(String pr_description) {
+		this.pr_description = pr_description;
 	}	
-
 }

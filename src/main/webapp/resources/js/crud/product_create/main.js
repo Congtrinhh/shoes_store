@@ -1,12 +1,3 @@
-function showHideSidebar() {
-    $('#nav__toggle').on('click', function(e) {
-        $('.nav').toggleClass('hide-side-bar');
-        $('.content').toggleClass('span-main-content');
-    })
-}
-showHideSidebar();
-
-
 $('#createForm').validate({
     rules: {
         images: {
@@ -32,8 +23,9 @@ $('.btn-submit').on('click', function(event){
     if ( $('#createForm').valid() ) {
         let form = document.querySelector('#createForm');
         let formData = new FormData(form);
-        let rs = $.ajax({
-            url: '/create-product',
+
+        $.ajax({
+            url: '/product-create',
             type: 'POST',
             data: formData,
             contentType: false,
@@ -42,6 +34,8 @@ $('.btn-submit').on('click', function(event){
             success: function(data){
                 if (data == null) { // tức là mọi thứ đều thành công, không lỗi lầm
 					$('.error-message').removeClass('on');
+					
+					setTimeout(function(){showToast();},300);
 				}
 				else {
 					$('.error-message').addClass('on');

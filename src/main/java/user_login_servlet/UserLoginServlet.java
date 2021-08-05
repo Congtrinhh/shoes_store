@@ -27,6 +27,10 @@ import entities.User;
  * */
 @WebServlet(name = "userLogin", urlPatterns = {"/login", "/user-login"})
 public class UserLoginServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();

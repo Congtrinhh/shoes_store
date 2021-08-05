@@ -12,40 +12,49 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import crud.entity.product_create.Brand;
 import homepage_servlet.ProductGetter;
 
 public class MenQuery {
-	public static List<ProductGetter> queryProduct(Connection conn, int brand, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
-		String sql = "select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-				+ "join specific_product s on s.product_line_id=p.product_line_id\r\n"
-				+ "where pr_brand_name like ? and (pr_price between ? and ?) \r\n"
+	
+	public static List<Brand> getBrandList(Connection conn) {
+		String sql = "select * from brand";
+		try (PreparedStatement stm = conn.prepareStatement(sql)){
+			ResultSet rs = stm.executeQuery();
+			
+			List<Brand> list = new ArrayList<>();
+			while(rs.next()) {
+				int id = rs.getInt("brand_id");
+				String name = rs.getString("brand_name");
+				list.add(new Brand(id, name));
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			System.out.println(e.getErrorCode());
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return null;
+	}
+	
+	public static List<ProductGetter> queryProduct(Connection conn, int brandId, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
+		String sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+				+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
+				+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
 				+ "group by p.product_line_id\r\n"
 				+ "order by ? limit ? offset ?;";
 		
 		String brandStr = null;
 		String priorityStr = null;
 		
-		switch(brand) {
-		case 1:
-			brandStr = "%";
-			break;
-		case 2:
-			brandStr = "adidas";
-			break;
-		case 3:
-			brandStr = "bitis";
-			break;
-		case 4:
-			brandStr = "nike";
-			break;
-		case 5:
-			brandStr = "ananas";
-			break;
-		case 6:
-			brandStr = "new balance";
-			break;
-		default:
-			brandStr = "all";
+		// nếu = 0 -> all, còn không thì lặp qua tất cả id trong brand table và so sánh
+		if (brandId==0) {
+			brandStr = "%"; // lấy ra tất cả brand
+		}
+		else {
+			brandStr = String.valueOf(brandId);
 		}
 		
 		switch(priority) {
@@ -76,154 +85,38 @@ public class MenQuery {
 			int id = rs.getInt("product_line_id");
 			String name = rs.getString("pr_name");
 			BigDecimal price = rs.getBigDecimal("spr_price");
-			String brandName = rs.getString("pr_brand_name");
+			int brand_id = rs.getInt("pr_brand_id");
 			String slug = rs.getString("pr_slug");
 			String c_slug = rs.getString("c_slug");
 			
 			Blob img_file = rs.getBlob("img_file");
 			String base64String = common_utils.MyUtils.convertBlobToString(img_file);
 			
-			ProductGetter product = new ProductGetter(slug, name, base64String, c_slug, brandName, price);
+			ProductGetter product = new ProductGetter(slug, name, base64String, c_slug, brand_id , price);
 			list.add(product);
 		}
-		return (ArrayList<ProductGetter>) list;
+		return list;
 	}
 	
-	public static List<ProductGetter> queryProduct(HttpServletRequest req, Connection conn, int brand, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
-		String sql = "select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-				+ "join specific_product s on s.product_line_id=p.product_line_id\r\n"
-				+ "where pr_brand_name like ? and (pr_price between ? and ?) \r\n"
-				+ "group by p.product_line_id\r\n"
-				+ "order by ? limit ? offset ?;";
+	public static int countTotalProducts(Connection conn, int brandId, int fromRange, int toRange) throws SQLException {
+		String sql = "select count(*) from product_line\r\n"
+				+ "where pr_brand_id like ? and (pr_price between ? and ?);";
 		
 		String brandStr = null;
-		String priorityStr = null;
 		
-		switch(brand) {
-		case 1:
-			brandStr = "%";
-			break;
-		case 2:
-			brandStr = "adidas";
-			break;
-		case 3:
-			brandStr = "bitis";
-			break;
-		case 4:
-			brandStr = "nike";
-			break;
-		case 5:
-			brandStr = "ananas";
-			break;
-		case 6:
-			brandStr = "new balance";
-			break;
-		default:
-			brandStr = "all";
+		// nếu = 0 -> all, còn không thì lặp qua tất cả id trong brand table và so sánh
+		if (brandId==0) {
+			brandStr = "%"; // lấy ra tất cả brand
+		}
+		else {
+			brandStr = String.valueOf(brandId);
 		}
 		
-		switch(priority) {
-		case 1:
-			priorityStr = "product_line.created_at DESC";
-			break;
-		case 2:
-			priorityStr = "pr_price ASC";
-			break;
-		case 3:
-			priorityStr = "pr_price DESC";
-			break;
-		default:
-			priorityStr = "product_line.created_at DESC";
-		}
-				
-		PreparedStatement stm = conn.prepareStatement(sql);
-		stm.setString(1, brandStr);
-		stm.setInt(2, fromRange);
-		stm.setInt(3, toRange);
-		stm.setString(4, priorityStr);
-		stm.setInt(5, constants.SystemConstants.PRODUCTS_PER_PAGE);
-		stm.setInt(6, (pageNo-1) * constants.SystemConstants.PRODUCTS_PER_PAGE);
-		
-		ResultSet rs = stm.executeQuery();
-		List<ProductGetter> list = new ArrayList<>();
-		while (rs.next()) {
-			int id = rs.getInt("product_line_id");
-			String name = rs.getString("pr_name");
-			BigDecimal price = rs.getBigDecimal("spr_price");
-			String brandName = rs.getString("pr_brand_name");
-			String slug = rs.getString("pr_slug");
-			String c_slug = rs.getString("c_slug");
-					
-			Blob img_file= rs.getBlob("img_file");
-			String base64String = common_utils.MyUtils.convertBlobToString(img_file);
-			
-			
-			ProductGetter product = new ProductGetter(slug, name, base64String, c_slug, brandName, price);
-			
-			if (rs.isFirst()) {
-				System.out.println("Đang ở đầu row product đây nè");
-			HttpSession session= req.getSession();
-			product.setCurrentPage((int)session.getAttribute("currentPage"));
-			product.setTotalPages((int)session.getAttribute("totalPages"));
-			}
-			
-			list.add(product);
-		}
-		return (ArrayList<ProductGetter>) list;
-	}
-	
-	public static int countTotalProducts(Connection conn, int brand, int priority, int fromRange, int toRange) throws SQLException {
-		String sql = "select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-				+ "join specific_product s on s.product_line_id=p.product_line_id\r\n"
-				+ "where pr_brand_name like ? and (pr_price between ? and ?) \r\n"
-				+ "group by p.product_line_id\r\n"
-				+ "order by ?;";
-		
-		String brandStr = null;
-		String priorityStr = null;
-		
-		switch(brand) {
-		case 1:
-			brandStr = "%";
-			break;
-		case 2:
-			brandStr = "adidas";
-			break;
-		case 3:
-			brandStr = "bitis";
-			break;
-		case 4:
-			brandStr = "nike";
-			break;
-		case 5:
-			brandStr = "ananas";
-			break;
-		case 6:
-			brandStr = "new balance";
-			break;
-		default:
-			brandStr = "all";
-		}
-		
-		switch(priority) {
-		case 1:
-			priorityStr = "created_at desc";
-			break;
-		case 2:
-			priorityStr = "pr_price asc";
-			break;
-		case 3:
-			priorityStr = "pr_price desc";
-			break;
-		default:
-			priorityStr = "created_at desc";
-		}
 		
 		PreparedStatement stm = conn.prepareStatement(sql);
 		stm.setString(1, brandStr);
 		stm.setInt(2, fromRange);
 		stm.setInt(3, toRange);
-		stm.setString(4, priorityStr);
 		
 		ResultSet rs = stm.executeQuery();
 		if (rs.next()) {
@@ -232,9 +125,9 @@ public class MenQuery {
 		return -1;
 	}
 	
-	public static int calculateTotalPages(int totalProducts) {
-		int total = totalProducts / constants.SystemConstants.PRODUCTS_PER_PAGE;
-		if (totalProducts % constants.SystemConstants.PRODUCTS_PER_PAGE > 0) {
+	public static int calculateTotalPages(int totalProducts, int productPerPage) {
+		int total = totalProducts / productPerPage;
+		if (totalProducts % productPerPage > 0) {
 			total++;
 		}
 		return total;

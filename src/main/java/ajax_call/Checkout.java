@@ -20,6 +20,11 @@ import entities.User;
 
 @WebServlet(urlPatterns = {"/ajax-checkout"})
 public class Checkout extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		/*

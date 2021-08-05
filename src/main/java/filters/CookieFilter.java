@@ -12,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.Admin;
@@ -33,7 +32,6 @@ public class CookieFilter implements Filter {
 		// CÂU HỎI: liệu request có tồn tại đến khi tắt trình duyệt (kết thúc 1 phiên) hay không?
 		// TRẢ LỜI: không, khi server nhận request và trả về response tức là request đã kết thúc
 		HttpServletRequest req = (HttpServletRequest)request; 
-		HttpServletResponse resp = (HttpServletResponse)response;
 		
 		HttpSession session = req.getSession();
 		

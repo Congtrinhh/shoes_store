@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import entities.Admin;
 
 public class AdminUpdateAdvancedInfo {
 	public static void updatePassword(int id, String newPassword, Connection conn) throws SQLException {

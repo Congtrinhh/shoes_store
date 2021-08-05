@@ -18,6 +18,11 @@ import entities.User;
 @WebServlet(urlPatterns = { "/admin-login" })
 public class AdminLoginServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -60,40 +65,6 @@ public class AdminLoginServlet extends HttpServlet {
 			// kết thúc
 		} 
 		else {
-//			String ad_login_name = db_admin_login_utils.cookie_session.AdminCookieSession.getAdminNameInCookie(req);		
-//
-////			System.out.println("Bước 1 thành công.");
-//			try {
-//				if (ad_login_name!=null) {
-//					Connection conn = common_utils.MyUtils.getStoredConnection(req);
-//					Admin logedInAdminFromCookie = db_admin_login_utils.sql.AdminQuery.findAdminByName(ad_login_name, conn);
-//					if (logedInAdminFromCookie != null) {
-//						
-//						// cập nhật trạng thái hoạt động cho admin
-//						boolean isStateUpdated = false;
-//						if (!isStateUpdated) {
-//							db_admin_login_utils.sql.AdminQuery.updateAdminStateOn(ad_login_name, conn);
-//							logedInAdminFromCookie.setAd_state((byte) 1);
-//							isStateUpdated = true;
-//						}
-//						
-//						req.setAttribute(Admin.LOGED_IN_ADMIN_IN_REQUEST, logedInAdminFromCookie);
-//						session.setAttribute(Admin.LOGED_IN_ADMIN_IN_SESSION, logedInAdminFromCookie);
-//						
-//						RequestDispatcher dispatcher = req.getServletContext()
-//								.getRequestDispatcher("/WEB-INF/views/admin_login/dashboard.jsp");
-//						dispatcher.forward(req, resp);
-//						System.out.println("case cookie");				
-//						return;
-//						// kết thúc	
-//					}
-//				}
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-
 			// còn nếu chưa có admin, yêu cầu đăng nhập
 			RequestDispatcher dispatcher = req.getServletContext()
 					.getRequestDispatcher("/WEB-INF/views/admin_login/login.jsp");

@@ -16,6 +16,11 @@ import entities.Admin;
 
 @WebServlet(urlPatterns = {"/admin-update"})
 public class AdminUpdateInfoServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/admin_update_info/updateBasicInfo.jsp");

@@ -23,24 +23,36 @@ public class MyUtils {
 	}
 	
 	public static String convertBlobToString(Blob imageBlog) {
-		try(InputStream iStream = imageBlog.getBinaryStream();
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-			byte[] buffer = new byte[4096];
-			int bytesRead = -1;
-			
-			while( (bytesRead = iStream.read(buffer)) != -1 ) {
-				outputStream.write(buffer, 0, bytesRead);
+		if (imageBlog!=null) {
+			try(InputStream iStream = imageBlog.getBinaryStream();
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+				byte[] buffer = new byte[4096];
+				int bytesRead = -1;
+				
+				while( (bytesRead = iStream.read(buffer)) != -1 ) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
+				byte[] imageBytes = outputStream.toByteArray();
+				
+				String base64 = Base64.getEncoder().encodeToString(imageBytes);
+				return base64;
+				
+			} catch(Exception e) {
+				System.out.println("lỗi khi convert blob ảnh sang string, "+e.getMessage());
 			}
-			byte[] imageBytes = outputStream.toByteArray();
-			
-			String base64 = Base64.getEncoder().encodeToString(imageBytes);
-			return base64;
-			
-		} catch(Exception e) {
-			System.out.println("lỗi khi convert blob ảnh sang string, "+e.getMessage());
+			return null;
 		}
 		
-		
-		return null;
+		return "";	
+	}
+	
+	
+	
+	public static int calculateTotalPage(int itemCount, int itemPerPage) {
+		int total = itemCount / itemPerPage;
+		if ( itemCount % itemPerPage != 0 ) {
+			total++;
+		}
+		return total;
 	}
 }

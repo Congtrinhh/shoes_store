@@ -1,10 +1,7 @@
 package ajax_first_step;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -20,6 +17,11 @@ import homepage_servlet.ProductGetter;
 
 @WebServlet(urlPatterns = {"/ajax/products"})
 public class GetProducts extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// có thể Connection to DB phải được lấy trực tiếp, thay vì lấy từ request.

@@ -11,12 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/cart")
 public class ShowProductInCartServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// forward qua trang jsp, ở đó javascript sẽ handle phần product trong localstorage
+		
+		
 		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/cart/productInCart.jsp");
 		dispatcher.forward(req, resp);
-		
 	}
 	
 	@Override

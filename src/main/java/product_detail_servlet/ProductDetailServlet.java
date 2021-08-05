@@ -16,6 +16,11 @@ import com.google.gson.Gson;
 
 @WebServlet(urlPatterns = {"/men/*", "/women/*"})
 public class ProductDetailServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String pr_slug = req.getPathInfo();
@@ -24,7 +29,7 @@ public class ProductDetailServlet extends HttpServlet {
 			Connection conn = common_utils.MyUtils.getStoredConnection(req);
 			
 			try {
-				ProductGetter product = product_detail_utils.ProductDetailSQL.getProduct(pr_slug, conn);
+				ProductGetter product = db_product_detail_utils.ProductDetailSQL.getProduct(pr_slug, conn);
 				
 				if (product != null) {
 					req.setAttribute("product", product);
@@ -34,7 +39,7 @@ public class ProductDetailServlet extends HttpServlet {
 				}
 				
 				
-				List<ImageGetter> imagesList = product_detail_utils.ProductDetailSQL.getImagesOfProduct(conn, pr_slug);
+				List<ImageGetter> imagesList = db_product_detail_utils.ProductDetailSQL.getImagesOfProduct(conn, pr_slug);
 				if (imagesList!=null) {
 					req.setAttribute("imagesList", imagesList);
 				}
@@ -43,7 +48,7 @@ public class ProductDetailServlet extends HttpServlet {
 				}
 				
 				// gửi về dưới dạng string
-				List<SpecificProductInfo> specificProductInfoList = product_detail_utils.ProductDetailSQL.getSpecificProductsList(conn, pr_slug);				
+				List<SpecificProductInfo> specificProductInfoList = db_product_detail_utils.ProductDetailSQL.getSpecificProductsList(conn, pr_slug);				
 				String json = new Gson().toJson(specificProductInfoList);
 				req.setAttribute("specificProductInfoList", json);
 				

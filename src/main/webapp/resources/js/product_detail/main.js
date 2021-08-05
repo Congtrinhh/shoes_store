@@ -1,7 +1,6 @@
 let specificProductsList = [];
 const moneySubfix = '.00';
 $(window).on('load', function(){
-
     $('.btn-increase').on('click', function(event) {
         let currentValue = Number($('[name="product-quantity"]').attr('value'));
         $('[name="product-quantity"]').attr('value', currentValue + 1);
@@ -173,7 +172,7 @@ $(window).on('load', function(){
         
         let productListInLS = getProductListFromLS();
 
-        if (productListInLS.length>0) { // danh sách không rỗng, cần kiểm tra id trùng
+        if (productListInLS!=null && productListInLS.length>0) { // danh sách không rỗng, cần kiểm tra id trùng
             let isDuplicatedId = productListInLS.some( product => {
                 return product.id === id;
             })

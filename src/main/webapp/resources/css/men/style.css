@@ -22,6 +22,10 @@
 }
 .form-range {
   padding-left: 20px;
+    width: 100%;
+    height: unset;
+    background-color: transparent;
+    appearance: unset;
 }
 .form-range > div {
   display: flex;
@@ -108,44 +112,9 @@
   margin-top: 15px;
 }
 
-/* Pagination */
-.pagination {
-  margin-top: 50px;
-}
-.pagination ul {
-  display: flex;
-  margin: auto;
-}
-.pagination ul li {
-  margin: 0 4px;
-}
-.btn-pagination {
-  background-color: #06696d;
-}
-.btn-pagination.active {
-  background-color: var(--primary-color);
-}
 
 /* Chỉnh sửa bổ sung cho em nó nào */
 .main .btn {
   padding-left: 20px;
   padding-right: 20px;
-}
-
-/* loader */
-.loader {
-	position: fixed;
-	display: none;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	z-index: 10000;
-	background-color: rgba(255,255,255,0.8);
-	overflow: hidden;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-.loader.on {
-	display: block;
 }

@@ -3,7 +3,10 @@ package ajax_call;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +19,13 @@ import com.google.gson.Gson;
 
 import homepage_servlet.ProductGetter;
 
-@WebServlet(urlPatterns = {"/ajax-men-products"})
+@WebServlet(urlPatterns = {"/ajax-men", "/ajax-men-products"})
 public class Men extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		/*
@@ -42,7 +50,7 @@ public class Men extends HttpServlet {
 		
 		// các tiêu chí đã nằm trong session, vì đã được set mặc định tại method GET của /men servlet
 		// tuy nhiên cần bắt lỗi tại case người dùng bấm nút lọc sản phẩm nhưng không điền 2 ô input giá
-		int brandOption = 1; // all
+		int brandOption = 0; // all
 		int priorityOption = 1; // mới nhất
 		int fromRangeOption = 0; // giá từ 0
 		int toRangeOption = 99999999; // đến 99999999 dollars
@@ -60,26 +68,31 @@ public class Men extends HttpServlet {
 			System.out.println("lỗi parse int [GET] Men.java" + e.getMessage());
 		}
 		
-		if (currentPage==requestedPage) {
-			System.out.println("Đang ở trang này rồi, bấm đi đâu nữa.");
-			return;
-		}
-		
 		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		try {
-			session.setAttribute("currentPage", requestedPage);
+			session.setAttribute("currentPage", requestedPage);// để so sánh với requested page
 			
-			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(req, conn, brandOption, priorityOption, fromRangeOption, toRangeOption, requestedPage);
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, brandOption, priorityOption, fromRangeOption, toRangeOption, requestedPage);
 			if (productList!=null) {
-				session.setAttribute("productList", productList);
 				
-				String json = new Gson().toJson(productList);
+				String productString = new Gson().toJson(productList);
 								
+				Map<String, Integer> pageInfoList = new HashMap<>();
+				pageInfoList.put("currentPage", requestedPage);
+				pageInfoList.put("productCount", (int)session.getAttribute("productCount"));
+				pageInfoList.put("totalPages", (int)session.getAttribute("totalPages"));
+				String pageString = new Gson().toJson(pageInfoList);
+				
+				List<String> finalList = new ArrayList<>();
+				finalList.add(pageString);
+				finalList.add(productString);
+				
+				
 				resp.setContentType("application/json");
 				resp.setCharacterEncoding("UTF-8");
 				
-				resp.getWriter().write(json);
-				System.out.println("Men jax [GET] thanh cong");
+				resp.getWriter().write(new Gson().toJson(finalList));
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,14 +114,14 @@ public class Men extends HttpServlet {
 		String toRangeOptionStr = req.getParameter("to-range");
 		
 				
-		System.out.println("1brand: "+brandOptionStr);
-		System.out.println("1priority: "+priorityOptionStr);
-		System.out.println("1from: "+fromRangeOptionStr);
-		System.out.println("1to: "+toRangeOptionStr);
+		System.out.println("brand: "+brandOptionStr);
+		System.out.println("priority: "+priorityOptionStr);
+		System.out.println("from: "+fromRangeOptionStr);
+		System.out.println("to: "+toRangeOptionStr);
 		
 		// khởi tạo giá trị (cũng là giá trị dự phòng nếu có lỗi trong khối try -parse integer
 		// nếu có bất kỳ lỗi gì, thì đã có giá trị mặc định hợp lệ
-		int brandOption = 1;
+		int brandOption = 0;
 		int priorityOption = 1;
 		int fromRangeOption = 0;
 		int toRangeOption = 0;
@@ -146,20 +159,28 @@ public class Men extends HttpServlet {
 			session.setAttribute("toRangeOptionOld", toRangeOption);
 			
 			session.setAttribute("currentPage", 1); // luôn trả về trang đầu tiên, nên currentPage=1
-			int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, brandOption, priorityOption, fromRangeOption, toRangeOption);
-			session.setAttribute("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts));
-			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(req, conn, brandOption, priorityOption, fromRangeOption, toRangeOption, 1);
+			int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, brandOption, fromRangeOption, toRangeOption);
+			session.setAttribute("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, brandOption, priorityOption, fromRangeOption, toRangeOption, 1);
 			
 			if (productList!=null) {
 				
-				System.out.println("togn sp: " + totalProducts);
-				String json = new Gson().toJson(productList);
+				String productString = new Gson().toJson(productList);
+				
+				Map<String, Integer> pageInfoList = new HashMap<>();
+				pageInfoList.put("currentPage", 1);
+				pageInfoList.put("productCount", totalProducts);
+				pageInfoList.put("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
+				String pageString = new Gson().toJson(pageInfoList);
+				
+				List<String> finalList = new ArrayList<>();
+				finalList.add(pageString);
+				finalList.add(productString);
 				
 				resp.setContentType("application/json");
 				resp.setCharacterEncoding("UTF-8");
 				
-				resp.getWriter().write(json);
-				System.out.println("Thanh cong. gui ajax ve");
+				resp.getWriter().write(new Gson().toJson(finalList));
 			}
 			
 			

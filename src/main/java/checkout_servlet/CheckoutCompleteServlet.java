@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = {"/checkout-complete"})
 public class CheckoutCompleteServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/notice/checkoutComplete.jsp");

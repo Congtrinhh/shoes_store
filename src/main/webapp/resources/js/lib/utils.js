@@ -1,7 +1,7 @@
-//$(window).on('load', function(){
+$(window).on('load', function(){
+	$('.loader').fadeOut();	
+})
       
-
-			
             displayNumberIndicator();
 
             function displayNumberIndicator() {
@@ -21,7 +21,7 @@
             function getProductListFromLS() {
 				let list = localStorage.getItem('productList');
 				
-				if (list.length>0) {
+				if (list!=null && list.length>0) {
 					try {
 						return JSON.parse(list);
 					} catch(e) {
@@ -78,3 +78,22 @@ function updateFooterContent() {
 updateFooterContent()
          
 //})
+
+//  --------------------------- toast ---------------------------
+function showToast() {
+            const toastHTMLElem = document.querySelector('.toast');
+            const toastElem = new bootstrap.Toast(toastHTMLElem, {
+                delay: 5000,
+            });
+
+            toastHTMLElem.classList.add('on');
+
+            toastElem.show();
+        }
+
+// header (highlight current nav page)
+$('.header .header__nav > ul > li > a').each(function(){
+	if ( $('.header .header__nav > ul').attr('tab-name') && $(this).attr('href').includes( $('.header .header__nav > ul').attr('tab-name') ) ) {
+		$(this).addClass('active-link');
+	}	
+})
