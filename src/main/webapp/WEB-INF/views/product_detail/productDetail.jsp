@@ -40,6 +40,8 @@
 <body>
 
     <div id="app">
+    	<!-- Loader -->
+		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
         <!-- Header -->
 		<jsp:include page="/WEB-INF/views/fragments/header.jsp"></jsp:include>
 
@@ -72,10 +74,10 @@
                     <div class="detail__left col-12 col-md-6">
         
                         <div>
-                            <div id="product-slider" class="carousel slide carousel-fade" data-ride="">
+                            <div id="product-slider" class="carousel slide carousel-fade" data-bs-ride="">
                                 <ol class="carousel-indicators">
                                     <c:forEach items="${imagesList}" var="image" varStatus="status">
-                                    	<li data-target="#product-slider" data-slide-to="${status.index}" class="">
+                                    	<li data-bs-target="#product-slider" data-bs-slide-to="${status.index}" class="">
 	                                        <img src="data:image/jpg;base64,${image.base64Image}" alt="">
 	                                    </li>
                                     </c:forEach>
@@ -92,11 +94,11 @@
                                 	</c:forEach>
 	                            </div>
                                 
-                                <a class="carousel-control-prev" href="#product-slider" role="button" data-slide="prev">
+                                <a class="carousel-control-prev" href="#product-slider" role="button" data-bs-slide="prev">
                                     <i class="fas fa-angle-left"></i>
                                     <span class="sr-only">Previous</span>
                                 </a>
-                                <a class="carousel-control-next" href="#product-slider" role="button" data-slide="next">
+                                <a class="carousel-control-next" href="#product-slider" role="button" data-bs-slide="next">
                                     <i class="fas fa-angle-right"></i>
                                     <span class="sr-only">Next</span>
                                 </a>
@@ -189,9 +191,6 @@
         
         <!-- Footer -->
 		<jsp:include page="/WEB-INF/views/fragments/footer.jsp"></jsp:include>
-		
-		<!-- Loader -->
-		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
 		
     </div>
     

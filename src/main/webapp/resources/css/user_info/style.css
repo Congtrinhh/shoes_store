@@ -1,0 +1,166 @@
+/* --------------- user nav -------------- */
+.user-nav {
+  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px; */
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.user-nav .nav-badge {
+  display: flex;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+}
+button[data-bs-toggle="collapse"].btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary-color);
+  appearance: none;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 6px 16px;
+  font-weight: 400;
+  transition: all var(--transition-duration) ease;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  border: none !important;
+  border-radius: 0;
+  cursor: pointer;
+  display: none;
+}
+button[data-bs-toggle="collapse"].btn {
+  color: var(--primary-color);
+}
+
+.user-nav .nav-badge .img-parent {
+  max-width: 40px;
+}
+.user-nav .nav-badge > h2 {
+  font-size: 28px;
+  margin-left: 15px;
+}
+
+.user-nav ul {
+}
+.user-nav ul li a {
+  color: #000;
+  display: block;
+  padding: 15px 0;
+  padding-left: 30px;
+  transition: all 0.15s linear;
+}
+.user-nav ul li a:hover {
+  color: var(--primary-color);
+  background-color: #f1f1f1;
+}
+.user-nav ul li a.active {
+  color: var(--primary-color);
+  background-color: #f1f1f1;
+}
+.user-nav ul li a > i {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+/* --------------- user info -------------- */
+.form-header {
+  font-weight: 600;
+  font-size: 1.8rem;
+  text-transform: capitalize;
+  color: var(--primary-color);
+  background-color: unset;
+  padding-left: unset;
+  border-radius: unset;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 50px;
+}
+.form-text,
+.select-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.form-text > label,
+.select-wrapper > label {
+  flex-basis: 30%;
+  font-size: 18px;
+  font-weight: 500;
+  color: #000;
+}
+.form-text > input {
+  border-radius: 0;
+}
+.form-text > input,
+.select-wrapper > .selects {
+  flex-grow: 1;
+  flex-basis: 50%;
+}
+
+.select-wrapper {
+  margin-top: 50px;
+}
+.selects {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-show {
+  margin-top: 60px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--primary-color);
+  text-decoration: underline;
+  font-size: 18px;
+  padding: 0;
+}
+.btn-show::after {
+  content: "\f0da";
+  font-family: "Font Awesome 5 Free";
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.btn-show.on::after {
+  transform: rotate(90deg);
+}
+
+.update-password-area input {
+	display: none;
+}
+.update-password-area {
+  padding-left: 100px;
+  display: none;
+}
+.update-password-area.on {
+  display: block;
+}
+.update-password-area.on input {
+	display: inline-block;
+}
+.update-password-area .form-text input {
+  border: 2px solid rgb(187, 187, 187);
+}
+
+.btn-submit {
+  margin-top: 70px;
+  display: block;
+}
+
+label.error {
+  text-align: right;
+}

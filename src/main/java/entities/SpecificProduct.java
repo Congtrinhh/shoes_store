@@ -21,6 +21,7 @@ public class SpecificProduct {
 		this.spr_price = spr_price;
 		this.spr_quantity = spr_quantity;
 	}
+
 	public int getId() {
 		return id;
 	}

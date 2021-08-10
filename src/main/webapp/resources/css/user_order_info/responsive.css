@@ -1,0 +1,54 @@
+/* -------------- tablet ---------------- */
+@media (max-width: 1024px) {
+  .item-info {
+    flex-basis: 64%;
+	}
+}
+@media (max-width: 992px) {
+  .item-info__address > span {
+    max-width: 80%;
+  }
+  .item-info {
+    flex-basis: 62%;
+}
+}
+
+@media (max-width: 768px) {
+  .main {
+    flex-wrap: wrap-reverse;
+  }
+  .form-header {
+    font-size: 1.6rem;
+  }
+  .container {
+    max-width: 576px;
+  }
+  button[data-bs-toggle="collapse"].btn {
+    display: block;
+  }
+  .item-info {
+    flex-basis: 63%;
+}
+  
+}
+/* -------------- mobile ---------------- */
+@media (max-width: 576px) {
+  .form-header {
+    margin-bottom: 30px;
+  }
+
+  .item-row  .img-parent {
+    flex-basis: 100%;
+    margin-bottom: 20px;
+  }
+
+  .item-info {
+    flex-grow: 1;
+  }
+  .status-badge {
+    flex-basis: 20%;
+  }
+  .item-info__address > span {
+    max-width: unset;
+  }
+}

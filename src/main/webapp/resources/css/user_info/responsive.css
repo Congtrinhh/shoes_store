@@ -1,0 +1,74 @@
+/* -------------- tablet ---------------- */
+@media (max-width: 992px) {
+  .update-password-area {
+    padding-left: 70px;
+  }
+
+  .form-text,
+  .select-wrapper {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+  .form-text > label,
+  .select-wrapper > label {
+    margin-bottom: 6px;
+  }
+
+  .select-wrapper > .selects {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+	.main {
+		flex-wrap: wrap-reverse;
+	}
+  .form-header {
+    font-size: 1.6rem;
+  }
+  .container {
+    max-width: 576px;
+  }
+
+  .update-password-area {
+    padding-left: 30px;
+  }
+  button[data-bs-toggle="collapse"].btn {
+    display: block;
+  }
+}
+/* -------------- mobile ---------------- */
+@media (max-width: 576px) {
+  .form-header {
+    margin-bottom: 30px;
+  }
+  .form-text {
+    margin-top: 30px;
+  }
+
+  .form-text,
+  .select-wrapper {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+
+  .form-text > input {
+    padding-bottom: calc((var(--input-padding-left) / 2) - 2px);
+    padding-top: calc((var(--input-padding-left) / 2) - 2px);
+  }
+  .select-wrapper > .selects {
+    flex-flow: column;
+  }
+
+  .btn-show {
+    margin-top: 40px;
+  }
+
+  .update-password-area.on {
+    padding-left: 0px;
+  }
+
+  .btn-submit {
+    margin-top: 50px;
+  }
+}

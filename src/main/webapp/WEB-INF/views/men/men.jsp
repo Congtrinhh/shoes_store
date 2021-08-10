@@ -37,7 +37,8 @@
 <body>
 
 	<div id="app">
-
+<!-- Loader -->
+		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
 		<!-- Header -->
 		<jsp:include page="/WEB-INF/views/fragments/header.jsp"></jsp:include>
 
@@ -127,8 +128,6 @@
 
 		<!-- Footer -->
 		<jsp:include page="/WEB-INF/views/fragments/footer.jsp"></jsp:include>
-		<!-- Loader -->
-		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
 
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

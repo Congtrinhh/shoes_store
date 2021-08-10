@@ -6,6 +6,8 @@ public class Admin {
 	public static final String ADMIN_LOGIN_NAME_IN_COOKIE = "ad_login_name";
 	public static final String ADMIN_LOGIN_STATUS = "adminLoginStatus"; // set cho session. 1: đang đăng nhập, 0: đang đăng xuất
 	public static final String ERROR_MESSAGE_IN_REQUEST = "errorMessage";
+	public static final String ADMIN_ID_IN_SESSION = "adminId";
+	
 	private int admin_id;
 	private String ad_name;
 	private String ad_login_name;

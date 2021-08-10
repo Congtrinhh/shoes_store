@@ -49,7 +49,7 @@
                             <fieldset>
                                 <select name='product-line-id' class='form-select' required>
 	                                    <option value=''>-- Dòng sản phẩm --</option>
-                                    <c:forEach items="${productsList}" var="product">
+                                    <c:forEach items="${productList}" var="product">
                                     	<option value='${product.product_line_id}'>${product.pr_name}</option>
                                     </c:forEach>
                                 </select>
@@ -58,7 +58,7 @@
                             <fieldset>
                                 <select name='color-id' class='form-select' required>
                                 	<option value=''>-- Màu --</option>
-                                    <c:forEach items="${colorsList}" var="color">
+                                    <c:forEach items="${colorList}" var="color">
                                     	<option value='${color.color_id}'>${color.color_name}</option>
                                     </c:forEach>
                                 </select>
@@ -67,7 +67,7 @@
                             <fieldset>
                                 <select name='size-id' class='form-select' required>
 	                                <option value=''>-- Size --</option>
-                                    <c:forEach items="${sizesList}" var="size">
+                                    <c:forEach items="${sizeList}" var="size">
                                     	<option value='${size.size_id}'>${size.size_number}</option>
                                     </c:forEach>
                                 </select>

@@ -24,7 +24,7 @@
 					<!--  -->
 					<div class="entity-preview-info">
 						<a
-							href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-dashboard</c:if><c:if test="${sessionScope.login_token=='user'}">user-manage</c:if>"
+							href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-dashboard</c:if><c:if test="${sessionScope.login_token=='user'}">user-info</c:if>"
 							class="img-container"> <img
 							src="<c:if test="${sessionScope.login_token=='user'}">${pageContext.request.contextPath}/resources/imgs/avatar${sessionScope.logedInUser.u_avatar}</c:if>"
 							alt="">
@@ -36,7 +36,7 @@
 						</p>
 						<div class="action">
 							<a
-								href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-dashboard</c:if><c:if test="${sessionScope.login_token=='user'}">user-manage</c:if>"
+								href="${pageContext.request.contextPath}/<c:if test="${sessionScope.login_token=='admin'}">admin-dashboard</c:if><c:if test="${sessionScope.login_token=='user'}">user-info</c:if>"
 								class="manage-account">Quản lý tài khoản</a>
 						</div>
 					</div>

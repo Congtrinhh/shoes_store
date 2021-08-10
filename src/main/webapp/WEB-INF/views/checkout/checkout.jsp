@@ -43,12 +43,6 @@
 <body>
 	
 
-
-
-
-
-	
-
         <main class="main container">
             <!-- breadcrumb -->
             <nav aria-label="breadcrumb">

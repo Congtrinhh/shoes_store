@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import checkout_servlet.AddressEntity;
+import entities.District;
+import entities.Province;
+import entities.Ward;
 
 public class CheckoutDB {
 	
@@ -47,13 +49,14 @@ public class CheckoutDB {
 		return -1;
 	}
 	
-	public static void createOrder(Connection conn, int userNameId, int wardId, String specificAddress) { // them params ward,..
-		String sql ="insert into purchase_order(user_id, ward_id, specific_address) \r\n"
-				+ "values(?, ?, ?);";
+	public static void createOrder(Connection conn, int userNameId, int wardId, String specificAddress, String created_at) { // them params ward,..
+		String sql ="insert into purchase_order(user_id, ward_id, specific_address, created_at) \r\n"
+				+ "values(?, ?, ?, ?);";
 		try (PreparedStatement stm = conn.prepareStatement(sql)){
 			stm.setInt(1, userNameId);
 			stm.setInt(2, wardId);
 			stm.setString(3, specificAddress);
+			stm.setString(4, created_at);
 			
 			stm.executeUpdate();
 		}
@@ -98,16 +101,16 @@ public class CheckoutDB {
 		return -1;
 	}
 	
-	public static List<AddressEntity> getAllProvinces(Connection conn){
+	public static List<Province> getAllProvinces(Connection conn){
 		String sql ="select id, _name from province;";
 		try (PreparedStatement stm = conn.prepareStatement(sql)){
 			ResultSet rs = stm.executeQuery();
 			
-			List<AddressEntity> list = new ArrayList<>();
+			List<Province> list = new ArrayList<>();
 			while(rs.next()) {
 				int id=rs.getInt(1);
 				String name= rs.getString(2);
-				list.add(new AddressEntity(id, name));
+				list.add(new Province(id, name));
 			}
 			return list;
 		}
@@ -117,7 +120,7 @@ public class CheckoutDB {
 		return null;
 	}
 	
-	public static List<AddressEntity> getAllDistricts(Connection conn, int provinceId) {
+	public static List<District> getAllDistricts(Connection conn, int provinceId) {
 		String sql ="select id , _name from district\r\n"
 				+ "where _province_id=?;";
 		try (PreparedStatement stm = conn.prepareStatement(sql)){
@@ -125,11 +128,11 @@ public class CheckoutDB {
 			
 			ResultSet rs = stm.executeQuery();
 			
-			List<AddressEntity> list = new ArrayList<>();
+			List<District> list = new ArrayList<>();
 			while(rs.next()) {
 				int id=rs.getInt(1);
 				String name= rs.getString(2);
-				list.add(new AddressEntity(id, name));
+				list.add( new District(id, name) );
 			}
 			return list;
 		}
@@ -139,7 +142,7 @@ public class CheckoutDB {
 		return null;
 	}
 	
-	public static List<AddressEntity> getAllWards(Connection conn, int districtId) {
+	public static List<Ward> getAllWards(Connection conn, int districtId) {
 		String sql ="select id , _name from ward\r\n"
 				+ "where _district_id=?;";
 		try (PreparedStatement stm = conn.prepareStatement(sql)){
@@ -147,11 +150,11 @@ public class CheckoutDB {
 			
 			ResultSet rs = stm.executeQuery();
 			
-			List<AddressEntity> list = new ArrayList<>();
+			List<Ward> list = new ArrayList<>();
 			while(rs.next()) {
 				int id=rs.getInt(1);
 				String name= rs.getString(2);
-				list.add(new AddressEntity(id, name));
+				list.add( new Ward(id, name) );
 			}
 			return list;
 		}

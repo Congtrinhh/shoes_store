@@ -17,7 +17,7 @@ import entities.SpecificProduct;
 public class SpecificProductUtils {
 	
 	/* ----------------- CREATE ---------------------- */
-	public static List<Product> getProductsList(Connection conn) {
+	public static List<Product> getProductList(Connection conn) {
 		String sql = "select product_line_id, pr_name from product_line\r\n" + "order by pr_name;";
 		try (PreparedStatement stm = conn.prepareStatement(sql)) {
 			List<Product> list = new ArrayList<>();
@@ -37,7 +37,7 @@ public class SpecificProductUtils {
 		return null;
 	}
 
-	public static List<Color> getColorsList(Connection conn) {
+	public static List<Color> getColorList(Connection conn) {
 		String sql = "select color_id,color_name from color;";
 
 		try (PreparedStatement stm = conn.prepareStatement(sql)) {
@@ -56,7 +56,7 @@ public class SpecificProductUtils {
 		return null;
 	}
 
-	public static List<Size> getSizesList(Connection conn) {
+	public static List<Size> getSizeList(Connection conn) {
 		String sql = "select size_id, size_number from size\r\n" + "order by size_number;";
 
 		try (PreparedStatement stm = conn.prepareStatement(sql)) {
@@ -132,5 +132,51 @@ public class SpecificProductUtils {
 	}
 	
 	/* ----------------- DELETE --------------------*/
+	public static int deleteItem(Connection conn, int id) throws SQLException {
+		String sql = "delete from specific_product\r\n"
+				+ "where specific_product_id=?;";
+		PreparedStatement stm = conn.prepareStatement(sql);
+		stm.setInt(1, id);
+		
+		return stm.executeUpdate();
 	
+	}
+	
+	/* ----------------- UPDATE --------------------*/
+	public static SpecificProduct getItem(Connection conn, int id) throws SQLException {
+		String sql ="select * from specific_product\r\n"
+				+ "where specific_product_id=?;";
+		PreparedStatement stm = conn.prepareStatement(sql);
+		stm.setInt(1, id);
+		
+		ResultSet rs = stm.executeQuery();
+		if (rs.next()) {
+			int specific_product_id = rs.getInt("specific_product_id");
+			int product_id = rs.getInt("product_line_id");
+			int color_id = rs.getInt("color_id");
+			int size_id = rs.getInt("size_id");
+			BigDecimal price = rs.getBigDecimal("spr_price");
+			int quantity = rs.getInt("spr_quantity");
+			
+			return new SpecificProduct(specific_product_id, product_id, color_id, size_id, price, quantity);
+		}
+		
+		return null;
+	}
+	
+	public static int updateItem(Connection conn, SpecificProduct p) throws SQLException {
+		String sql ="update specific_product\r\n"
+				+ "set product_line_id=?, color_id=?, size_id=?,\r\n"
+				+ "	spr_price=?, spr_quantity=?\r\n"
+				+ "where specific_product_id=?;";
+		PreparedStatement stm = conn.prepareStatement(sql);
+		stm.setInt(1, p.getProduct_line_id());
+		stm.setInt(2, p.getColor_id());
+		stm.setInt(3, p.getSize_id());
+		stm.setBigDecimal(4, p.getSpr_price());
+		stm.setInt(5, p.getSpr_quantity());
+		stm.setInt(6, p.getId());
+		
+		return stm.executeUpdate();
+	}
 }

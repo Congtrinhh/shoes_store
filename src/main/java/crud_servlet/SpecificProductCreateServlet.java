@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -42,18 +41,18 @@ public class SpecificProductCreateServlet extends HttpServlet {
 		 */
 		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		
-		List<Product> productsList = db_crud_utils.SpecificProductUtils.getProductsList(conn);
-		List<Color> colorsList = db_crud_utils.SpecificProductUtils.getColorsList(conn);
-		List<Size> sizesList = db_crud_utils.SpecificProductUtils.getSizesList(conn);
+		List<Product> productList = db_crud_utils.SpecificProductUtils.getProductList(conn);
+		List<Color> colorList = db_crud_utils.SpecificProductUtils.getColorList(conn);
+		List<Size> sizeList = db_crud_utils.SpecificProductUtils.getSizeList(conn);
 		
-		if (productsList!=null) {
-			req.setAttribute("productsList", productsList);
+		if (productList!=null) {
+			req.setAttribute("productList", productList);
 		}
-		if (colorsList!=null) {
-			req.setAttribute("colorsList", colorsList);
+		if (colorList!=null) {
+			req.setAttribute("colorList", colorList);
 		}
-		if (sizesList!=null) {
-			req.setAttribute("sizesList", sizesList);
+		if (sizeList!=null) {
+			req.setAttribute("sizeList", sizeList);
 		}
 		
 		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/crud/specificProductCreate.jsp");

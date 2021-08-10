@@ -7,12 +7,17 @@
 
 	<context-param>
 		<param-name>dateFormat</param-name>
-		<param-value>dd-MM-yyyy 'at' HH:mm:ss z</param-value>
+		<param-value>dd-MM-yyyy HH:mm:ss</param-value>
 	</context-param>
 	
 	<context-param>
 		<param-name>tabIndicator</param-name>
 		<param-value>home</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>userNavTabIndicator</param-name>
+		<param-value>user-info</param-value>
 	</context-param>
 
 	<filter-mapping>

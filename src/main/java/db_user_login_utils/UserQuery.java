@@ -9,7 +9,7 @@ import entities.User;
 
 public class UserQuery {
 	public static User findUser(String login_name, String password, Connection conn) throws SQLException {
-		String sql = "select user_id, u_name, u_login_name,u_password,u_email, u_phone_number,u_address,u_avatar from user where u_login_name = ? and u_password = ?;";
+		String sql = "select * from user where u_login_name = ? and u_password = ?;";
 		PreparedStatement stm = conn.prepareStatement(sql);
 		
 		stm.setString(1, login_name);
@@ -18,15 +18,20 @@ public class UserQuery {
 		ResultSet rs = stm.executeQuery();
 		if (rs.next()) {
 			int user_id = rs.getInt("user_id");
-			String u_name = rs.getString("u_name");
+			int admin_id = rs.getInt("created_at");
 			String u_login_name = rs.getString("u_login_name");
-			String u_password = rs.getString("u_password");
-			String u_email = rs.getString("u_email");
+			String u_name = rs.getString("u_name");
 			String u_phone_number = rs.getString("u_phone_number");
-			String u_address = rs.getString("u_address");
+			String u_email = rs.getString("u_email");
+			String u_password = rs.getString("u_password");
 			String u_avatar = rs.getString("u_avatar");
+			String specific_address = rs.getString("specific_address");
+			int wardId = rs.getInt("ward_id");
+			String created_at = rs.getString("created_at");
+			String updated_at = rs.getString("updated_at");
+			// lay het thong tin ra
+			return new User(user_id, admin_id, u_name, u_login_name, u_password, u_email, u_phone_number, specific_address, u_avatar, wardId, created_at, updated_at);
 			
-			return new User(user_id, u_name, u_login_name, u_password, u_email, u_phone_number, u_address, u_avatar);
 		}
 		
 		return null;

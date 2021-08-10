@@ -57,7 +57,7 @@
 		<p class="error-message" style="color: red; margin-bottom: 10px;">${errorMessage}</p>
 
 		<div class="action">
-			<a href="" class="forget-password">Quên mật khẩu</a> <a href="${pageContext.request.contextPath}/"
+			<a href="${pageContext.request.contextPath}/admin-forget-password" class="forget-password">Quên mật khẩu</a> <a href="${pageContext.request.contextPath}/"
 				class="to-homepage"><< Trang chủ</a>
 		</div>
 

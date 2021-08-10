@@ -233,21 +233,14 @@ select * from purchase_order;
 select * from product_in_order;
 
 
+select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id
+				left join specific_product s on s.product_line_id=p.product_line_id
+				where pr_brand_id like '%' and (pr_price between 0 and 999)
+				group by p.product_line_id
+				order by '\t\tpr_price\t\t'
+                limit 100 offset 0;
 
-select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id
-				join specific_product s on s.product_line_id=p.product_line_id
-				where pr_brand_id like '0' and (pr_price between 0 and 99999999) 
-				group by p.product_line_id
-				order by p.created_at ;
-                -- limit 10 offset 0;
-                
-select *, min(spr_price) 'spr_price' from product_line p join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id
-			--	join specific_product s on s.product_line_id=p.product_line_id
-				where pr_brand_id like '%' and (pr_price between 0 and 9999) 
-				group by p.product_line_id
-				order by p.created_at limit 18 offset 0;
-		
-                
+
 -- --------------trigger for inserting-----------------
 -- we don't need trigger now
 -- create crud for data entry

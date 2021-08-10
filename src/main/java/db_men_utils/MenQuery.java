@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import crud.entity.product_create.Brand;
 import homepage_servlet.ProductGetter;
@@ -39,17 +37,11 @@ public class MenQuery {
 		return null;
 	}
 	
-	public static List<ProductGetter> queryProduct(Connection conn, int brandId, int priority, int fromRange, int toRange, int pageNo) throws SQLException {
-		String sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-				+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
-				+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
-				+ "group by p.product_line_id\r\n"
-				+ "order by ? limit ? offset ?;";
+	public static List<ProductGetter> queryProduct(Connection conn, int brandId, int priority, int fromRange, int toRange, int pageNo) throws SQLException {		
+		String sql = "";
 		
 		String brandStr = null;
-		String priorityStr = null;
 		
-		// nếu = 0 -> all, còn không thì lặp qua tất cả id trong brand table và so sánh
 		if (brandId==0) {
 			brandStr = "%"; // lấy ra tất cả brand
 		}
@@ -59,30 +51,49 @@ public class MenQuery {
 		
 		switch(priority) {
 		case 1:
-			priorityStr = "product_line.created_at DESC";
+			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+					+ "group by p.product_line_id\r\n"
+					+ "order by p.created_at DESC limit ? offset ?;";
+			
 			break;
 		case 2:
-			priorityStr = "pr_price ASC";
+			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+					+ "group by p.product_line_id\r\n"
+					+ "order by pr_price ASC "
+					+ "limit ? offset ?;";
+			//priorityStr = "pr_price ASC";
 			break;
 		case 3:
-			priorityStr = "pr_price DESC";
+			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+					+ "group by p.product_line_id\r\n"
+					+ "order by pr_price DESC "
+					+ "limit ? offset ?;";
+			//priorityStr = "pr_price DESC";
 			break;
 		default:
-			priorityStr = "product_line.created_at DESC";
+			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+					+ "group by p.product_line_id\r\n"
+					+ "order by p.created_at DESC limit ? offset ?;";
 		}
 				
 		PreparedStatement stm = conn.prepareStatement(sql);
 		stm.setString(1, brandStr);
 		stm.setInt(2, fromRange);
 		stm.setInt(3, toRange);
-		stm.setString(4, priorityStr);
-		stm.setInt(5, constants.SystemConstants.PRODUCTS_PER_PAGE);
-		stm.setInt(6, (pageNo-1) * constants.SystemConstants.PRODUCTS_PER_PAGE);
+		stm.setInt(4, constants.SystemConstants.PRODUCTS_PER_PAGE);
+		stm.setInt(5, (pageNo-1) * constants.SystemConstants.PRODUCTS_PER_PAGE);
 		
 		ResultSet rs = stm.executeQuery();
 		List<ProductGetter> list = new ArrayList<ProductGetter>();
 		while (rs.next()) {
-			int id = rs.getInt("product_line_id");
 			String name = rs.getString("pr_name");
 			BigDecimal price = rs.getBigDecimal("spr_price");
 			int brand_id = rs.getInt("pr_brand_id");

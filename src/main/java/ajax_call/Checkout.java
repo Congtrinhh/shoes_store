@@ -2,7 +2,9 @@ package ajax_call;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -15,8 +17,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import checkout_servlet.AddressEntity;
+import entities.District;
 import entities.User;
+import entities.Ward;
 
 @WebServlet(urlPatterns = {"/ajax-checkout"})
 public class Checkout extends HttpServlet {
@@ -74,7 +77,7 @@ public class Checkout extends HttpServlet {
 			int size = Integer.parseInt(req.getParameter(paramNamesList.get(i*4 + 2)));
 			int quantity = Integer.parseInt(req.getParameter(paramNamesList.get(i*4 + 3)));
 			
-			int row = db_checkout_utils.CheckoutDB.decreaseInStockQuantity(conn, id, colorCode, size, quantity);
+			db_checkout_utils.CheckoutDB.decreaseInStockQuantity(conn, id, colorCode, size, quantity);
 			//System.out.println("(update quantity)1 -> 1 row effected; 0 -> failed: "+row);
 		}
 		
@@ -85,7 +88,11 @@ public class Checkout extends HttpServlet {
 		String specificAddress = req.getParameter("specific-address");
 		int wardId = Integer.parseInt(req.getParameter("ward"));
 	
-		db_checkout_utils.CheckoutDB.createOrder(conn, logedinUser.getUser_id(), wardId, specificAddress);
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat( req.getServletContext().getInitParameter("dateFormat") );
+		String nowStr = sdf.format(now);
+		
+		db_checkout_utils.CheckoutDB.createOrder(conn, logedinUser.getUser_id(), wardId, specificAddress, nowStr);
 		//System.out.println("Tạo 1 Order");
 		
 		int highestOrderId = db_checkout_utils.CheckoutDB.getHighestOrderId(conn);
@@ -122,7 +129,7 @@ public class Checkout extends HttpServlet {
 			Connection conn = common_utils.MyUtils.getStoredConnection(req);
 			int id = Integer.parseInt(req.getParameter("id"));
 			
-			List<AddressEntity> districtsList = db_checkout_utils.CheckoutDB.getAllDistricts(conn, id);
+			List<District> districtsList = db_checkout_utils.CheckoutDB.getAllDistricts(conn, id);
 			if (districtsList!=null) {
 				resp.setCharacterEncoding("UTF-8");
 				resp.setContentType("application/json");
@@ -138,7 +145,7 @@ public class Checkout extends HttpServlet {
 			Connection conn = common_utils.MyUtils.getStoredConnection(req);
 			int id = Integer.parseInt(req.getParameter("id"));
 			
-			List<AddressEntity> wardsList = db_checkout_utils.CheckoutDB.getAllWards(conn, id);
+			List<Ward> wardsList = db_checkout_utils.CheckoutDB.getAllWards(conn, id);
 			if (wardsList!=null) {
 				resp.setCharacterEncoding("UTF-8");
 				resp.setContentType("application/json");

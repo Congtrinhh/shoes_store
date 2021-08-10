@@ -40,7 +40,7 @@ public class SpecificProductDelete extends HttpServlet {
 		 * -> trả về page attr + list item
 		 */
 		try {
-			String idStr = req.getParameter("");
+			String idStr = req.getParameter("id");
 			int id = -1;
 			if ( idStr!=null ) {
 				id = Integer.parseInt(idStr);
@@ -59,8 +59,11 @@ public class SpecificProductDelete extends HttpServlet {
 					itemCount = itemCount -1; // vì vừa xóa 1 item mà
 					
 					if ( itemCount % itemPerPage == 0 ) { // tức là sau khi xóa item thì 1 trang sẽ biến mất (item vừa xóa là item cuối của trang đó)
-						totalPage = totalPage -1;
-						currentPage = currentPage -1;
+						totalPage = totalPage -1; // tổng số trang giảm 1
+						
+						if ( totalPage < currentPage ) { // trang hiện tại xuống cho đúng
+							currentPage = currentPage -1;
+						}
 					}
 					
 					List<SpecificProduct> specificProductList = db_crud_utils.SpecificProductUtils.getSpecificProductList(conn, itemPerPage, currentPage);

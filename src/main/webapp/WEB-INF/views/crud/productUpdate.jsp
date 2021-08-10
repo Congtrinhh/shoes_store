@@ -93,9 +93,11 @@
                                         <span>Hãng: ${product.brand_name}</span>
                                         <button class="btn btn-edit"><i class="far fa-edit"></i></button>
                                     </div>
-                                    <select name='brand' class='form-select' required>
+                                    <select name='brand' class='form-select'>
+                                    	<option value="">- Chọn brand -</option>
                                         <c:forEach items="${brandList}" var="brand">
-                                            <option value="${brand.id}">${brand.name}</option>
+                                            <option value="${brand.id}" <c:if test="${brand.name == product.brand_name}">selected</c:if>
+                                            >${brand.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -108,9 +110,11 @@
                                         <span>Phân loại: ${product.category_name}</span>
                                         <button class="btn btn-edit"><i class="far fa-edit"></i></button>
                                     </div>
-                                    <select name='category' class='form-select' required>
+                                    <select name='category' class='form-select'>
+                                    	<option value="">- Chọn category -</option>
                                         <c:forEach items="${categoryList}" var="cate">
-                                            <option value="${cate.id}">${cate.name}</option>
+                                            <option value="${cate.id}" <c:if test="${cate.name == product.category_name}">selected</c:if>
+                                            >${cate.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>

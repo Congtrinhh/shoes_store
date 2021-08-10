@@ -14,10 +14,10 @@ $('.pagination > ul').on('click', '.btn-pagination', goToAnotherPage);
 // ------------------ gán handler cho thẻ select khi giá trị của nó thay đổi -----------
 $('#item-per-page-select').on('change', changeItemPerPageQuantity);
 
-
-// 
+//  ------------------ gán handler cho việc xóa item và làm 1 số việc sau xóa -----------
 $('.btn-delete').on('click', deleteItem);
 
+//  ------------------ gán item id cho button xác nhận xóa của modal -----------
 $('#item-table > tbody').on('click', '.btn-show-modal', function(event){
 	event.preventDefault();
 	
@@ -29,8 +29,11 @@ $('#item-table > tbody').on('click', '.btn-show-modal', function(event){
 	$('.btn-delete').attr('item-id', itemId);
 })
 
+//	
+
 function deleteItem(event){
 	event.preventDefault();
+	$('.modal').modal('hide');
 	
 	let itemId = $(this).attr('item-id');	
 	if (itemId == -1) {
@@ -43,11 +46,13 @@ function deleteItem(event){
 		type: 'GET',
 		data: 'id=' + itemId,
 		success: function(response){
-			if ( response != null ) {
-				console.log({
-					type: typeof response,
-					data: reponse,
-				})
+			if ( response != null && Array.isArray(response) ) {
+				const pageInfoObject = JSON.parse(response[0]); // object
+				const itemList = JSON.parse(response[1]); // array
+				
+				update4PageAttr(pageInfoObject);
+				doPaginating();
+				loadItemToDOM(itemList);
 			}
 		}
 	})
@@ -157,9 +162,6 @@ function doPaginating(){
 				if (pageIndex==currentPage){
 					return `<li><button type="button" pagination-value=${pageIndex} class="btn btn-pagination active">${pageIndex}</button></li>`;
 				}
-				/*else if ( Number.isNaN(pageIndex) ) { // it is ...
-					return `<li><button type="button" pagination-value=${pageIndex} class="btn btn-pagination">${pageIndex}</button></li>`;
-				}*/
 				else {
 					return `<li><button type="button" pagination-value=${pageIndex} class="btn btn-pagination">${pageIndex}</button></li>`;
 				}

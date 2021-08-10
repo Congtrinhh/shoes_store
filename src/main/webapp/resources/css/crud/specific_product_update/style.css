@@ -1,0 +1,94 @@
+.form-text {
+  margin-top: 56px;
+}
+.form-text > input:required ~ span::before {
+  content: "required";
+  position: absolute;
+  right: 4%;
+  top: -60%;
+  background-color: #000;
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
+/*  */
+form .form-header {
+  margin-bottom: 6px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  font-size: 1.1rem;
+}
+form .fieldsets {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+form .fieldsets fieldset {
+  flex-basis: 50%;
+  margin-bottom: 16px;
+}
+form .fieldsets fieldset:nth-child(odd) {
+  padding-right: 15px;
+}
+form .fieldsets fieldset:nth-child(even) {
+  padding-left: 15px;
+}
+
+form .fieldsets fieldset select {
+  width: 100%;
+  padding: 6px 20px;
+}
+form .fieldsets fieldset option {
+  display: inline-block;
+}
+
+form textarea {
+  width: 100%;
+  padding: 4px 6px;
+}
+.btn-submit {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.error-message {
+  display: none;
+}
+.error-message.on {
+  display: block;
+}
+
+.form-text-container {
+	display: flex;
+	gap: 30px;
+}
+.form-text-container > * {
+	flex-grow: 1;
+}
+
+/* delete some unnecessary and add some necessary */
+.content {
+	text-align: center;
+}
+.create-area {
+	margin-top: 50px;
+	max-width: 800px;
+	display: inline-block;
+	text-align: left;
+}
+.form-header {
+	text-align: left;
+	font-size: 26px;
+}
+.fieldsets select {
+	display: none;
+}
+.fieldsets .form-header > span {
+	font-weight: 400;
+	font-size: 20px;
+}
+.fieldsets .form-header > span > * {
+	font-weight: 500;
+	font-size: 22px;
+}

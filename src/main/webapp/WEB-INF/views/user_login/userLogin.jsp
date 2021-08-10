@@ -35,14 +35,14 @@
 			<h1 class="form-header">Đăng nhập</h1>
 
 			<div class='form-text'>
-				<input type='text' name='name' id='' placeholder='' required>
+				<input type='text' name='name'  required>
 				<label for='' class='label-name'>
 					<p class='content-name__placeholder'>Tên tài khoản</p>
 				</label> <span></span>
 			</div>
 
 			<div class='form-text'>
-				<input type='password' name='password' id='' placeholder='' required>
+				<input type='password' name='password' required>
 				<label for='' class='label-name'>
 					<p class='content-name__placeholder'>Mật khẩu</p>
 				</label> <span></span>
@@ -58,7 +58,7 @@
 
 		<p class="error-message">${errorMessage}</p>
 		<div class="action">
-			<a href="" class="forget-password">Quên mật khẩu</a> <a href="${pageContext.request.contextPath}/register"
+			<a href="${pageContext.request.contextPath}/forget-password" class="forget-password">Quên mật khẩu</a> <a href="${pageContext.request.contextPath}/register"
 				class="">Chưa có tài khoản? Đăng ký</a>
 		</div>
 

@@ -42,7 +42,7 @@
 							value=${sessionScope.currentPage}> 
 						<input type="text"
 							hidden name="hidden-total-page" value=${sessionScope.totalPage}>
-						<input type="text" hidden name="hidden-product-count"
+						<input type="text" hidden name="hidden-item-count"
 							value=${sessionScope.itemCount}> 
 					</div>
 					<div class="item-per-page">
@@ -97,7 +97,7 @@
 		                    <div class="modal-content">
 		                        <div class="modal-header">
 		                            <h5 class="modal-title" id="exampleModalLabel">Xóa ?</h5>
-		                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
 		                                <span aria-hidden="true">&times;</span>
 		                            </button>
 		                        </div>

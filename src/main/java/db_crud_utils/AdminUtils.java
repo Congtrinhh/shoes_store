@@ -3,6 +3,7 @@ package db_crud_utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.springframework.dao.DuplicateKeyException;
 
@@ -53,10 +54,25 @@ public class AdminUtils {
 			}
 			
 		}
+		catch (SQLException e) {
+			System.out.println("Loi db_crud_utils findadminbyname, code: "+e.getErrorCode());
+		}
 		catch(Exception e) {
-			System.out.println("Loi "+e.getMessage());
+			System.out.println("Loi db_crud_utils findadminbyname, mes: "+e.getMessage());
 		}
 		return -1;
 	}
 	
+ 	public static int changePassword(Connection conn, int id, String password) throws SQLException {
+		String sql ="update admin\r\n"
+				+ "set ad_password=?\r\n"
+				+ "where admin_id=?;";
+		
+		PreparedStatement stm = conn.prepareStatement(sql);
+		
+		stm.setString(1, password);
+		stm.setInt(2, id);
+		
+		return stm.executeUpdate();
+	}
 }

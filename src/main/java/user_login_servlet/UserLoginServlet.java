@@ -33,24 +33,31 @@ public class UserLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
-		
-		// ngoại lệ: người dùng cố đăng nhập user khi đang đăng nhập là admin
-		Admin logedInAdmin = (Admin) session.getAttribute(Admin.LOGED_IN_ADMIN_IN_SESSION);
-		if (logedInAdmin!=null) {
-			RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/exception/logoutAdminFirst.jsp");
-			dispatcher.forward(req, resp);		
-			return;
+		try {
+			HttpSession session = req.getSession();
+			
+			// ngoại lệ: người dùng cố đăng nhập user khi đang đăng nhập là admin
+			Admin logedInAdmin = (Admin) session.getAttribute(Admin.LOGED_IN_ADMIN_IN_SESSION);
+			if (logedInAdmin!=null) {
+				RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/exception/logoutAdminFirst.jsp");
+				dispatcher.forward(req, resp);		
+				return;
+			}
+			
+			
+			User userInSession = (User) session.getAttribute(User.LOGED_IN_USER_IN_SESSION);
+			if (userInSession==null) {
+				doPost(req, resp); // auto login
+				
+//				RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/user_login/userLogin.jsp");
+//				dispatcher.forward(req, resp);			
+			}
+			else {
+				resp.sendRedirect(req.getServletContext().getContextPath() +"/");
+			}
 		}
-		
-		
-		User userInSession = (User) session.getAttribute(User.LOGED_IN_USER_IN_SESSION);
-		if (userInSession==null) {
-			RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/user_login/userLogin.jsp");
-			dispatcher.forward(req, resp);			
-		}
-		else {
-			resp.sendRedirect(req.getServletContext().getContextPath() +"/");
+		catch (Exception e) {
+			System.out.println("user login servlet get, mes: "+e.getMessage());
 		}
 		
 	}
@@ -59,6 +66,11 @@ public class UserLoginServlet extends HttpServlet {
 		String u_login_name = req.getParameter("name");
 		String u_password = req.getParameter("password");
 		String remember_me = req.getParameter("remember-me");
+		
+		// auto login
+		u_login_name ="adog11"; 
+		u_password="abc123";
+		remember_me="y";
 		
 		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		String errorMessage = null;

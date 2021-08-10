@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import entities.Province;
+
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutServlet extends HttpServlet {
 	/**
@@ -22,7 +24,7 @@ public class CheckoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		
-		List<AddressEntity> provincesList = db_checkout_utils.CheckoutDB.getAllProvinces(conn);
+		List<Province> provincesList = db_checkout_utils.CheckoutDB.getAllProvinces(conn);
 		if (provincesList!=null) {			
 			req.setAttribute("provincesList", provincesList);
 		}

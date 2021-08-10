@@ -69,15 +69,16 @@ public class ProductUpdate extends HttpServlet {
 			String name = req.getParameter(paramNameList.get(1));
 			String slug = req.getParameter(paramNameList.get(2));
 			BigDecimal price = new BigDecimal(req.getParameter(paramNameList.get(3)));
-			int brandId = Integer.parseInt(req.getParameter(paramNameList.get(4)));
-			int categoryId=Integer.parseInt(req.getParameter(paramNameList.get(5)));
+			int brandId = Integer.parseInt( req.getParameter(paramNameList.get(4)) );
+			int categoryId = Integer.parseInt( req.getParameter(paramNameList.get(5)) );
 			String description = req.getParameter(paramNameList.get(6));
+			
 			
 			if (!slug.startsWith("/")) {
 				slug = "/" +slug;
 			}
 			
-			System.out.println("Number of params: "+paramNameList.size());
+			//System.out.println("Number of params: "+paramNameList.size());
 			// update thông tin cơ bản 
 			int adminId = -1;
 			adminId = ((Admin)req.getSession().getAttribute(Admin.LOGED_IN_ADMIN_IN_SESSION)).getAdmin_id();
@@ -88,7 +89,6 @@ public class ProductUpdate extends HttpServlet {
 			Date now = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat(req.getServletContext().getInitParameter("dateFormat"));
 			String nowString = sdf.format(now);
-		
 			
 			
 			Product product = new Product(id, adminId, categoryId, slug, name, brandId, price, description, nowString); 

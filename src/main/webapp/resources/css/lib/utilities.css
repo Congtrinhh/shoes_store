@@ -373,7 +373,7 @@ input[type="submit"] {
     background-repeat: unset;
     background-position: unset;
     background-size: unset;
-    border: 1px solid #ced4da;
+    border: 1px solid #9da2a7;
     border-radius: unset;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     -webkit-appearance: none;
@@ -621,4 +621,16 @@ input[type="submit"] {
 	z-index: 10000;
 	background-repeat: no-repeat;
 	background-position: center 70%;
+}
+
+/* thẻ a của admin login */
+#adminForm ~ .action a:hover,
+#userForm ~ .action a:hover {
+	text-decoration: underline;
+}
+
+/* thời gian */
+.time {
+	font-size: 14px;
+	color: #777;
 }

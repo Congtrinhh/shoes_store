@@ -253,13 +253,17 @@ public class ProductUtils {
 	}
 	
 	public static int updateProduct(Connection conn, Product p) {
-		String sql ="update product_line\r\n"
+		String sql = "";
+		PreparedStatement stm =null;
+		try {
+			sql ="update product_line\r\n"
 				+ "set pr_name=?, pr_slug=?, pr_price=?,\r\n"
 				+ "	pr_brand_id=?, category_id=?, pr_description=?,\r\n"
 				+ "    admin_id=?, updated_at=?\r\n"
 				+ "where product_line_id=?;";
-		
-		try(PreparedStatement stm = conn.prepareStatement(sql)){
+			
+			stm = conn.prepareStatement(sql);
+			
 			stm.setString(1, p.getPr_name());
 			stm.setString(2, p.getPr_slug());
 			stm.setBigDecimal(3, p.getPr_price());
@@ -269,9 +273,8 @@ public class ProductUtils {
 			stm.setInt(7, p.getAdmin_id());
 			stm.setString(8, p.getUpdated_at());
 			stm.setInt(9, p.getProduct_line_id());
-			
-			int row = stm.executeUpdate();
-			return row;
+		
+			return stm.executeUpdate();
 		}
 		catch (SQLException e) {
 			System.out.println("Loi update product line, code: "+e.getErrorCode());

@@ -58,7 +58,6 @@ $('.btn-submit').on('click', function(event) {
 
 		let form = document.querySelector('#createForm');
 		let formData = new FormData(form);
-		console.log(formData)
 		
 		$.ajax({
 			url: '/ajax-product-update',
@@ -69,7 +68,6 @@ $('.btn-submit').on('click', function(event) {
 			success: function(response){
 				if (typeof response == 'string') {
 					if (response.startsWith("/")) { // thành công
-					console.log('sucess', response);
 						location.reload();
 					} 
 					else {
@@ -150,5 +148,3 @@ $('.btn-delete-image').on('click', function(event){
 			`<input hidden type="text" name="deleted-image-id-${deleteImageIndex}" value="${_this.attr('image-id')}">`;
 	deleteImageIndex++;
 })
-
-// disable thuộc tính tự submit của button
