@@ -28,7 +28,7 @@ function loadMoreProduct(){
 		$(window).off('scroll', loadMoreProduct); // tắt event listener
 		
 		$.ajax({
-			url: '/ajax-men',
+			url: '/ajax-women',
 			type: 'GET',
 			data: 'requested-page='+ requestedPage,
 			success: function(response){
@@ -53,7 +53,7 @@ function changeWithFilter(event){
 	event.preventDefault();
 	
 	$.ajax({
-		url: '/ajax-men',
+		url: '/ajax-women',
 		type: 'post',
 		//processData: false,
 		data: $('#filter').serialize(),

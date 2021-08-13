@@ -37,7 +37,7 @@ public class MenQuery {
 		return null;
 	}
 	
-	public static List<ProductGetter> queryProduct(Connection conn, int brandId, int priority, int fromRange, int toRange, int pageNo) throws SQLException {		
+	public static List<ProductGetter> queryProduct(Connection conn, String categorySlug, int brandId, int priority, int fromRange, int toRange, int pageNo) throws SQLException {		
 		String sql = "";
 		
 		String brandStr = null;
@@ -51,51 +51,56 @@ public class MenQuery {
 		
 		switch(priority) {
 		case 1:
-			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
-					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+			sql = "select *\r\n"
+					+ "from product_line p left join image i on p.product_line_id=i.product_line_id \r\n"
+					+ "	join category c on c.category_id=p.category_id\r\n"
+					+ "	right join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where c.c_slug=? and\r\n"
+					+ "	pr_brand_id like ? and (pr_price between ? and ?)\r\n"
 					+ "group by p.product_line_id\r\n"
 					+ "order by p.created_at DESC limit ? offset ?;";
 			
 			break;
 		case 2:
-			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
-					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+			sql = "select * from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+					+ "	right join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where c.c_slug=? and pr_brand_id like ? and (pr_price between ? and ?) \r\n"
 					+ "group by p.product_line_id\r\n"
 					+ "order by pr_price ASC "
 					+ "limit ? offset ?;";
-			//priorityStr = "pr_price ASC";
 			break;
 		case 3:
-			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
-					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+			sql = "select * from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
+					+ "	right join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where c.c_slug=? and pr_brand_id like ? and (pr_price between ? and ?) \r\n"
 					+ "group by p.product_line_id\r\n"
 					+ "order by pr_price DESC "
 					+ "limit ? offset ?;";
-			//priorityStr = "pr_price DESC";
 			break;
 		default:
-			sql = "select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id\r\n"
-					+ "left join specific_product s on s.product_line_id=p.product_line_id\r\n"
-					+ "where pr_brand_id like ? and (pr_price between ? and ?) \r\n"
+			sql = "select * \r\n"
+					+ "from product_line p left join image i on p.product_line_id=i.product_line_id \r\n"
+					+ "	join category c on c.category_id=p.category_id\r\n"
+					+ "	right join specific_product s on s.product_line_id=p.product_line_id\r\n"
+					+ "where c.c_slug=? and\r\n"
+					+ "	pr_brand_id like ? and (pr_price between ? and ?)\r\n"
 					+ "group by p.product_line_id\r\n"
 					+ "order by p.created_at DESC limit ? offset ?;";
 		}
 				
 		PreparedStatement stm = conn.prepareStatement(sql);
-		stm.setString(1, brandStr);
-		stm.setInt(2, fromRange);
-		stm.setInt(3, toRange);
-		stm.setInt(4, constants.SystemConstants.PRODUCTS_PER_PAGE);
-		stm.setInt(5, (pageNo-1) * constants.SystemConstants.PRODUCTS_PER_PAGE);
+		stm.setString(1, categorySlug);
+		stm.setString(2, brandStr);
+		stm.setInt(3, fromRange);
+		stm.setInt(4, toRange);
+		stm.setInt(5, constants.SystemConstants.PRODUCTS_PER_PAGE);
+		stm.setInt(6, (pageNo-1) * constants.SystemConstants.PRODUCTS_PER_PAGE);
 		
 		ResultSet rs = stm.executeQuery();
 		List<ProductGetter> list = new ArrayList<ProductGetter>();
 		while (rs.next()) {
 			String name = rs.getString("pr_name");
-			BigDecimal price = rs.getBigDecimal("spr_price");
+			BigDecimal price = rs.getBigDecimal("pr_price");
 			int brand_id = rs.getInt("pr_brand_id");
 			String slug = rs.getString("pr_slug");
 			String c_slug = rs.getString("c_slug");
@@ -109,9 +114,12 @@ public class MenQuery {
 		return list;
 	}
 	
-	public static int countTotalProducts(Connection conn, int brandId, int fromRange, int toRange) throws SQLException {
-		String sql = "select count(*) from product_line\r\n"
-				+ "where pr_brand_id like ? and (pr_price between ? and ?);";
+	public static int countTotalProducts(Connection conn,String categorySlug, int brandId, int fromRange, int toRange) throws SQLException {
+		String sql = "select count(distinct(p.product_line_id))\r\n"
+				+ "from product_line p join category c on p.category_id=c.category_id\r\n"
+				+ "	right join specific_product s on s.product_line_id=p.product_line_id\r\n"
+				+ "where c.c_slug=? and \r\n"
+				+ "	pr_brand_id like ? and (pr_price between ? and ?);";
 		
 		String brandStr = null;
 		
@@ -125,9 +133,10 @@ public class MenQuery {
 		
 		
 		PreparedStatement stm = conn.prepareStatement(sql);
-		stm.setString(1, brandStr);
-		stm.setInt(2, fromRange);
-		stm.setInt(3, toRange);
+		stm.setString(1, categorySlug);
+		stm.setString(2, brandStr);
+		stm.setInt(3, fromRange);
+		stm.setInt(4, toRange);
 		
 		ResultSet rs = stm.executeQuery();
 		if (rs.next()) {

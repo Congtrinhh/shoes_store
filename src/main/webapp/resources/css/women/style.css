@@ -79,6 +79,7 @@
 	object-position: center;
 	transition: all 0.35s ease; 
 	transform-origin: center;
+	border-radius: 3px;
 }
 .product-row .product:hover {
 	border-radius: 20px;

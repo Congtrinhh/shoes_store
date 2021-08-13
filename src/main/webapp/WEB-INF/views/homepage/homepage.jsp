@@ -100,7 +100,7 @@
 									<a href="${pageContext.request.contextPath}${product.c_slug}${product.pr_slug}">
 										<h2 class="product__info__title">${product.pr_name}</h2>
 									</a>
-									<p class="product__info__price">$${product.pr_price}</p>
+									<p class="product__info__price money">${product.pr_price}</p>
 								</div>
 							</div>
 						</div>

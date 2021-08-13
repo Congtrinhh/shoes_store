@@ -27,6 +27,9 @@
     width: 40px;
     height: 40px;
   }
+  .detail__right__list > li > span {
+  	line-height: 40px; /* tạm */ 
+  }
   .product__description {
     margin-top: 40px;
   }

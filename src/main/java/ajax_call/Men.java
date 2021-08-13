@@ -32,9 +32,11 @@ public class Men extends HttpServlet {
 		 * Nhiệm vụ của hàm này là trả về list sản phẩm theo từng trang, cập nhật lại currentPage,..
 		 */
 		
-		String requestedPageStr = req.getParameter("requestedPage");
+		String requestedPageStr = req.getParameter("requested-page");
 		
-		int requestedPage = 1; // giá trị mặc định, tránh lỗi
+		String categorySlug = "/men";
+		
+		int requestedPage = -1;
 		try {
 			requestedPage = Integer.parseInt(requestedPageStr);
 		}catch(Exception e) {
@@ -42,8 +44,8 @@ public class Men extends HttpServlet {
 		}
 		
 		HttpSession session = req.getSession();
-		int totalPages = (int) session.getAttribute("totalPages");
-		if (requestedPage > totalPages || requestedPage<1) {
+		int totalPage = (int) session.getAttribute("totalPage");
+		if (requestedPage > totalPage || requestedPage<1) {
 			System.out.println("Trang yêu cầu không hợp lệ [out of range]");
 			return;
 		}
@@ -54,12 +56,12 @@ public class Men extends HttpServlet {
 		int priorityOption = 1; // mới nhất
 		int fromRangeOption = 0; // giá từ 0
 		int toRangeOption = 99999999; // đến 99999999 dollars
-		int currentPage = 1; 
+		//int currentPage = 1; 
 		
 		try {
 			brandOption = (int) session.getAttribute("brandOption");
 			priorityOption = (int) session.getAttribute("priorityOption");
-			currentPage = (int) session.getAttribute("currentPage"); // lấy ra trang đang đứng ngay trước khi thực hiện request GET này
+			//currentPage = (int) session.getAttribute("currentPage"); // lấy ra trang đang đứng ngay trước khi thực hiện request GET này
 			
 			fromRangeOption = (int) session.getAttribute("fromRangeOption"); // 2 ông dễ bị lỗi để bên dưới
 			toRangeOption = (int) session.getAttribute("toRangeOption");
@@ -72,15 +74,14 @@ public class Men extends HttpServlet {
 		try {
 			session.setAttribute("currentPage", requestedPage);// để so sánh với requested page
 			
-			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, brandOption, priorityOption, fromRangeOption, toRangeOption, requestedPage);
-			if (productList!=null) {
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, categorySlug, brandOption, priorityOption, fromRangeOption, toRangeOption, requestedPage);
+			if (productList!=null && productList.size()>0) {
 				
 				String productString = new Gson().toJson(productList);
 								
 				Map<String, Integer> pageInfoList = new HashMap<>();
 				pageInfoList.put("currentPage", requestedPage);
-				pageInfoList.put("productCount", (int)session.getAttribute("productCount"));
-				pageInfoList.put("totalPages", (int)session.getAttribute("totalPages"));
+				pageInfoList.put("totalPage", (int)session.getAttribute("totalPage"));
 				String pageString = new Gson().toJson(pageInfoList);
 				
 				List<String> finalList = new ArrayList<>();
@@ -94,9 +95,12 @@ public class Men extends HttpServlet {
 				resp.getWriter().write(new Gson().toJson(finalList));
 				
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		} catch (Exception e) {
+			System.out.println("ajax get men, mes: "+e.getMessage());
+		}
 				
 	}
 	
@@ -106,7 +110,7 @@ public class Men extends HttpServlet {
 		 * nhiệm vụ của hàm này là cập nhật tiêu chí và trả về trang đầu tiên của list sản phẩm mới
 		 * theo tiêu chí đó 
 		 * */
-		
+		String categorySlug = "/men";
 		
 		String brandOptionStr = req.getParameter("brand");
 		String priorityOptionStr = req.getParameter("priority");
@@ -159,9 +163,9 @@ public class Men extends HttpServlet {
 			session.setAttribute("toRangeOptionOld", toRangeOption);
 			
 			session.setAttribute("currentPage", 1); // luôn trả về trang đầu tiên, nên currentPage=1
-			int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, brandOption, fromRangeOption, toRangeOption);
-			session.setAttribute("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
-			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, brandOption, priorityOption, fromRangeOption, toRangeOption, 1);
+			int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, categorySlug, brandOption, fromRangeOption, toRangeOption);
+			session.setAttribute("totalPage", common_utils.MyUtils.calculateTotalPage(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, categorySlug, brandOption, priorityOption, fromRangeOption, toRangeOption, 1);
 			
 			if (productList!=null) {
 				
@@ -169,8 +173,7 @@ public class Men extends HttpServlet {
 				
 				Map<String, Integer> pageInfoList = new HashMap<>();
 				pageInfoList.put("currentPage", 1);
-				pageInfoList.put("productCount", totalProducts);
-				pageInfoList.put("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
+				pageInfoList.put("totalPage", common_utils.MyUtils.calculateTotalPage(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
 				String pageString = new Gson().toJson(pageInfoList);
 				
 				List<String> finalList = new ArrayList<>();

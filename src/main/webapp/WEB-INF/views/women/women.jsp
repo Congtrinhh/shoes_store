@@ -25,20 +25,21 @@
 <script defer
 	src="${pageContext.request.contextPath}/resources/js/lib/utils.js"></script>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/men/style.css">
+	href="${pageContext.request.contextPath}/resources/css/women/style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/homepage/header_and_footer_responsive.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/men/responsive.css">
+	href="${pageContext.request.contextPath}/resources/css/women/responsive.css">
 <script defer
-	src="${pageContext.request.contextPath}/resources/js/men/main.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/women/main.js"></script>
 
 </head>
 <body>
 
 	<div id="app">
-<!-- Loader -->
+		<!-- Loader -->
 		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
+		
 		<!-- Header -->
 		<jsp:include page="/WEB-INF/views/fragments/header.jsp"></jsp:include>
 
@@ -47,6 +48,7 @@
 			<div class="page-info-block" style="display:none;">
 				<input type="text" hidden name="hidden-total-page" value="${totalPage}">
 				<input type="text" hidden name="hidden-current-page" value="${currentPage}">
+				<input type="text" hidden name="hidden-product-count" value="${productCount}">
 			</div>
 		
 			<div class="filters col-lg-3">

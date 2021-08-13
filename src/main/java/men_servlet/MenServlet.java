@@ -27,7 +27,9 @@ public class MenServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		// hàm này có tác dụng set các tiêu chí mặc định vào session
+		// set category slug vào session
 		// và lấy ra trang đầu tiên của list sản phẩm theo tiêu chí mặc định
+		String categorySlug = "/men";
 		HttpSession session = req.getSession();
 		
 		int brandOption = 0; // all
@@ -45,17 +47,16 @@ public class MenServlet extends HttpServlet {
 		Connection conn = common_utils.MyUtils.getStoredConnection(req);
 		
 		try {
-			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, brandOption, priorityOption, fromRangeOption, toRangeOption, pageNo);
+			List<ProductGetter> productList = db_men_utils.MenQuery.queryProduct(conn, categorySlug, brandOption, priorityOption, fromRangeOption, toRangeOption, pageNo);
 			
 			if (productList!=null) {
-				int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, brandOption, fromRangeOption, toRangeOption);
+				int totalProducts = db_men_utils.MenQuery.countTotalProducts(conn, categorySlug, brandOption, fromRangeOption, toRangeOption);
 
-				session.setAttribute("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE)); // set để ajax [get] lấy mà không cần query lại
+				session.setAttribute("totalPage", common_utils.MyUtils.calculateTotalPage(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE)); // set để ajax [get] lấy mà không cần query lại
 				session.setAttribute("productCount", totalProducts);
 				
 				req.setAttribute("currentPage", pageNo); // 2 cái này dành cho phân trang.
-				req.setAttribute("totalPages", db_men_utils.MenQuery.calculateTotalPages(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
-				req.setAttribute("productCount", totalProducts);
+				req.setAttribute("totalPage", common_utils.MyUtils.calculateTotalPage(totalProducts, constants.SystemConstants.PRODUCTS_PER_PAGE));
 				
 				req.setAttribute("productList", productList);				
 			}
@@ -69,6 +70,8 @@ public class MenServlet extends HttpServlet {
 			}
 			
 			req.setAttribute(constants.SystemConstants.TAB_INDICATOR, req.getServletPath()); // tab indicator
+			
+			session.setAttribute("categorySlug", categorySlug); // set category slug
 			
 			RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher("/WEB-INF/views/men/men.jsp");
 			dispatcher.forward(req, resp);

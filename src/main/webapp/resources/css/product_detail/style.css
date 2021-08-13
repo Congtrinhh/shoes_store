@@ -69,11 +69,11 @@
   bottom: 0;
   z-index: -1;
   text-align: center;
-  text-shadow: 0 0 1px rgba(0,0,0,0.3);
-  background-color: #ddd;
-  font-weight: 500;
    border-radius: 50%;
-  line-height: 300%; /* tạm */ 
+  line-height: 50px; /* tạm */ 
+  background-color: transparent;
+  color: #000;  
+  transition: all 0.3s cubic-bezier(.38,1.32,.66,1.34);
 }
 .detail__right__quantity {
   display: flex;
@@ -122,13 +122,22 @@
   appearance: none;
   width: 100%;
   height: 100%;
-  border: 1px solid #ddd;
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+  background-color: transparent;
+  transition: all 0.3s cubic-bezier(.38,1.32,.66,1.34);
 }
 
 #productOption input[type="radio"]:checked {
-  border-color: #555;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  transform: scale(1.2);
+}
+#productOption input[type="radio"]:checked + span {
+	transform: scale(1.2);
+	background-color: #333;
+	color: #fff;
 }
 
 

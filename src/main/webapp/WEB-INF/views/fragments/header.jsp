@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!-- Header -->
 <header class="header">
 	<div class="header__top container">
 		<div class="logo-login-cart">
@@ -76,17 +75,19 @@
 			</nav>
 			<!-- Search form -->
 			<div class="header__form-control">
-				<input type="text" name="home-search" placeholder="Search">
-				<!--search for information through the website: products, articles, ..-->
-				<button type="button" class="btn">
-					<i class="fas fa-search"></i>
-				</button>
-				<ul class="drown-drop-result">
-					<li><a href="">Giày sneaker</a></li>
-					<li><a href="">Addidas</a></li>
-					<li><a href="">Niceke</a></li>
-					<li><a href="">Hehehe</a></li>
-				</ul>
+				<div class="wrapper">
+					<input type="text" name="home-search" placeholder="Search">
+					<!--search for information through the website: products, articles, ..-->
+					<button type="button" class="btn">
+						<i class="fas fa-search"></i>
+					</button>
+					<ul class="drown-drop-result">
+						<li><a href="">Giày sneaker</a></li>
+						<li><a href="">Addidas</a></li>
+						<li><a href="">Niceke</a></li>
+						<li><a href="">Hehehe</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
