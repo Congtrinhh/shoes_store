@@ -57,7 +57,7 @@ public class Women extends HttpServlet {
 			int fromRangeOption = (int) session.getAttribute("fromRangeOption");
 			int toRangeOption = (int) session.getAttribute("toRangeOption");
 			
-			int currentPage = (int) session.getAttribute("currentPage"); 
+			//int currentPage = (int) session.getAttribute("currentPage"); 
 			
 			
 			Connection conn = common_utils.MyUtils.getStoredConnection(req);

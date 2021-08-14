@@ -1,0 +1,50 @@
+@media only screen and (max-width: 992px) {
+  .filters > form {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .main .btn {
+    white-space: nowrap;
+  }
+  picture:nth-of-type(2){
+  	display:none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .filters > form {
+    flex-wrap: wrap;
+  }
+  .filters > form > * {
+    flex-grow: 1;
+  }
+  .filters-and-products .filters {
+        margin-bottom: 10px;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .form-header {
+    margin-bottom: 6px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  .filters fieldset {
+    margin-bottom: 8px;
+  }
+  .filters-and-products {
+    margin-top: 20px;
+  }
+  .filters fieldset select {
+    text-transform: capitalize;
+    padding: 4px 20px;
+  }
+  .product__info__title{
+  	font-size: 1.7rem;
+  }
+  .product__info__price {
+  font-size: 1.1rem;
+  }
+  
+}

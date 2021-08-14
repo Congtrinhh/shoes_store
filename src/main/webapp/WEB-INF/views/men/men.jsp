@@ -41,8 +41,7 @@
 		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
 		<!-- Header -->
 		<jsp:include page="/WEB-INF/views/fragments/header.jsp"></jsp:include>
-
-
+		
 		<main class="filters-and-products main container row">
 			<div class="page-info-block" style="display:none;">
 				<input type="text" hidden name="hidden-total-page" value="${totalPage}">

@@ -40,7 +40,6 @@
 						</div>
 					</div>
 
-
 				</div>
 				<a href="/cart" class="header__cart"> <i
 					class="fas fa-shopping-cart"></i>
@@ -48,13 +47,10 @@
 				</a>
 			</div>
 
-
-
 		</div>
 		<div class="nav-and-search">
 
-			<!-- Navbar -->
-			
+			<!-- Navbar -->			
 			<nav class="header__nav">
 				<ul tab-name="${tabIndicator}">
 					
@@ -75,10 +71,10 @@
 			</nav>
 			<!-- Search form -->
 			<div class="header__form-control">
-				<div class="wrapper">
-					<input type="text" name="home-search" placeholder="Search">
+				<form class="wrapper" action="${pageContext.request.contextPath}/search" method="get">
+					<input type="text" name="product-name" placeholder="Eg: nike">
 					<!--search for information through the website: products, articles, ..-->
-					<button type="button" class="btn">
+					<button type="submit" class="btn">
 						<i class="fas fa-search"></i>
 					</button>
 					<ul class="drown-drop-result">
@@ -87,7 +83,7 @@
 						<li><a href="">Niceke</a></li>
 						<li><a href="">Hehehe</a></li>
 					</ul>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -25,73 +25,54 @@
 <script defer
 	src="${pageContext.request.contextPath}/resources/js/lib/utils.js"></script>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/women/style.css">
+	href="${pageContext.request.contextPath}/resources/css/search/style.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/homepage/header_and_footer_responsive.css">
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/women/responsive.css">
+	href="${pageContext.request.contextPath}/resources/css/search/responsive.css">
 <script defer
-	src="${pageContext.request.contextPath}/resources/js/women/main.js"></script>
+	src="${pageContext.request.contextPath}/resources/js/search/main.js"></script>
 
 </head>
 <body>
 
 	<div id="app">
-		<!-- Loader -->
+<!-- Loader -->
 		<jsp:include page="/WEB-INF/views/fragments/loader.html"></jsp:include>
-		
 		<!-- Header -->
 		<jsp:include page="/WEB-INF/views/fragments/header.jsp"></jsp:include>
+
+		<nav aria-label="breadcrumb" class="container">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
+		    <li class="breadcrumb-item active" aria-current="page">Search</li>
+		  </ol>
+		</nav>
 
 		<main class="filters-and-products main container row">
 			<div class="page-info-block" style="display:none;">
 				<input type="text" hidden name="hidden-total-page" value="${totalPage}">
 				<input type="text" hidden name="hidden-current-page" value="${currentPage}">
-				<input type="text" hidden name="hidden-product-count" value="${productCount}">
 			</div>
 		
 			<div class="filters col-lg-3">
-				<form id="filter">
-
-					<fieldset>
-						<h3 class="form-header">hãng</h3>
-						<select name='brand' id='brand' class='form-select'>
-							<option value='0' selected>all</option>
-							<c:forEach items="${brandList}" var="br">
-								<option value='${br.id}'>${br.name}</option>
-							</c:forEach>
-						</select>
-					</fieldset>
-
-					<fieldset>
-						<h3 class="form-header">ưu tiên</h3>
-						<select name='priority' id='priority' class='form-select'>
-							<option value='1' selected>mới nhất</option>
-							<option value='2'>giá tăng dần</option>
-							<option value='3'>giá giảm dần</option>
-						</select>
-					</fieldset>
-
-					<fieldset>
-						<h3 class="form-header">khoảng giá</h3>
-						<div class='form-range'>
-							<div class="">
-								<label for="from-range">Từ</label> <input type='number'
-									name='from-range' id='from-range' placeholder=''>
-							</div>
-
-							<div class="">
-								<label for="to-range">Đến</label> <input type='number'
-									name='to-range' id='to-range' placeholder=''>
-							</div>
-						</div>
-					</fieldset>
-					<button class="btn" id="filterBtn" type="button">Tìm sản
-						phẩm</button>
-				</form>
+				<h3 class="form-header result-header">What's new?</h3>
+				
+				<picture>
+				  <source media="(max-width: 991px)" srcset="${pageContext.request.contextPath}/resources/imgs/banner/h-banner-1.jpg">
+				  <img src="${pageContext.request.contextPath}/resources/imgs/banner/v-banner-2.jpg" alt="a shoes banner">
+				</picture>
+				
+				<picture>
+				  <source media="(max-width: 991px)" srcset="">
+				  <img src="${pageContext.request.contextPath}/resources/imgs/banner/v-banner-1.jpg" alt="a shoes banner">
+				</picture>
+				
 			</div>
 
 			<div class="products col-lg-9">
+				<h3 class="result-header">Kết quả tìm kiếm cho "${sessionScope.productNameForSearching}":</h3>
+			
 				<div class="product-row row">
 
 					<c:forEach items="${productList}" var="product">

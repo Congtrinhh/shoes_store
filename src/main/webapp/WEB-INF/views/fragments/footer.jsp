@@ -7,7 +7,7 @@
 		<div
 			class="col-10 offset-1 offset-sm-0 col-sm-4 col-md-4 mb-3 mb-md-0 footer__child-section">
 			<div class="">
-				<p class="footer__sub-header">
+				<p class="footer__sub-header mb-0">
 					about runyouth <a class="d-inline-block d-sm-none"
 						data-bs-toggle="collapse" href="#footer__sub-content-1"
 						role="button" aria-expanded="false"

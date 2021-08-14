@@ -68,6 +68,16 @@ public class ProductGetter {
 		this.category_name = category_name;
 		this.pr_description = pr_description;
 	}
+	
+	
+	public ProductGetter(String pr_slug, String pr_name, String base64Image, String c_slug, BigDecimal pr_price) {
+		super();
+		this.pr_slug = pr_slug;
+		this.pr_name = pr_name;
+		this.base64Image = base64Image;
+		this.c_slug = c_slug;
+		this.pr_price = pr_price;
+	}
 	public String getBase64Image() {
 		return base64Image;
 	}

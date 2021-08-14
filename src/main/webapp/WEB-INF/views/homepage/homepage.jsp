@@ -51,8 +51,7 @@
 						style="background-image: url('${pageContext.request.contextPath}/resources/imgs/cta/${cta.cta_banner_location}');">
 						<div class="slide__info">
 							<p class="slide__info__header">${cta.cta_title}</p>
-							<a href="${pageContext.request.contextPath}${cta.cta_slug}"
-								class="btn btn-cta">${cta.cta_button_text}</a>
+							<a href="${pageContext.request.contextPath}${cta.cta_slug}" class="btn btn-cta  button button-pulse">${cta.cta_button_text}</a>
 						</div>
 					</div>
 				</c:forEach>

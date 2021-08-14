@@ -1,0 +1,136 @@
+.filters-and-products {
+  margin-top: 60px;
+}
+.filters-and-products .filters {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.form-header {
+  margin-bottom: 10px;
+}
+.filters fieldset {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.filters fieldset select {
+  text-transform: capitalize;
+  padding: 2px 20px;
+}
+.filters fieldset select option {
+  text-transform: capitalize;
+}
+.form-range {
+  padding-left: 20px;
+    width: 100%;
+    height: unset;
+    background-color: transparent;
+    appearance: unset;
+}
+.form-range > div {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  margin-bottom: 6px;
+}
+.form-range label {
+  /* min-width: 40px; */
+  display: inline-block;
+  width: 20%;
+}
+.form-range input {
+  display: inline-block;
+  width: 75%;
+  margin-left: auto;
+  padding-left: 20px;
+}
+
+.filters-and-products .products {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.filters-and-products .product-row {
+}
+
+.product-row .product {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: all 0.35s ease; 
+}
+.product__img {
+	display:block;
+	position: relative;
+  overflow: hidden;
+  transition: all 0.35s ease; 
+}
+.product__img::after {
+	content:"";
+	display: block;
+	padding-bottom: 100%;
+}
+.product__img > img {
+	position: absolute;
+	top:0;left:0;
+	width:100%;
+	height:100%;
+	object-fit: cover;
+	object-position: center;
+	transition: all 0.35s ease; 
+	transform-origin: center;
+}
+.product-row .product:hover {
+	border-radius: 20px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.product__img:hover img {
+	transform: scale(1.2);
+} 
+
+.product__info {
+  padding: calc(var(--gutter) / 2);
+  text-align: center;
+}
+.product__info > a {
+  text-decoration: none;
+}
+.product__info__title {
+  color: #000;
+  font-weight: 400;
+  font-size: 28px;
+}
+.product__info__price {
+  margin-top: 15px;
+}
+
+
+/* Chỉnh sửa bổ sung cho em nó nào */
+.main .btn {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+/**/
+.result-header {
+	background-color: var(--table-background-color);
+	    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 26px;
+    margin-bottom: 24px;
+}
+picture {
+	display: block;
+}
+picture > source,
+picture > img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+picture:nth-of-type(1){
+  	margin-bottom: 20px;
+  }

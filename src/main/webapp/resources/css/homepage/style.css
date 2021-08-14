@@ -242,3 +242,88 @@
   /* giúp cta button nổi lên so với overlay */
   z-index: 1000;
 }
+
+/* cta button */
+
+.button-container {
+  margin: 60px auto 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.button {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid white;
+  border-radius: 1000px;
+  box-shadow: 0 2px 5px 0 rgba(3,6,26,0.15);
+  transition: .5s all ease-in-out;
+  
+}
+.button:hover {
+    animation: none;
+ }
+
+.button-wiggle {
+  animation: wiggle 4s 2s infinite;
+}
+
+@keyframes wiggle {
+	5%,
+	50% {
+		transform: scale(1);
+	}
+	10% {
+		transform: scale(0.9);
+	}
+	15% {
+		transform: scale(1.15);
+	}
+	20% {
+		transform: scale(1.15) rotate(-5deg);
+	}
+	25% {
+		transform: scale(1.15) rotate(5deg);
+	}
+	30% {
+		transform: scale(1.15) rotate(-3deg);
+	}
+	35% {
+		transform: scale(1.15) rotate(2deg);
+	}
+	40% {
+		transform: scale(1.15) rotate(0);
+	}
+}
+
+
+.button-pulse {
+  animation: pulse 2s infinite 3s cubic-bezier(0.25, 0, 0, 1);
+  box-shadow: 0 0 0 0 white;
+}
+@keyframes pulse {
+  to {
+    box-shadow: 0 0 0 18px rgba(255, 255, 255, 0); 
+  }
+}
+
+.button-float {
+  animation: float 1.5s linear alternate infinite;
+}
+
+@keyframes float {
+	50% {
+    transform: translateY(-px);
+  }
+  100% {
+    transform: translateY(-18px);
+  }
+}

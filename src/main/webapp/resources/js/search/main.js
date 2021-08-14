@@ -5,18 +5,8 @@ $(window).on('load', function(){
 // -------------------- ajax get load item khi scroll đến đáy trang -----------------
 $(window).on('scroll', loadMoreProduct);
 
-// -------------------- ajax post load item khi thay đổi item mỗi trang -----------------
-$('#filterBtn').on('click', changeWithFilter);
-
 function loadMoreProduct(){
-	setInterval(function(){
-		console.log({
-			scrTop: $(window).scrollTop(),
-			docHeight: $(document).height(),
-			winHeight:  $(window).height()
-		})
-	},100)
-	if( $(window).scrollTop() >= $(document).height() - $(window).height() ) {
+	if($(window).scrollTop() >= $(document).height() - $(window).height()) {
 		
 		let currentPage = Number($('[name="hidden-current-page"]').attr('value'));
 		let totalPage = Number($('[name="hidden-total-page"]').attr('value'));
@@ -35,7 +25,7 @@ function loadMoreProduct(){
 		$(window).off('scroll', loadMoreProduct); // tắt event listener
 		
 		$.ajax({
-			url: '/ajax-men',
+			url: '/ajax-search',
 			type: 'GET',
 			data: 'requested-page='+ requestedPage,
 			success: function(response){
@@ -54,33 +44,6 @@ function loadMoreProduct(){
 		})
 		
     }
-}
-
-function changeWithFilter(event){
-	event.preventDefault();
-	
-	$.ajax({
-		url: '/ajax-men',
-		type: 'post',
-		//processData: false,
-		data: $('#filter').serialize(),
-		success: function(response){
-			if ( response!=null && Array.isArray(response) ){
-				const pageInfoObject = JSON.parse(response[0]);
-				const listItem = JSON.parse(response[1]);
-				
-				updatePageAttr(pageInfoObject);
-				
-				document.querySelector('.product-row').innerHTML='';
-				appendItemList(listItem);
-
-			}
-			else if ( response!=null && response.length==0 ){
-				document.querySelector('.product-row').innerHTML='';
-			}
-		}
-	})
-
 }
 
 function appendItemList(productArray){
