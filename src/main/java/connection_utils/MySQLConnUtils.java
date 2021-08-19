@@ -27,6 +27,10 @@ public class MySQLConnUtils {
 		String dbName = "shoes_store";
 		String userName = "root";
 		String password = "";
+		
+		hostName = "congtrinhh.cggiop45nqom.ap-southeast-1.rds.amazonaws.com";
+		userName = "admin";
+		password="trinhquycong";
 		return getMySQLConnection(hostName, dbName, userName, password);
 	}
 }

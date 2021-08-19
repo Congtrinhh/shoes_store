@@ -7,13 +7,29 @@ public class Order {
 	private int admin_id;
 	private int user_id;
 	private BigDecimal or_shipping_cost;
-	private byte or_status; // 0: chưa thanh toán; 1: đã thanh toán; 3: đang giao hàng; 4. đã giao hàng
+	private byte or_status; // 0: đang xử lí; 2: đang giao hàng; 3. đã giao hàng
 	private String specific_address;
 	private int ward_id;
 	private String created_at;
 	private String updated_at;
 	
-	
+		
+	public Order(int order_id, int admin_id, int user_id, BigDecimal or_shipping_cost, byte or_status,
+			String specific_address, int ward_id, String created_at, String updated_at) {
+		super();
+		this.order_id = order_id;
+		this.admin_id = admin_id;
+		this.user_id = user_id;
+		this.or_shipping_cost = or_shipping_cost;
+		this.or_status = or_status;
+		this.specific_address = specific_address;
+		this.ward_id = ward_id;
+		this.created_at = created_at;
+		this.updated_at = updated_at;
+	}
+
+
+
 	public Order(int admin_id, int user_id,BigDecimal or_shipping_cost, byte or_status) {
 		super();
 		this.admin_id = admin_id;

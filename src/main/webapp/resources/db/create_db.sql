@@ -221,9 +221,7 @@ select brand_id, brand_name from brand;
 
 select * from admin;
 select * from category;
-
 select * from cta;
-select * from user;
 select * from color;
 select * from size;
 select * from product_line; -- co the xoa pr_price vi khong con can thiet
@@ -231,15 +229,46 @@ select * from specific_product;
 
 select * from purchase_order;
 select * from product_in_order;
+select * from user;
 
 
-select *, min(spr_price) 'spr_price' from product_line p left join image i on p.product_line_id=i.product_line_id join category c on c.category_id=p.category_id
-				left join specific_product s on s.product_line_id=p.product_line_id
-				where pr_brand_id like '%' and (pr_price between 0 and 999)
-				group by p.product_line_id
-				order by '\t\tpr_price\t\t'
-                limit 100 offset 0;
+select *
+from product_line p left join image i on p.product_line_id=i.product_line_id 
+	join category c on c.category_id=p.category_id
+	right join specific_product s on s.product_line_id=p.product_line_id
+where c.c_slug='/women' and
+	pr_brand_id like '%' and (pr_price between 0 and 999)
+group by p.product_line_id
+order by p.created_at DESC limit 100 offset 0;
 
+select count(distinct(p.product_line_id))
+from product_line p join category c on p.category_id=c.category_id
+	right join specific_product s on s.product_line_id=p.product_line_id
+where c.c_slug='/men' and 
+	pr_brand_id like '%' and (pr_price between 0 and 999);
+
+select count(distinct(p.product_line_id)) 
+from product_line p join image i on p.product_line_id=i.product_line_id
+	join category c on c.category_id=p.category_id 
+where p.pr_name like '%';
+
+select count(*) from
+(select count(*)
+	from product_line p join image i on p.product_line_id=i.product_line_id
+	join category c on c.category_id=p.category_id
+	join specific_product s on s.product_line_id=p.product_line_id
+where p.pr_name like '%%'
+group by p.product_line_id
+having count(s.specific_product_id) > 0) as rs;
+
+
+select *
+	from product_line p join image i on p.product_line_id=i.product_line_id
+	join category c on c.category_id=p.category_id
+	join specific_product s on s.product_line_id=p.product_line_id
+where p.pr_name like '%n%'
+group by p.product_line_id
+having count(s.specific_product_id) > 0;
 
 -- --------------trigger for inserting-----------------
 -- we don't need trigger now

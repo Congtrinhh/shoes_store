@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
-import com.google.protobuf.TextFormat.ParseException;
 
 import entities.Admin;
 import entities.Product;
@@ -130,9 +129,6 @@ public class ProductUpdate extends HttpServlet {
 			
 			String currentPageLink = req.getServletPath()+ "/product-update" + "/" + id;
 			resp.getWriter().write(new Gson().toJson(currentPageLink));
-		}
-		catch (ParseException e) {
-			System.out.println("parse line: "+ e.getLine());
 		}
 		catch(Exception e) {
 			errorMessage = "Có lỗi, có thể do slug trùng";

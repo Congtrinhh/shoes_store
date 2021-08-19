@@ -14,7 +14,7 @@
 					href="${pageContext.request.contextPath}/specific-product-read">specific
 						product</a></li>
 				<li><a href="${pageContext.request.contextPath}/user-read">User</a></li>
-				<li><a href="${pageContext.request.contextPath}/">order</a></li>
+				<li><a href="${pageContext.request.contextPath}/order-read">order</a></li>
 			</ul></li>
 
 		<li><a href="${pageContext.request.contextPath}/" class="">home
